@@ -1,8 +1,38 @@
-h1 {
+body {
   font-family: sans-serif;
+  width: 100%;
+}
+
+h1 {
   font-size: 50px;
   font-weight: bold;
   text-align: center;
+  margin-top: 60px;
+}
+
+h2 {
+  text-align: center;
+}
+
+#project2023,
+#project2024,
+#project2025 {
+  display: none;
+}
+
+.projectYears {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.projectYears h3 {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: aquamarine;
+  cursor: pointer;
 }
 
 .wrapperProject {
@@ -31,6 +61,19 @@ h1 {
   margin-top: -60px;
   width: 50%;
   text-align: center;
+  transition: 1s;
+}
+
+.project p {
+  opacity: 0;
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  margin-top: -80px;
+  width: 50%;
+  text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
   transition: 1s;
 }
 
