@@ -1,63 +1,63 @@
-// btn 2022
-document.getElementById("2022").onclick = function () {
-  project2022Show();
-  project2023Hidden();
-  project2024Hidden();
-  project2025Hidden();
-};
+// Function to create project elements for a specific year
+function createProjectsForYear(year) {
+  const wrapper = document.createElement("div");
+  wrapper.id = "project" + year;
+  wrapper.classList.add("wrapperProject");
+  
+  projectsWrapper.innerHTML = ""; // Clear existing project elements
+  
+  projects.forEach(project => {
+    if (project.year === year) {
+      const projectElement = document.createElement("div");
+      projectElement.classList.add("project");
 
-// btn 2023
-document.getElementById("2023").onclick = function () {
-  project2023Show();
-  project2022Hidden();
-  project2024Hidden();
-  project2025Hidden();
-};
-document.getElementById("2024").onclick = function () {
-  project2024Show();
-  project2022Hidden();
-  project2023Hidden();
-  project2025Hidden();
-};
-document.getElementById("2025").onclick = function () {
-  project2025Show();
-  project2022Hidden();
-  project2023Hidden();
-  project2024Hidden();
-};
+      const linkProject = document.createElement("a");
+      linkProject.href = project.url;
+      linkProject.target = "_blank";
 
-// Years Button
-// function 2022
-function project2022Show() {
-  document.getElementById("project2022").style.display = "flex";
-}
-function project2022Hidden() {
-  document.getElementById("project2022").style.display = "none";
-}
+      const bg = document.createElement("div");
+      bg.id = project.title.toLowerCase();
+      bg.classList.add("project-item");
+      bg.style.backgroundImage = `url(img/background_project/${project.year}/${project.title.toLowerCase()}.png)`;
+      linkProject.appendChild(bg);
 
-// function 2023
-function project2023Show() {
-  document.getElementById("project2023").style.display = "flex";
-}
-function project2023Hidden() {
-  document.getElementById("project2023").style.display = "none";
+      const title = document.createElement("h4");
+      title.id = `title${project.title.toLowerCase()}`;
+      title.innerHTML = project.title;
+      linkProject.appendChild(title);
+
+      const desc = document.createElement("p");
+      desc.id = `desc${project.title.toLowerCase()}`;
+      desc.innerHTML = project.desc;
+      linkProject.appendChild(desc);
+
+      projectElement.appendChild(linkProject);
+      wrapper.appendChild(projectElement);
+    }
+  });
+
+  projectsWrapper.appendChild(wrapper);
 }
 
-// function 2024
-function project2024Show() {
-  document.getElementById("project2024").style.display = "flex";
-}
-function project2024Hidden() {
-  document.getElementById("project2024").style.display = "none";
+// Function to handle click on year button
+function handleYearButtonClick(year) {
+  createProjectsForYear(year);
 }
 
-// function 2025
-function project2025Show() {
-  document.getElementById("project2025").style.display = "flex";
-}
-function project2025Hidden() {
-  document.getElementById("project2025").style.display = "none";
-}
+// Create years buttons
+const projectYearsContainer = document.getElementById("projectYears");
+projectYears.forEach(year => {
+  const h3 = document.createElement("h3");
+  h3.textContent = year;
+  h3.onclick = function () {
+    handleYearButtonClick(year);
+  };
+  projectYearsContainer.appendChild(h3);
+});
+
+// Initialize projects wrapper
+const projectsWrapper = document.getElementById("wrapperProject");
+createProjectsForYear(projectYears[0]);
 
 // Portofolio Font
 document.getElementById("portofolio").onmouseover = function () {
@@ -68,12 +68,12 @@ document.getElementById("portofolio").onmouseout = function () {
 };
 
 function mouseOverPorto() {
-  document.getElementById("textPorto").style.opacity = "0";
-  document.getElementById("descPorto").style.opacity = "1";
+  document.getElementById("titleportofolio").style.opacity = "0";
+  document.getElementById("descportofolio").style.opacity = "1";
 }
 function mouseOutPorto() {
-  document.getElementById("textPorto").style.opacity = "1";
-  document.getElementById("descPorto").style.opacity = "0";
+  document.getElementById("titleportofolio").style.opacity = "1";
+  document.getElementById("descportofolio").style.opacity = "0";
 }
 // End Portofolio Font
 
@@ -86,11 +86,11 @@ document.getElementById("fifa").onmouseout = function () {
 };
 
 function mouseOverFifa() {
-  document.getElementById("textFifa").style.opacity = "0";
-  document.getElementById("descFifa").style.opacity = "1";
+  document.getElementById("titlefifa").style.opacity = "0";
+  document.getElementById("descfifa").style.opacity = "1";
 }
 function mouseOutFifa() {
-  document.getElementById("textFifa").style.opacity = "1";
-  document.getElementById("descFifa").style.opacity = "0";
+  document.getElementById("titlefifa").style.opacity = "1";
+  document.getElementById("descfifa").style.opacity = "0";
 }
 // End Fifa Font

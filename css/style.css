@@ -25,18 +25,13 @@ h2 {
   border-radius: 10px;
 }
 
-#project2023,
-#project2024,
-#project2025 {
-  display: none;
-}
-
 .project-wrapper {
   border: 5px solid lightblue;
   border-radius: 10px;
   background-color: #000;
   margin: auto;
   width: 70%;
+  height: 10%;
 }
 
 .projectYears {
@@ -95,14 +90,6 @@ h2 {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   transition: 1s;
-}
-
-#portofolio {
-  background-image: url(../img/background\ project/porto.png);
-}
-
-#fifa {
-  background-image: url(../img/background\ project/fifa.png);
 }
 
 .project-item {
