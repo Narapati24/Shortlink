@@ -1,4 +1,4 @@
-export const profile = {
+const profile = {
   name: "Narapati Keysa Anandi",
   role: "Mobile Developer & Web Developer",
   image: "profile.jpg",
@@ -9,7 +9,7 @@ export const profile = {
   }
 };
 
-export const projects = [
+const projects = [
   {
     title: "Portofolio",
     url: "https://porto.narapatis.my.id",
@@ -37,4 +37,4 @@ export const projects = [
 ];
 
 // Generate years dynamically from projects
-export const projectYears = [...new Set(projects.map(project => project.year))].sort((a, b) => b - a);
+const projectYears = [...new Set(projects.map(project => project.year))].sort((a, b) => b - a);
