@@ -1,6 +1,3 @@
-import '../css/input.css'
-import { projects, projectYears, profile } from './array.js'
-
 // Add Dark Mode Toggle Function
 function initTheme() {
   const themeToggle = document.getElementById('theme-toggle');
