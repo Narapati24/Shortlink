@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /src/img/
+Disallow: /node_modules/
+
+# Allow CSS and JavaScript
+Allow: /*.css$
+Allow: /*.js$
+
+# Sitemap
+Sitemap: https://narapati24.github.io/Shortlink/sitemap.xml
