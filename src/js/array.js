@@ -1,7 +1,7 @@
 const profile = {
   name: "Narapati Keysa Anandi",
   role: "Mobile Developer & Web Developer",
-  image: "profile.jpg",
+  image: "profile.JPG",
   description: "Seorang mahasiswa yang berfokus pada pengembangan website",
   social: {
     github: "https://github.com/Narapati24",
