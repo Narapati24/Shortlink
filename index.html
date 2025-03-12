@@ -2,107 +2,112 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Narapati Main</title>
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
-    <script src="js/array.js"></script>
+    <title>Narapati Shortcut</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
-  <body>
-    <div class="project-wrapper">
-      <div class="title">
-        <h1>Narapati Keysa Anandi</h1>
-        <h2>Where you gonna go?</h2>
+  <body
+    class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen py-12 transition-all duration-500"
+  >
+    <!-- Add Dark Mode Toggle Button -->
+    <button
+      id="theme-toggle"
+      class="fixed top-6 right-6 w-14 h-14 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-50 border border-gray-200 dark:border-gray-700"
+      aria-label="Toggle Dark Mode"
+    >
+      <!-- Sun Icon -->
+      <svg
+        class="w-6 h-6 text-yellow-500 dark:text-gray-400 transition-all duration-300 dark:rotate-0 dark:scale-100 rotate-90 scale-0 absolute"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+
+      <!-- Moon Icon -->
+      <svg
+        class="w-6 h-6 text-gray-600 dark:text-yellow-300 transition-all duration-300 dark:rotate-90 dark:scale-0 rotate-0 scale-100 absolute"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+      </svg>
+    </button>
+
+    <div class="container mx-auto px-4 max-w-6xl">
+      <!-- Profile Section -->
+      <div
+        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 mb-12 transform hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+      >
+        <div class="flex flex-col md:flex-row items-center">
+          <div
+            class="w-28 h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl ring-4 ring-blue-100/50 dark:ring-blue-500/20 transition-all duration-300 group-hover:ring-blue-200 dark:group-hover:ring-blue-500/30"
+          >
+            <img
+              id="profileImage"
+              alt="Profile"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div
+            class="ml-0 md:ml-6 mt-4 md:mt-0 flex-1 text-center md:text-left"
+          >
+            <div class="flex flex-col md:flex-row items-center justify-between">
+              <div>
+                <h1
+                  id="profileName"
+                  class="text-2xl font-bold text-gray-800 dark:text-white mb-1"
+                ></h1>
+                <p
+                  id="profileRole"
+                  class="text-gray-600 dark:text-gray-400 font-medium"
+                ></p>
+              </div>
+              <div id="socialLinks" class="flex space-x-6 mt-4 md:mt-0">
+                <!-- Social links will be inserted here -->
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Years Button -->
-      <div class="projectYears" id="projectYears"></div>
-      <!-- End Years Button -->
 
-      <div class="wrapperProject" id="wrapperProject">
-        <!-- Project 2022 -->
-        <div id="project2022" class="wrapperProject">
-          <!-- Porto -->
-          <div class="project">
-            <a href="https://porto.narapatis.my.id" target="_blank">
-              <div id="portofolio" class="project-item"></div>
-              <h4 id="textPorto">Portofolio</h4>
-              <p id="descPorto">
-                Merupakan Sebuah Porto sekaligus Project untuk memenuhi tugas
-                besar 1 ITW
-              </p>
-            </a>
-          </div>
-          <!-- End Porto -->
+      <!-- Projects Section -->
+      <h1
+        class="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
+      >
+        My Projects
+      </h1>
 
-          <!-- Fifa -->
-          <div class="project">
-            <a href="https://fifa.narapatis.my.id" target="_blank">
-              <div id="fifa" class="project-item"></div>
-              <h4 id="textFifa">FIFA</h4>
-              <p id="descFifa">
-                Merupakan Sebuah Project untuk memenuhi tugas besar 2 ITW
-              </p>
-            </a>
-          </div>
-          <!-- End Fifa -->
-        </div>
-        <!-- End Project 2022 -->
-
-        <!-- Project 2023 -->
-        <div id="project2023" class="wrapperProject">
-          <!-- Porto -->
-          <div class="project">
-            <a href="#" target="">
-              <div id="#" class="project-item"></div>
-              <h4 id="#">COMING SOON</h4>
-              <p id="#">
-                Merupakan Sebuah Porto sekaligus Project untuk memenuhi tugas
-                besar 1 ITW
-              </p>
-            </a>
-          </div>
-          <!-- End Porto -->
-        </div>
-        <!-- End Project 2023 -->
-
-        <!-- Project 2024 -->
-        <div id="project2024" class="wrapperProject">
-          <!-- Porto -->
-          <div class="project">
-            <a href="#" target="_blank">
-              <div id="#" class="project-item"></div>
-              <h4 id="#">COMING SOON</h4>
-              <p id="#">
-                Merupakan Sebuah Porto sekaligus Project untuk memenuhi tugas
-                besar 1 ITW
-              </p>
-            </a>
-          </div>
-          <!-- End Porto -->
-        </div>
-        <!-- End Project 2024 -->
-
-        <!-- Project 2025 -->
-        <div id="project2025" class="wrapperProject">
-          <!-- Porto -->
-          <div class="project">
-            <a href="#" target="_blank">
-              <div id="#" class="project-item"></div>
-              <h4 id="#">COMING SOON</h4>
-              <p id="#">
-                Merupakan Sebuah Porto sekaligus Project untuk memenuhi tugas
-                besar 1 ITW
-              </p>
-            </a>
-          </div>
-          <!-- End Porto -->
-        </div>
-
-        <!-- End Project 2025 -->
+      <div class="flex justify-center mb-10">
+        <select
+          id="yearFilter"
+          class="px-8 py-3 border-2 border-blue-100 dark:border-blue-900/50 rounded-xl text-gray-700 dark:text-white font-medium focus:outline-none focus:border-blue-400 dark:focus:border-blue-500 transition-all bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-lg hover:shadow-xl"
+        >
+          <option value="all">All Years</option>
+        </select>
       </div>
+
+      <div
+        id="projectContainer"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      ></div>
     </div>
-    <script src="js/script.js"></script>
+
+    <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>
