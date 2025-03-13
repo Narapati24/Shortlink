@@ -34,6 +34,14 @@ const projects = [
     year: "2023",
     image: "pnews.png"
   },
+  {
+    title: "Game Balap Karung",
+    url: "https://lompat-karung.narapatis.my.id/",
+    github: "https://github.com/Narapati24/LompatKarung",
+    desc: "Merupakan Sebuah Project untuk mengikuti perlombaan 17 agustus",
+    year: "2023",
+    image: "balapkarung.png"
+  },
 ];
 
 // Generate years dynamically from projects

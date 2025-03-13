@@ -65,8 +65,8 @@ function displayProjects(year = 'all', page = 1) {
   container.innerHTML = '';
   
   const filteredProjects = year === 'all' 
-    ? projects
-    : projects.filter(project => project.year === year);
+    ? [...projects].reverse() // Reverse the array to show newest projects first
+    : projects.filter(project => project.year === year).reverse();
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
@@ -74,7 +74,6 @@ function displayProjects(year = 'all', page = 1) {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   
   filteredProjects
-    .sort((a, b) => b.year - a.year)
     .slice(startIndex, endIndex)
     .forEach(project => {
       const card = document.createElement('div');
