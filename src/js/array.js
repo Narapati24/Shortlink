@@ -77,6 +77,22 @@ const projects = [
     image: "grafAkademik.jpg",
     type: ["web", "terminal"]  // Changed to array of types
   },
+  {
+    title: "League of Legend Champion",
+    github: "https://github.com/Narapati24/League-Of-Legend-Champion",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas bangkit academy",
+    year: "2024",
+    image: "leagueOfLegendChampion.jpg",
+    type: "mobile"
+  },
+  {
+    title: "Dicoding Event Apk",
+    github: "https://github.com/Narapati24/Dicoding-Event-APK",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas bangkit academy",
+    year: "2024",
+    image: "dicodingEvent.jpg",
+    type: "mobile"
+  },
 ];
 
 // Generate years dynamically from projects
