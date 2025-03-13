@@ -86,9 +86,13 @@ function displayProjects(year = 'all', page = 1) {
             <span class="px-3 py-1 ${
               project.type === 'web' 
                 ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' 
-                : 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+                : project.type === 'mobile'
+                  ? 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+                  : 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
             } rounded-full text-xs font-medium">${
-              project.type === 'web' ? 'Web' : 'Mobile'
+              project.type === 'web' ? 'Web' : 
+              project.type === 'mobile' ? 'Mobile' : 
+              'Terminal'
             }</span>
           </div>
           <div class="flex gap-3">

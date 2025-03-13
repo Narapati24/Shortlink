@@ -54,6 +54,21 @@ const projects = [
     image: "wifiku.png",
     type: "web"
   },
+  {
+    title: "Pptq Ponpes AM",
+    desc: "Merupakan Sebuah Project untuk mengelola data pendaftaran santri baru",
+    year: "2023",
+    image: "pptqPonpes.jpg",
+    type: "web"
+  },
+  {
+    title: "Automated Teller Machine (ATM)",
+    github: "https://github.com/Narapati24/Alpro2_Project1_ATM",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas besar Algoritma dan Pemrograman 2",
+    year: "2023",
+    image: "atm.png",
+    type: "terminal"
+  },
 ];
 
 // Generate years dynamically from projects

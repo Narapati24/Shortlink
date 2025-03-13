@@ -88,114 +88,196 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <!-- Add particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   </head>
   <body
-    class="bg-[#fafafa] dark:bg-gray-900 min-h-screen py-16 transition-colors duration-500"
+    class="bg-gradient-to-br from-blue-50/50 via-white/50 to-indigo-50/50 dark:from-gray-900 dark:via-gray-800/95 dark:to-gray-900 min-h-screen py-16 transition-all duration-500 relative"
   >
-    <!-- Add semantic HTML structure -->
-    <header class="sr-only">
-      <h1>Narapati Keysa Anandi - Web & Mobile Developer Portfolio</h1>
-    </header>
+    <!-- Add particles container -->
+    <div
+      id="particles-js"
+      class="absolute inset-0 z-0 pointer-events-none"
+    ></div>
 
-    <!-- Add Dark Mode Toggle Button -->
-    <button
-      id="theme-toggle"
-      class="fixed top-8 right-8 w-12 h-12 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-50"
-      aria-label="Toggle Dark Mode"
-    >
-      <!-- Sun Icon -->
-      <svg
-        class="w-6 h-6 text-yellow-500 dark:text-gray-400 transition-all duration-300 dark:rotate-0 dark:scale-100 rotate-90 scale-0 absolute"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <!-- Wrap content in relative container for z-index -->
+    <div class="relative z-10">
+      <!-- Add semantic HTML structure -->
+      <header class="sr-only">
+        <h1>Narapati Keysa Anandi - Web & Mobile Developer Portfolio</h1>
+      </header>
+
+      <!-- Add Dark Mode Toggle Button -->
+      <button
+        id="theme-toggle"
+        class="fixed top-8 right-8 w-12 h-12 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-50"
+        aria-label="Toggle Dark Mode"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-        />
-      </svg>
+        <!-- Sun Icon -->
+        <svg
+          class="w-6 h-6 text-yellow-500 dark:text-gray-400 transition-all duration-300 dark:rotate-0 dark:scale-100 rotate-90 scale-0 absolute"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          />
+        </svg>
 
-      <!-- Moon Icon -->
-      <svg
-        class="w-6 h-6 text-gray-600 dark:text-yellow-300 transition-all duration-300 dark:rotate-90 dark:scale-0 rotate-0 scale-100 absolute"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-        />
-      </svg>
-    </button>
+        <!-- Moon Icon -->
+        <svg
+          class="w-6 h-6 text-gray-600 dark:text-yellow-300 transition-all duration-300 dark:rotate-90 dark:scale-0 rotate-0 scale-100 absolute"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          />
+        </svg>
+      </button>
 
-    <div class="container mx-auto px-6 max-w-7xl">
-      <!-- Profile Section -->
-      <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 mb-16">
-        <div class="flex flex-col md:flex-row items-center gap-8">
-          <div
-            class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-2xl ring-4 ring-blue-100 dark:ring-blue-900/30"
-          >
-            <img
-              id="profileImage"
-              alt="Profile"
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <div class="flex-1 text-center md:text-left">
+      <div class="container mx-auto px-6 max-w-7xl">
+        <!-- Profile Section -->
+        <div
+          class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-3xl shadow-xl p-10 mb-16 hover:shadow-2xl transition-all duration-500 border border-white/20 dark:border-gray-700/20"
+        >
+          <div class="flex flex-col md:flex-row items-center gap-8">
             <div
-              class="flex flex-col md:flex-row items-center justify-between gap-6"
+              class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-2xl ring-4 ring-blue-100 dark:ring-blue-900/30"
             >
-              <div>
-                <h1
-                  id="profileName"
-                  class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
-                ></h1>
-                <p
-                  id="profileRole"
-                  class="text-lg text-gray-600 dark:text-gray-300"
-                ></p>
-              </div>
-              <div id="socialLinks" class="flex gap-6">
-                <!-- Social links will be inserted here -->
+              <img
+                id="profileImage"
+                alt="Profile"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="flex-1 text-center md:text-left">
+              <div
+                class="flex flex-col md:flex-row items-center justify-between gap-6"
+              >
+                <div>
+                  <h1
+                    id="profileName"
+                    class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
+                  ></h1>
+                  <p
+                    id="profileRole"
+                    class="text-lg text-gray-600 dark:text-gray-300"
+                  ></p>
+                </div>
+                <div id="socialLinks" class="flex gap-6">
+                  <!-- Social links will be inserted here -->
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Projects Section -->
-      <div
-        class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12"
-      >
-        <h1
-          class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 dark:from-blue-400 dark:via-blue-500 dark:to-indigo-500"
+        <!-- Projects Section -->
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12"
         >
-          My Projects
-        </h1>
-        <select
-          id="yearFilter"
-          class="px-6 py-3 bg-white dark:bg-gray-800 rounded-xl text-gray-700 dark:text-white font-medium border-2 border-gray-100 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 transition-all shadow-lg"
-        >
-          <option value="all">All Years</option>
-        </select>
-      </div>
+          <h1
+            class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white"
+          >
+            My Pro<span class="inline-block">j</span>ects
+          </h1>
+          <div class="flex gap-4 flex-wrap justify-center">
+            <select
+              id="yearFilter"
+              class="px-6 py-3 bg-white dark:bg-gray-800 rounded-xl text-gray-700 dark:text-white font-medium border-2 border-gray-100 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 transition-all shadow-lg"
+            >
+              <option value="all">All Years</option>
+            </select>
+            <!-- Type filter will be inserted here by JavaScript -->
+          </div>
+        </div>
 
-      <div
-        id="projectContainer"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      >
-        <!-- Projects will be inserted here -->
+        <div
+          id="projectContainer"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <!-- Projects will be inserted here -->
+        </div>
       </div>
     </div>
 
     <script src="src/js/array.js"></script>
     <script src="src/js/main.js"></script>
+
+    <!-- Update particles config -->
+    <script>
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 100, density: { enable: true, value_area: 800 } },
+          color: {
+            value: document.documentElement.classList.contains("dark")
+              ? "#6366f1"
+              : "#3b82f6",
+          },
+          shape: { type: "circle" },
+          opacity: {
+            value: 0.3,
+            random: true,
+            animation: {
+              enable: true,
+              speed: 1,
+              minimumValue: 0.1,
+              sync: false,
+            },
+          },
+          size: {
+            value: 4,
+            random: true,
+            animation: {
+              enable: true,
+              speed: 2,
+              minimumValue: 0.3,
+              sync: false,
+            },
+          },
+          move: {
+            enable: true,
+            speed: 0.8,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: document.documentElement.classList.contains("dark")
+              ? "#6366f1"
+              : "#3b82f6",
+            opacity: 0.2,
+            width: 1,
+          },
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "bubble" },
+            onclick: { enable: true, mode: "push" },
+            resize: true,
+          },
+          modes: {
+            bubble: { distance: 200, size: 6, duration: 0.2 },
+            push: { particles_nb: 4 },
+          },
+        },
+        retina_detect: true,
+      });
+    </script>
 
     <!-- Add footer with additional SEO content -->
     <footer class="mt-24 pb-8 text-center">
