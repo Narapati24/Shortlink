@@ -681,6 +681,10 @@ video {
   display: inline-block;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
 }
@@ -719,6 +723,10 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-\[400px\] {
+  min-height: 400px;
 }
 
 .w-12 {

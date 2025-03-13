@@ -3,16 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore the portfolio of Narapati Keysa Anandi, a skilled Web and Mobile Developer."
+    />
+
+    <!-- Critical CSS inline -->
+    <style>
+      /* Add critical styles here */
+      .loading {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .loaded {
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Defer non-critical CSS -->
+    <link
+      rel="stylesheet"
+      href="src/css/style.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!-- Preload key assets -->
+    <link rel="preload" href="src/js/array.js" as="script" />
+    <link rel="preload" href="src/js/main.js" as="script" />
+
+    <!-- Load particles.js only if needed -->
+    <script>
+      // Load particles.js dynamically only if device is powerful enough
+      if (
+        !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js";
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+    </script>
 
     <!-- Enhanced SEO Meta Tags -->
     <title>
       Narapati Keysa Anandi - Web & Mobile Developer Portfolio | Project
       Showcase
     </title>
-    <meta
-      name="description"
-      content="Explore the portfolio of Narapati Keysa Anandi, a skilled Web and Mobile Developer. View innovative projects in web development, mobile apps, and software engineering."
-    />
     <meta
       name="keywords"
       content="Narapati Keysa Anandi, Web Developer, Mobile Developer, Full Stack Developer, Portfolio, React Developer, Android Developer, Software Engineer, Indonesia Developer"
@@ -77,22 +123,9 @@
         ]
       }
     </script>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="src/css/style.css" />
-    <!-- Add animation library -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <!-- Add particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   </head>
   <body
-    class="bg-gradient-to-br from-blue-50/50 via-white/50 to-indigo-50/50 dark:from-gray-900 dark:via-gray-800/95 dark:to-gray-900 min-h-screen py-16 transition-all duration-500 relative"
+    class="loading bg-gradient-to-br from-blue-50/50 via-white/50 to-indigo-50/50 dark:from-gray-900 dark:via-gray-800/95 dark:to-gray-900 min-h-screen py-16 transition-all duration-500 relative"
   >
     <!-- Add particles container -->
     <div
@@ -197,7 +230,12 @@
             >
               <option value="all">All Years</option>
             </select>
-            <!-- Type filter will be inserted here by JavaScript -->
+            <select
+              id="typeFilter"
+              class="px-6 py-3 bg-white dark:bg-gray-800 rounded-xl text-gray-700 dark:text-white font-medium border-2 border-gray-100 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 transition-all shadow-lg"
+            >
+              <option value="all">All Types</option>
+            </select>
           </div>
         </div>
 
@@ -210,74 +248,18 @@
       </div>
     </div>
 
-    <script src="src/js/array.js"></script>
-    <script src="src/js/main.js"></script>
-
-    <!-- Update particles config -->
+    <!-- Initialize loading state -->
     <script>
-      particlesJS("particles-js", {
-        particles: {
-          number: { value: 100, density: { enable: true, value_area: 800 } },
-          color: {
-            value: document.documentElement.classList.contains("dark")
-              ? "#6366f1"
-              : "#3b82f6",
-          },
-          shape: { type: "circle" },
-          opacity: {
-            value: 0.3,
-            random: true,
-            animation: {
-              enable: true,
-              speed: 1,
-              minimumValue: 0.1,
-              sync: false,
-            },
-          },
-          size: {
-            value: 4,
-            random: true,
-            animation: {
-              enable: true,
-              speed: 2,
-              minimumValue: 0.3,
-              sync: false,
-            },
-          },
-          move: {
-            enable: true,
-            speed: 0.8,
-            direction: "none",
-            random: true,
-            straight: false,
-            out_mode: "out",
-            bounce: false,
-          },
-          line_linked: {
-            enable: true,
-            distance: 150,
-            color: document.documentElement.classList.contains("dark")
-              ? "#6366f1"
-              : "#3b82f6",
-            opacity: 0.2,
-            width: 1,
-          },
-        },
-        interactivity: {
-          detect_on: "canvas",
-          events: {
-            onhover: { enable: true, mode: "bubble" },
-            onclick: { enable: true, mode: "push" },
-            resize: true,
-          },
-          modes: {
-            bubble: { distance: 200, size: 6, duration: 0.2 },
-            push: { particles_nb: 4 },
-          },
-        },
-        retina_detect: true,
+      window.addEventListener("load", () => {
+        document.body.classList.remove("loading");
+        document.body.classList.add("loaded");
       });
     </script>
+
+    <!-- Load scripts with priority -->
+    <script src="src/js/array.js" defer></script>
+    <script src="src/js/main.js" defer></script>
+    <script src="src/js/particles-config.js" defer></script>
 
     <!-- Add footer with additional SEO content -->
     <footer class="mt-24 pb-8 text-center">

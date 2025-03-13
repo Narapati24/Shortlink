@@ -69,7 +69,20 @@ const projects = [
     image: "atm.png",
     type: "terminal"
   },
+  {
+    title: "Graph Akademic",
+    github: "https://github.com/Narapati24/2_Tubes_PP1",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas besar praktikum pemrograman 1",
+    year: "2024",
+    image: "grafAkademik.jpg",
+    type: ["web", "terminal"]  // Changed to array of types
+  },
 ];
 
 // Generate years dynamically from projects
 const projectYears = [...new Set(projects.map(project => project.year))].sort((a, b) => b - a);
+
+// Update projectTypes to handle arrays of types
+const projectTypes = [...new Set(projects.flatMap(project => 
+  Array.isArray(project.type) ? project.type : [project.type]
+))].sort();
