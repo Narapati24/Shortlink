@@ -83,10 +83,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="src/css/style.css" />
-    <!-- Add this line -->
+    <!-- Add animation library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
   </head>
   <body
-    class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen py-12 transition-all duration-500"
+    class="bg-[#fafafa] dark:bg-gray-900 min-h-screen py-16 transition-colors duration-500"
   >
     <!-- Add semantic HTML structure -->
     <header class="sr-only">
@@ -96,7 +100,7 @@
     <!-- Add Dark Mode Toggle Button -->
     <button
       id="theme-toggle"
-      class="fixed top-6 right-6 w-14 h-14 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-50 border border-gray-200 dark:border-gray-700"
+      class="fixed top-8 right-8 w-12 h-12 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-50"
       aria-label="Toggle Dark Mode"
     >
       <!-- Sun Icon -->
@@ -130,14 +134,12 @@
       </svg>
     </button>
 
-    <div class="container mx-auto px-4 max-w-6xl">
+    <div class="container mx-auto px-6 max-w-7xl">
       <!-- Profile Section -->
-      <div
-        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 mb-12 transform hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
-      >
-        <div class="flex flex-col md:flex-row items-center">
+      <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 mb-16">
+        <div class="flex flex-col md:flex-row items-center gap-8">
           <div
-            class="w-28 h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl ring-4 ring-blue-100/50 dark:ring-blue-500/20 transition-all duration-300 group-hover:ring-blue-200 dark:group-hover:ring-blue-500/30"
+            class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-2xl ring-4 ring-blue-100 dark:ring-blue-900/30"
           >
             <img
               id="profileImage"
@@ -145,21 +147,21 @@
               class="w-full h-full object-cover"
             />
           </div>
-          <div
-            class="ml-0 md:ml-6 mt-4 md:mt-0 flex-1 text-center md:text-left"
-          >
-            <div class="flex flex-col md:flex-row items-center justify-between">
+          <div class="flex-1 text-center md:text-left">
+            <div
+              class="flex flex-col md:flex-row items-center justify-between gap-6"
+            >
               <div>
                 <h1
                   id="profileName"
-                  class="text-2xl font-bold text-gray-800 dark:text-white mb-1"
+                  class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
                 ></h1>
                 <p
                   id="profileRole"
-                  class="text-gray-600 dark:text-gray-400 font-medium"
+                  class="text-lg text-gray-600 dark:text-gray-300"
                 ></p>
               </div>
-              <div id="socialLinks" class="flex space-x-6 mt-4 md:mt-0">
+              <div id="socialLinks" class="flex gap-6">
                 <!-- Social links will be inserted here -->
               </div>
             </div>
@@ -168,16 +170,17 @@
       </div>
 
       <!-- Projects Section -->
-      <h1
-        class="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12"
       >
-        My Projects
-      </h1>
-
-      <div class="flex justify-center mb-10">
+        <h1
+          class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 dark:from-blue-400 dark:via-blue-500 dark:to-indigo-500"
+        >
+          My Projects
+        </h1>
         <select
           id="yearFilter"
-          class="px-8 py-3 border-2 border-blue-100 dark:border-blue-900/50 rounded-xl text-gray-700 dark:text-white font-medium focus:outline-none focus:border-blue-400 dark:focus:border-blue-500 transition-all bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-lg hover:shadow-xl"
+          class="px-6 py-3 bg-white dark:bg-gray-800 rounded-xl text-gray-700 dark:text-white font-medium border-2 border-gray-100 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 transition-all shadow-lg"
         >
           <option value="all">All Years</option>
         </select>
@@ -186,16 +189,24 @@
       <div
         id="projectContainer"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      ></div>
+      >
+        <!-- Projects will be inserted here -->
+      </div>
     </div>
 
     <script src="src/js/array.js"></script>
     <script src="src/js/main.js"></script>
 
     <!-- Add footer with additional SEO content -->
-    <footer class="mt-16 text-center text-gray-600 dark:text-gray-400">
-      <p class="text-sm">© 2025 Narapati Keysa Anandi. All rights reserved.</p>
-      <p class="text-sm mt-2">Web & Mobile Developer based in Indonesia</p>
+    <footer class="mt-24 pb-8 text-center">
+      <div class="max-w-2xl mx-auto px-6">
+        <p class="text-gray-600 dark:text-gray-400">
+          © 2025 Narapati Keysa Anandi. All rights reserved.
+        </p>
+        <p class="text-gray-500 dark:text-gray-500 mt-2">
+          Web & Mobile Developer based in Indonesia
+        </p>
+      </div>
     </footer>
   </body>
 </html>

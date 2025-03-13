@@ -77,23 +77,31 @@ function displayProjects(year = 'all', page = 1) {
     .slice(startIndex, endIndex)
     .forEach(project => {
       const card = document.createElement('div');
-      card.className = 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 hover:scale-[1.02] border border-gray-100 dark:border-gray-700';
+      card.className = 'group bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1';
       
-      // Create buttons HTML based on available links
       const buttonsHTML = `
-        <div class="flex justify-between items-center gap-3">
-          <span class="px-4 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium border border-blue-100/50 dark:border-blue-800/50">${project.year}</span>
-          <div class="flex gap-2">
+        <div class="flex justify-between items-center gap-4">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-4 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">${project.year}</span>
+            <span class="px-3 py-1 ${
+              project.type === 'web' 
+                ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' 
+                : 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+            } rounded-full text-xs font-medium">${
+              project.type === 'web' ? 'Web' : 'Mobile'
+            }</span>
+          </div>
+          <div class="flex gap-3">
             ${project.github ? `
               <a href="${project.github}" target="_blank" 
-                 class="bg-gray-800 dark:bg-gray-700 text-white px-4 py-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm font-medium flex items-center gap-2">
+                 class="bg-gray-800 dark:bg-gray-700 text-white px-4 py-2 rounded-xl hover:bg-gray-700 dark:hover:bg-gray-600 transition-all duration-300 text-sm font-medium flex items-center gap-2">
                 <i class="fab fa-github"></i>
                 <span>Code</span>
               </a>
             ` : ''}
             ${project.url ? `
               <a href="${project.url}" target="_blank" 
-                 class="bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white px-4 py-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm font-medium flex items-center gap-2">
+                 class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium flex items-center gap-2">
                 <i class="fas fa-external-link-alt"></i>
                 <span>Visit</span>
               </a>
@@ -103,15 +111,15 @@ function displayProjects(year = 'all', page = 1) {
       `;
 
       card.innerHTML = `
-        <div class="relative h-56 overflow-hidden group">
+        <div class="relative h-60 overflow-hidden">
           <img src="src/img/background_project/${project.year + '/' + project.image}" 
                alt="${project.title}" 
                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div class="p-7">
+        <div class="p-8">
           <h2 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">${project.title}</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-5 text-sm leading-relaxed">${project.desc}</p>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">${project.desc}</p>
           ${buttonsHTML}
         </div>
       `;
