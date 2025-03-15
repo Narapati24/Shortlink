@@ -93,6 +93,14 @@ const projects = [
     image: "dicodingEvent.jpg",
     type: "mobile"
   },
+  {
+    title: "Glucoscan",
+    github: "https://github.com/GlucoScan-Bangkit/GlucoScan-App",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas capstone project pada bangkit academy",
+    year: "2024",
+    image: "glucoscan.png",
+    type: "mobile"
+  },
 ];
 
 // Generate years dynamically from projects
