@@ -553,6 +553,9 @@ window.addEventListener('load', () => {
     window.pJSDom[0].pJS.fn.particlesRefresh();
   }
 
+  // Fix dropdowns styling and behavior
+  fixDropdowns();
+
   // Add custom animations to the page
   const style = document.createElement('style');
   style.textContent = `
@@ -662,6 +665,53 @@ window.addEventListener('load', () => {
     html:not(.dark) .group:hover {
       border-color: rgba(196, 224, 252, 0.8);
     }
+
+    /* Enhanced dropdown styles for light & dark mode */
+    select {
+      appearance: none;
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    /* Light mode dropdown fixes */
+    html:not(.dark) select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      color: #374151;
+      border-color: #e2e8f0;
+    }
+    
+    html:not(.dark) select:hover {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    html:not(.dark) select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
+    
+    /* Dark mode dropdown fixes */
+    html.dark select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e2e8f0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      color: #e2e8f0;
+      border-color: #374151;
+    }
+    
+    html.dark select:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    html.dark select:focus {
+      border-color: #3b82f6; 
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
   `;
   document.head.appendChild(style);
   
@@ -763,4 +813,49 @@ function setupCardObserver() {
       subtree: true 
     });
   }
+}
+
+// Add new function to fix dropdowns
+function fixDropdowns() {
+  const selects = document.querySelectorAll('select');
+  selects.forEach(select => {
+    // Fix visual appearance
+    select.classList.add('dropdown-fixed');
+    
+    // Update dropdown arrow on theme change
+    const updateDropdownArrow = () => {
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      if (isDarkMode) {
+        select.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e2e8f0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`;
+      } else {
+        select.style.backgroundImage = `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`;
+      }
+    };
+    
+    updateDropdownArrow();
+    
+    // Add hover effect
+    select.addEventListener('mouseenter', () => {
+      select.style.borderColor = document.documentElement.classList.contains('dark') ? '#3b82f6' : '#93c5fd';
+      select.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+    });
+    
+    select.addEventListener('mouseleave', () => {
+      if (document.activeElement !== select) {
+        select.style.borderColor = document.documentElement.classList.contains('dark') ? '#374151' : '#e2e8f0';
+        select.style.boxShadow = '';
+      }
+    });
+    
+    // Update on theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', updateDropdownArrow);
+    }
+  });
+  
+  // Listen for theme changes from system preference
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    setTimeout(fixDropdowns, 100);
+  });
 }
