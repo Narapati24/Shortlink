@@ -19,7 +19,7 @@ function initTheme() {
 // Initialize theme
 initTheme();
 
-// Display profile - Simplified
+// Display profile - Enhanced with better animations and styling
 function displayProfile() {
   document.getElementById('profileImage').src = `src/img/profile/${profile.image}`;
   document.getElementById('profileName').textContent = profile.name;
@@ -41,6 +41,89 @@ function displayProfile() {
     link.innerHTML = `<i class="fab fa-${socialIcons[platform]}"></i>`;
     socialContainer.appendChild(link);
   });
+
+  // Add expanded content
+  document.getElementById('profileDesc').textContent = profile.description;
+  
+  // Display skills with visual enhancements - improved colors and animations
+  const skillsContainer = document.getElementById('skillsList');
+  skillsContainer.innerHTML = profile.skills
+    .map((skill, index) => {
+      // Assign colors based on category - enhanced for better dark/light mode contrast
+      const categoryColors = {
+        frontend: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/70',
+        backend: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/70',
+        mobile: 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/70',
+        design: 'bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800/70',
+        tools: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/70'
+      };
+      
+      const colorClass = categoryColors[skill.category] || 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300';
+      
+      return `
+        <span class="px-3 py-1 ${colorClass} rounded-full text-sm border border-opacity-40 hover:scale-105 transition-all duration-300 cursor-default flex items-center gap-1 shadow-sm" style="animation: fadeIn 0.5s ease forwards; animation-delay: ${index * 0.1}s; opacity: 0;">
+          ${getSkillIcon(skill.category)}
+          ${skill.name}
+          ${skill.level ? `<span class="ml-1 text-xs opacity-80">${levelDot(skill.level)}</span>` : ''}
+        </span>
+      `;
+    })
+    .join('');
+
+  // Add toggle functionality with enhanced animation
+  const toggle = document.getElementById('profileToggle');
+  const expanded = document.getElementById('profileExpanded');
+  const toggleIcon = document.getElementById('toggleIcon');
+  const toggleText = document.getElementById('toggleText');
+  let isExpanded = false;
+
+  toggle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    
+    if (isExpanded) {
+      expanded.style.height = `${expanded.scrollHeight}px`;
+      toggleIcon.style.transform = 'rotate(180deg)';
+      toggleText.textContent = 'See Less';
+      
+      // Add subtle animation to content
+      setTimeout(() => {
+        const elements = expanded.querySelectorAll('h2, p, #skillsList span');
+        elements.forEach((el, i) => {
+          el.style.animation = `fadeIn 0.5s ease forwards`;
+          el.style.animationDelay = `${i * 0.05}s`;
+        });
+      }, 300);
+    } else {
+      expanded.style.height = '0';
+      toggleIcon.style.transform = '';
+      toggleText.textContent = 'See More';
+    }
+  });
+}
+
+// Helper function to get appropriate icon for skill category
+function getSkillIcon(category) {
+  const icons = {
+    frontend: '<i class="fas fa-code fa-sm mr-1"></i>',
+    backend: '<i class="fas fa-server fa-sm mr-1"></i>',
+    mobile: '<i class="fas fa-mobile-alt fa-sm mr-1"></i>',
+    design: '<i class="fas fa-palette fa-sm mr-1"></i>',
+    tools: '<i class="fas fa-tools fa-sm mr-1"></i>'
+  };
+  
+  return icons[category] || '';
+}
+
+// Helper function to show level as dots
+function levelDot(level) {
+  const levels = {
+    'Beginner': '•',
+    'Intermediate': '••',
+    'Advanced': '•••',
+    'Expert': '••••'
+  };
+  
+  return levels[level] || '';
 }
 
 // Initialize profile
@@ -73,6 +156,9 @@ function displayProjects(year = 'all', type = 'all', page = 1) {
   const container = document.getElementById('projectContainer');
   container.innerHTML = '';
   
+  // Update container class to limit max columns to 3 on all screen sizes
+  container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6';
+  
   let filteredProjects = [...projects];
 
   if (year !== 'all') {
@@ -93,79 +179,198 @@ function displayProjects(year = 'all', type = 'all', page = 1) {
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   
-  filteredProjects
-    .slice(startIndex, endIndex)
-    .forEach(project => {
-      const card = createProjectCard(project);
-      container.appendChild(card);
-    });
+  // If we have fewer than ITEMS_PER_PAGE items, add placeholders to maintain grid
+  const projectsToDisplay = filteredProjects.slice(startIndex, endIndex);
+  
+  projectsToDisplay.forEach(project => {
+    const card = createProjectCard(project);
+    container.appendChild(card);
+  });
 
   // Display pagination controls
   displayPagination(totalPages, page, year, type);
+  
+  // Add a small delay before enhancing cards to ensure DOM is ready
+  setTimeout(() => enhanceExistingCards(), 50);
 }
 
-// Update the type badge display in the project card
+// Update the type badge display in the project card with fixed position and improved light mode
 function getTypeBadges(projectTypes) {
   const typeColors = {
-    web: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400',
-    mobile: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400',
-    terminal: 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
+    web: 'bg-emerald-600/90 dark:bg-emerald-500/90 text-white border-emerald-500/50 dark:border-emerald-400/30',
+    mobile: 'bg-violet-600/90 dark:bg-violet-500/90 text-white border-violet-500/50 dark:border-violet-400/30',
+    terminal: 'bg-amber-600/90 dark:bg-amber-500/90 text-white border-amber-500/50 dark:border-amber-400/30'
   };
 
   const types = Array.isArray(projectTypes) ? projectTypes : [projectTypes];
   return types.map(type => `
-    <span class="px-3 py-1 ${typeColors[type]} rounded-full text-xs font-medium">
+    <span class="px-2 py-1 ${typeColors[type]} rounded-full text-xs font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1 badge-glow">
+      ${getTypeIcon(type)}
       ${type.charAt(0).toUpperCase() + type.slice(1)}
     </span>
   `).join('');
 }
 
+// Helper function to get icon for project type
+function getTypeIcon(type) {
+  const icons = {
+    web: '<i class="fas fa-globe fa-xs mr-1"></i>',
+    mobile: '<i class="fas fa-mobile-alt fa-xs mr-1"></i>',
+    terminal: '<i class="fas fa-terminal fa-xs mr-1"></i>'
+  };
+  
+  return icons[type] || '';
+}
+
 // Update the project card creation to use getTypeBadges
 function createProjectCard(project) {
   const card = document.createElement('div');
-  // Generate card content only when it enters viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         generateCardContent(card, project);
+        
+        // Enhanced animation when card enters viewport
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px) scale(0.98)';
+        
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0) scale(1)';
+        }, 100);
+        
         observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: '0px 0px 50px 0px'
   });
   
-  card.className = 'group bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 min-h-[400px]';
+  card.className = 'group bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col h-[360px] border border-gray-100/50 dark:border-gray-700/50 hover:border-blue-200/50 dark:hover:border-blue-700/50 hover:-translate-y-1';
+  card.style.transition = 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease, transform 0.5s ease';
   observer.observe(card);
   return card;
 }
 
 function generateCardContent(card, project) {
-  const typeBadgesHTML = getTypeBadges(project.type);
   const imagePath = `src/img/background_project/${project.year}/${project.image}`;
   
-  // Simplify image handling - remove WebP for now
-  const imageHTML = `
-    <img src="${imagePath}" 
-         alt="${project.title}" 
-         loading="lazy"
-         decoding="async"
-         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-         onerror="this.onerror=null; this.src='src/img/placeholder.jpg';"
-    >
-  `;
-
   card.innerHTML = `
-    <div class="relative h-60 overflow-hidden">
-      ${imageHTML}
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div class="relative h-40 overflow-hidden group-hover:h-44 transition-all duration-500">
+      <img src="${imagePath}" 
+           alt="${project.title}" 
+           loading="lazy"
+           decoding="async"
+           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+           onerror="this.onerror=null; this.src='src/img/placeholder.jpg';"
+      >
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/80 dark:from-black/30 dark:via-black/50 dark:to-black/80 group-hover:opacity-80 transition-all duration-300"></div>
+      
+      <!-- Type badges - Always visible with transition effect -->
+      <div class="absolute top-3 left-3 flex gap-2 flex-wrap transition-all duration-300 transform group-hover:translate-y-0">
+        ${getTypeBadges(project.type)}
+      </div>
+      
+      <!-- Year badge - Fixed at bottom left -->
+      <div class="absolute bottom-3 left-3">
+        <span class="px-3 py-1 bg-blue-600/90 dark:bg-blue-500/90 text-white rounded-full text-xs font-medium backdrop-blur-sm shadow-md transform group-hover:scale-105 transition-transform duration-300 border border-blue-500/30 dark:border-blue-400/30">
+          ${project.year}
+        </span>
+      </div>
     </div>
-    <div class="p-8">
-      <h2 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">${project.title}</h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">${project.desc}</p>
-      ${project.type ? getButtonsHTML(project) : ''}
+    <div class="p-5 flex flex-col flex-grow bg-gradient-to-br from-white/0 via-white/70 to-blue-50/50 dark:from-transparent dark:via-transparent dark:to-blue-900/20 relative">
+      <!-- Enhanced background element - improved for light mode -->
+      <div class="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.15),transparent_70%)]"></div>
+      
+      <!-- Card shine effect overlay - enhanced for light mode -->
+      <div class="card-shine absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700"></div>
+      
+      <h2 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative z-10">${project.title}</h2>
+      <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow relative z-10">${project.desc}</p>
+      
+      <!-- Enhanced card divider - improved for light mode -->
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-4 opacity-70"></div>
+      
+      <div class="flex gap-2 mt-auto relative z-10">
+        ${project.github ? `
+          <a href="${project.github}" target="_blank" rel="noopener" 
+             class="project-btn project-github-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl border border-gray-700/50 dark:border-gray-600/50 overflow-hidden group/btn">
+            <span class="flex items-center justify-center gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
+              <i class="fab fa-github transition-all duration-300 group-hover/btn:scale-110"></i>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold">Source Code</span>
+            </span>
+          </a>
+        ` : ''}
+        ${project.url ? `
+          <a href="${project.url}" target="_blank" rel="noopener" 
+             class="project-btn project-demo-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl border border-blue-500/50 dark:border-blue-500/30 overflow-hidden group/btn">
+            <span class="flex items-center justify-center gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
+              <i class="fas fa-external-link-alt transition-all duration-300 group-hover/btn:scale-110"></i>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold">Live Demo</span>
+            </span>
+          </a>
+        ` : project.github ? '' : '<div class="flex-1"></div>'}
+      </div>
     </div>
   `;
+  
+  // Add enhanced interaction effects
+  addCardInteractionEffects(card);
+}
+
+// New function to add more sophisticated card interaction effects
+function addCardInteractionEffects(card) {
+  // Prevent duplicate event handlers by adding a data attribute
+  if (card.dataset.enhanced === 'true') {
+    return;
+  }
+  
+  // Button hover effects
+  const projectBtns = card.querySelectorAll('.project-btn');
+  projectBtns.forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      const icon = btn.querySelector('i');
+      const text = btn.querySelector('span span');
+      if (icon && text) {
+        icon.style.transform = 'scale(1.2)';
+        text.style.fontWeight = '600';
+      }
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+      const icon = btn.querySelector('i');
+      const text = btn.querySelector('span span');
+      if (icon && text) {
+        icon.style.transform = '';
+        text.style.fontWeight = '';
+      }
+    });
+  });
+  
+  // Card shine effect on mouse move - enhanced for light mode
+  card.addEventListener('mousemove', handleCardShineEffect);
+  
+  // Mark card as enhanced
+  card.dataset.enhanced = 'true';
+}
+
+// Separate the card shine effect into its own function
+function handleCardShineEffect(e) {
+  const card = this;
+  const shine = card.querySelector('.card-shine');
+  if (shine) {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    if (isDarkMode) {
+      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%)`;
+    } else {
+      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59,130,246,0.15) 0%, rgba(255,255,255,0) 50%)`;
+    }
+  }
 }
 
 // Separate buttons HTML generation for cleaner code
@@ -196,7 +401,7 @@ function getButtonsHTML(project) {
   `;
 }
 
-// Add pagination controls
+// Enhanced pagination controls
 function displayPagination(totalPages, currentPage, year, type) {
   // Remove existing pagination if any
   const existingPagination = document.getElementById('paginationContainer');
@@ -205,22 +410,75 @@ function displayPagination(totalPages, currentPage, year, type) {
   }
 
   const paginationContainer = document.createElement('div');
-  paginationContainer.id = 'paginationContainer'; // Add ID for easy removal
-  paginationContainer.className = 'flex justify-center gap-3 mt-12 mb-6';
+  paginationContainer.id = 'paginationContainer';
+  paginationContainer.className = 'flex justify-center gap-2 mt-12 mb-8';
+  
+  // Add previous page button if not on first page
+  if (currentPage > 1) {
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'px-4 py-2 rounded-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm hover:text-blue-600 dark:hover:text-blue-400';
+    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    prevBtn.onclick = () => displayProjects(year, type, currentPage - 1);
+    paginationContainer.appendChild(prevBtn);
+  }
   
   for (let i = 1; i <= totalPages; i++) {
+    // Show limited page numbers for cleaner UI
+    if (totalPages > 5) {
+      // Always show first, last, current, and pages around current
+      if (i !== 1 && i !== totalPages && i !== currentPage && 
+          i !== currentPage - 1 && i !== currentPage + 1 &&
+          i !== currentPage - 2 && i !== currentPage + 2) {
+        // Show ellipsis for skipped pages
+        if (i === 2 || i === totalPages - 1) {
+          const ellipsis = document.createElement('span');
+          ellipsis.className = 'flex items-center justify-center px-2';
+          ellipsis.textContent = '...';
+          paginationContainer.appendChild(ellipsis);
+        }
+        continue;
+      }
+    }
+    
     const pageBtn = document.createElement('button');
-    pageBtn.className = `px-5 py-2.5 rounded-xl transition-all duration-300 ${
+    pageBtn.className = `w-10 h-10 rounded-xl transition-all duration-300 flex items-center justify-center backdrop-blur-sm ${
       currentPage === i 
-        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white shadow-lg scale-110' 
-        : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/80 hover:scale-105 shadow-md border border-gray-100 dark:border-gray-700'
+        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white shadow-lg scale-110 border border-blue-500/50 dark:border-blue-400/50' 
+        : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700'
     }`;
     pageBtn.textContent = i;
     pageBtn.onclick = () => displayProjects(year, type, i);
     paginationContainer.appendChild(pageBtn);
   }
   
+  // Add next page button if not on last page
+  if (currentPage < totalPages) {
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'px-4 py-2 rounded-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm';
+    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nextBtn.onclick = () => displayProjects(year, type, currentPage + 1);
+    paginationContainer.appendChild(nextBtn);
+  }
+  
   document.getElementById('projectContainer').after(paginationContainer);
+
+  // Add custom pagination styles in JS to ensure better animation and hover effects
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    #paginationContainer button {
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    #paginationContainer button:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 // Initial display
@@ -249,3 +507,260 @@ typeFilter.addEventListener('change', debounce((e) => {
   currentPage = 1;
   displayProjects(yearFilter.value, e.target.value, currentPage);
 }, 250));
+
+// Add additional initialization
+window.addEventListener('load', () => {
+  // Add smooth scroll behavior
+  document.documentElement.style.scrollBehavior = 'smooth';
+  
+  // Remove shimmer loading elements
+  const shimmerElements = document.querySelectorAll('.shimmer');
+  shimmerElements.forEach(el => el.remove());
+  
+  // Update initial container class to match displayProjects
+  const container = document.getElementById('projectContainer');
+  if (container) {
+    container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6';
+  }
+
+  // Fix the bouncing animation for the "j" in Projects heading
+  const projectHeading = document.querySelector('h1[class*="text-3xl"]');
+  if (projectHeading) {
+    projectHeading.innerHTML = projectHeading.innerHTML.replace(
+      'Pro<span class="inline-block animate-bounce">j</span>ects',
+      'Pro<span class="inline-block animate-bounce text-blue-600 dark:text-blue-400">j</span>ects'
+    );
+  }
+
+  // Apply theme-based subtle animations
+  const isDarkMode = document.documentElement.classList.contains('dark');
+  
+  // Adjust particles based on theme if particles.js is loaded
+  if (window.pJSDom && window.pJSDom.length > 0) {
+    const particles = window.pJSDom[0].pJS.particles;
+    
+    if (isDarkMode) {
+      // More subtle particles for dark mode
+      particles.color.value = '#4b5563';
+      particles.opacity.value = 0.3;
+    } else {
+      // Brighter particles for light mode
+      particles.color.value = '#93c5fd';
+      particles.opacity.value = 0.5;
+    }
+    
+    // Refresh particles
+    window.pJSDom[0].pJS.fn.particlesRefresh();
+  }
+
+  // Add custom animations to the page
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Enhanced card effects */
+    .badge-glow {
+      animation: badgePulse 2s infinite alternate ease-in-out;
+    }
+    
+    @keyframes badgePulse {
+      0% { box-shadow: 0 0 5px rgba(0,0,0,0.15); }
+      100% { box-shadow: 0 0 8px rgba(59,130,246,0.3); }
+    }
+    
+    .dark .badge-glow {
+      animation: darkBadgePulse 2s infinite alternate ease-in-out;
+    }
+    
+    @keyframes darkBadgePulse {
+      0% { box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+      100% { box-shadow: 0 0 8px rgba(59,130,246,0.4); }
+    }
+    
+    /* Fix for project buttons */
+    .project-btn {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.3s ease-out;
+    }
+    
+    .project-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: all 0.6s;
+      z-index: -1;
+    }
+    
+    .project-btn:hover:before {
+      left: 100%;
+    }
+    
+    .project-github-btn:hover {
+      background: #000 !important;
+      transform: translateY(-2px) scale(1.02);
+    }
+    
+    .project-demo-btn:hover {
+      box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3) !important;
+      transform: translateY(-2px) scale(1.02);
+    }
+    
+    .project-btn i {
+      transition: transform 0.3s ease;
+    }
+    
+    .project-btn:active {
+      transform: scale(0.95) !important;
+    }
+    
+    /* Card shine effect - improved for light mode */
+    .card-shine {
+      border-radius: 1rem;
+      transition: opacity 0.5s;
+    }
+    
+    /* Better card border in light mode */
+    .group {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .group:hover {
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    /* Light mode specific styles */
+    html:not(.dark) .group {
+      border-color: rgba(226, 232, 240, 0.8);
+    }
+    
+    html:not(.dark) .group:hover {
+      border-color: rgba(196, 224, 252, 0.8);
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Fix any existing project buttons
+  enhanceExistingCards();
+  
+  // Immediately enhance any initially rendered cards
+  enhanceExistingCards();
+  
+  // Setup a mutation observer to detect dynamically added cards
+  setupCardObserver();
+});
+
+// New function to enhance existing cards - improved with error handling
+function enhanceExistingCards() {
+  try {
+    const cards = document.querySelectorAll('.group');
+    cards.forEach(card => {
+      // Skip cards that are already enhanced
+      if (card.dataset.enhanced === 'true') {
+        return;
+      }
+      
+      // Add shine element to cards if needed
+      const contentDiv = card.querySelector('div:nth-child(2)');
+      if (contentDiv && !contentDiv.querySelector('.card-shine')) {
+        const shine = document.createElement('div');
+        shine.className = 'card-shine absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700';
+        contentDiv.prepend(shine);
+      }
+      
+      // Add mousemove event to card - only if not already enhanced
+      if (!card.dataset.enhanced) {
+        card.addEventListener('mousemove', handleCardShineEffect);
+      }
+      
+      // Fix button interactions
+      const buttons = card.querySelectorAll('.project-btn');
+      buttons.forEach(btn => {
+        if (!btn.dataset.enhanced) {
+          btn.dataset.enhanced = 'true';
+          
+          btn.addEventListener('mouseenter', () => {
+            const icon = btn.querySelector('i');
+            const text = btn.querySelector('span span');
+            if (icon && text) {
+              icon.style.transform = 'scale(1.2)';
+              text.style.fontWeight = '600';
+            }
+          });
+          
+          btn.addEventListener('mouseleave', () => {
+            const icon = btn.querySelector('i');
+            const text = btn.querySelector('span span');
+            if (icon && text) {
+              icon.style.transform = '';
+              text.style.fontWeight = '';
+            }
+          });
+        }
+      });
+      
+      // Mark card as enhanced
+      card.dataset.enhanced = 'true';
+    });
+  } catch (error) {
+    console.log('Error enhancing cards:', error);
+  }
+}
+
+// New function to observe DOM changes and enhance new cards
+function setupCardObserver() {
+  // Only proceed if the browser supports MutationObserver
+  if (!('MutationObserver' in window)) return;
+  
+  const observer = new MutationObserver((mutations) => {
+    let needsEnhancement = false;
+    
+    mutations.forEach(mutation => {
+      if (mutation.addedNodes.length) {
+        mutation.addedNodes.forEach(node => {
+          if (node.classList && node.classList.contains('group')) {
+            needsEnhancement = true;
+          }
+        });
+      }
+    });
+    
+    if (needsEnhancement) {
+      enhanceExistingCards();
+    }
+  });
+  
+  // Start observing the container for added cards
+  const container = document.getElementById('projectContainer');
+  if (container) {
+    observer.observe(container, { 
+      childList: true, 
+      subtree: true 
+    });
+  }
+}

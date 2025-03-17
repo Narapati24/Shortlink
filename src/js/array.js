@@ -2,7 +2,14 @@ const profile = {
   name: "Narapati Keysa Anandi",
   role: "Mobile Developer & Web Developer",
   image: "profile.JPG",
-  description: "Seorang mahasiswa yang berfokus pada pengembangan website",
+  description: "Seorang mahasiswa yang berfokus pada pengembangan website dan mobile apps. Memiliki pengalaman dalam pembuatan aplikasi web responsif dan aplikasi Android native.",
+  skills: [
+    { name: "Web Development", category: "frontend", level: "Advanced" },
+    { name: "React.js", category: "frontend", level: "Intermediate" },
+    { name: "Android Development", category: "mobile", level: "Intermediate" },
+    { name: "Node.js", category: "backend", level: "Intermediate" },
+    { name: "Git", category: "tools", level: "Advanced" }
+  ],
   social: {
     github: "https://github.com/Narapati24",
     linkedin: "https://www.linkedin.com/in/narapati-keysa/"

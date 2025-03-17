@@ -1,3 +1,170 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes shimmerEffect {
+  0% { background-position: -468px 0 }
+  100% { background-position: 468px 0 }
+}
+
+/* Button hover effect */
+@keyframes buttonGlow {
+  0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+}
+
+@keyframes buttonShine {
+  from { background-position: -100% 0; }
+  to { background-position: 200% 0; }
+}
+
+/* Custom button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white shadow-md hover:shadow-lg border border-blue-500/50 dark:border-blue-500/30;
+}
+
+.btn-secondary {
+  @apply bg-gray-800 dark:bg-gray-700 text-white hover:bg-black dark:hover:bg-gray-600 shadow-md hover:shadow-lg border border-gray-700/50 dark:border-gray-600/50;
+}
+
+/* Project card button styles */
+.project-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease-out;
+}
+
+.project-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200% 100%;
+  transition: all 0.6s;
+  z-index: -1;
+}
+
+.project-btn:hover:before {
+  left: 100%;
+}
+
+.project-github-btn:hover {
+  background: #000 !important;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.project-demo-btn:hover {
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3) !important;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.project-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* Custom card styles */
+.card {
+  @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100/50 dark:border-gray-700/50 hover:border-blue-200/50 dark:hover:border-blue-700/50;
+}
+
+/* Card enhanced styling */
+.group {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.group:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+/* Light mode specific styles */
+html:not(.dark) .group {
+  border-color: rgba(226, 232, 240, 0.8);
+}
+
+html:not(.dark) .group:hover {
+  border-color: rgba(196, 224, 252, 0.8);
+}
+
+html:not(.dark) .card-shine {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+/* Card shine effect */
+.card-shine {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+}
+
+/* Badge glow effect */
+@keyframes badgePulse {
+  0% { box-shadow: 0 0 5px rgba(0,0,0,0.15); }
+  100% { box-shadow: 0 0 8px rgba(59,130,246,0.3); }
+}
+
+.badge-glow {
+  animation: badgePulse 2s infinite alternate ease-in-out;
+}
+
+.dark .badge-glow {
+  animation: darkBadgePulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes darkBadgePulse {
+  0% { box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+  100% { box-shadow: 0 0 8px rgba(59,130,246,0.4); }
+}
+
+/* Enhanced focus styles */
+:focus {
+  @apply outline-none ring-2 ring-blue-500/50 dark:ring-blue-600/50;
+}
+
+/* Better light mode focus styles */
+html:not(.dark) :focus {
+  @apply outline-none ring-2 ring-blue-400/60;
+}
+
+/* Custom scrollbar enhancements */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Better accessibility styles */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
