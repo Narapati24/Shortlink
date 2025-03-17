@@ -2,7 +2,14 @@ const profile = {
   name: "Narapati Keysa Anandi",
   role: "Mobile Developer & Web Developer",
   image: "profile.JPG",
-  description: "Seorang mahasiswa yang berfokus pada pengembangan website",
+  description: "Seorang mahasiswa yang berfokus pada pengembangan website dan mobile apps. Memiliki pengalaman dalam pembuatan aplikasi web responsif dan aplikasi Android native.",
+  skills: [
+    { name: "Web Development", category: "frontend", level: "Advanced" },
+    { name: "Android Development", category: "mobile", level: "Intermediate" },
+    { name: "Flutter", category: "mobile", level: "Intermediate" },
+    { name: "Laravel", category: "backend", level: "Intermediate" },
+    { name: "Git", category: "tools", level: "Advanced" }
+  ],
   social: {
     github: "https://github.com/Narapati24",
     linkedin: "https://www.linkedin.com/in/narapati-keysa/"
@@ -92,6 +99,21 @@ const projects = [
     year: "2024",
     image: "dicodingEvent.jpg",
     type: "mobile"
+  },
+  {
+    title: "Glucoscan",
+    github: "https://github.com/GlucoScan-Bangkit/GlucoScan-App",
+    desc: "Merupakan Sebuah Project untuk memenuhi tugas capstone project pada bangkit academy",
+    year: "2024",
+    image: "glucoscan.png",
+    type: "mobile"
+  },
+  {
+    title: "Realact",
+    desc: "Merupakan Sebuah Project untuk mengelola tour Agent",
+    year: "2024",
+    image: "realAct.png",
+    type: "web"
   },
 ];
 
