@@ -93,6 +93,8 @@
 .group {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin: auto;
+  width: 100%;
 }
 
 .group:hover {
@@ -116,6 +118,13 @@ html:not(.dark) .card-shine {
 /* Card shine effect */
 .card-shine {
   background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+  border-radius: 0.5rem !important;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 5 !important;
 }
 
 /* Badge glow effect */
@@ -213,4 +222,281 @@ html.dark select:focus {
 /* Fix text colors for select options */
 option {
   @apply bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200;
+}
+
+/* Layout & spacing improvements */
+.container {
+  @apply mx-auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 90%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Add buffer space at the edges */
+body {
+  @apply px-2 sm:px-4 md:px-6;
+}
+
+/* Theme toggle button styles */
+#theme-toggle {
+  @apply shadow-lg hover:shadow-xl;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#theme-toggle:hover {
+  @apply transform scale-110;
+}
+
+#theme-toggle:active {
+  @apply transform scale-95;
+}
+
+#theme-toggle svg {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: center;
+}
+
+/* Ensure icons are centered */
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Remove animations when user prefers reduced motion */
+@media (prefers-reduced-motion) {
+  #theme-toggle svg {
+    transition: opacity 0.15s ease-in-out;
+  }
+}
+
+/* Enhanced responsiveness */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  #projectContainer {
+    gap: 1rem !important;
+  }
+}
+
+/* Better mobile profile layout */
+@media (max-width: 768px) {
+  #socialLinks {
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+  
+  #profileImage {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+/* Adaptive card heights */
+.group {
+  height: auto;
+  min-height: 360px;
+}
+
+@media (max-width: 640px) {
+  .group {
+    min-height: 340px;
+  }
+}
+
+/* Improved text readability on small screens */
+@media (max-width: 375px) {
+  .text-sm {
+    font-size: 0.8125rem !important;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Responsive spacing system */
+.responsive-p {
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-p {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-p {
+    padding: 1.5rem;
+  }
+}
+
+/* Fix filter dropdown width on mobile */
+@media (max-width: 480px) {
+  select {
+    min-width: 130px;
+    max-width: 100%;
+  }
+}
+
+/* Fix for hover events on touch devices */
+@media (hover: hover) {
+  .group:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+  }
+  
+  .card-shine {
+    pointer-events: none;
+    z-index: 20;
+  }
+}
+
+/* Make hover effects work for touch devices with .hover class */
+.group.hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+/* Fix shine effect to work on all devices */
+.card-shine {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* Ensure the content stays above the shine effect */
+.group h2,
+.group p,
+.group .project-btn {
+  position: relative;
+  z-index: 10;
+}
+
+/* Make all interactive elements have proper hover states */
+.group .project-btn {
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Ensure buttons have proper hover state on touch */
+.project-btn:hover,
+.project-btn:focus {
+  transform: translateY(-2px);
+}
+
+/* Better touch interaction handling */
+@media (max-width: 640px) {
+  .project-btn {
+    padding: 0.625rem 0.75rem;
+  }
+}
+
+/* Touch-friendly button sizes */
+@media (max-width: 480px) {
+  .project-btn {
+    min-height: 40px;
+  }
+}
+
+/* Fix shine effect to work reliably on all devices */
+.card-shine {
+  border-radius: 0.5rem !important;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 5 !important;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+}
+
+/* Ensure pointer-events work properly for all interactive elements */
+.group * {
+  pointer-events: auto;
+}
+
+.group .card-shine {
+  pointer-events: none !important;
+}
+
+/* Force higher z-index for interactive elements */
+.project-btn, 
+.group h2,
+.group p {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure buttons have proper hover state */
+.project-btn {
+  position: relative;
+  z-index: 20 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+/* Fix for Firefox mouse event handling */
+@-moz-document url-prefix() {
+  .group {
+    will-change: transform;
+  }
+  
+  .card-shine {
+    will-change: opacity, background;
+  }
 }

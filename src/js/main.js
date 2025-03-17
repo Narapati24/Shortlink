@@ -9,11 +9,38 @@ function initTheme() {
     document.documentElement.classList.remove('dark');
   }
 
+  // Fix icon visibility based on current theme
+  updateThemeIcons();
+
   // Toggle theme
   themeToggle.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
     localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    
+    // Update icon visibility after theme change
+    updateThemeIcons();
   });
+}
+
+// New helper function to ensure correct icon visibility
+function updateThemeIcons() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const sunIcon = document.querySelector('#theme-toggle svg:first-child');
+  const moonIcon = document.querySelector('#theme-toggle svg:last-child');
+  
+  if (isDark) {
+    // Show sun icon in dark mode
+    sunIcon.classList.remove('opacity-0', 'scale-0');
+    sunIcon.classList.add('opacity-100', 'scale-100');
+    moonIcon.classList.remove('opacity-100', 'scale-100');
+    moonIcon.classList.add('opacity-0', 'scale-0');
+  } else {
+    // Show moon icon in light mode
+    moonIcon.classList.remove('opacity-0', 'scale-0');
+    moonIcon.classList.add('opacity-100', 'scale-100');
+    sunIcon.classList.remove('opacity-100', 'scale-100');
+    sunIcon.classList.add('opacity-0', 'scale-0');
+  }
 }
 
 // Initialize theme
@@ -71,14 +98,47 @@ function displayProfile() {
     .join('');
 
   // Add toggle functionality with enhanced animation
+  setupProfileToggle();
+  
+  // Flag that profile has been displayed
+  document.body.dataset.profileLoaded = 'true';
+}
+
+// Separate function for profile toggle to allow reinitialization
+function setupProfileToggle() {
   const toggle = document.getElementById('profileToggle');
   const expanded = document.getElementById('profileExpanded');
   const toggleIcon = document.getElementById('toggleIcon');
   const toggleText = document.getElementById('toggleText');
-  let isExpanded = false;
+  
+  // Preserve expanded state using localStorage
+  let isExpanded = localStorage.getItem('profileExpanded') === 'true';
+  
+  // Apply initial state
+  if (isExpanded) {
+    expanded.style.height = `${expanded.scrollHeight}px`;
+    toggleIcon.style.transform = 'rotate(180deg)';
+    toggleText.textContent = 'See Less';
+    
+    // Ensure skills are visible
+    setTimeout(() => {
+      const elements = expanded.querySelectorAll('h2, p, #skillsList span');
+      elements.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }, 300);
+  } else {
+    expanded.style.height = '0';
+    toggleIcon.style.transform = '';
+    toggleText.textContent = 'See More';
+  }
 
   toggle.addEventListener('click', () => {
     isExpanded = !isExpanded;
+    
+    // Store state in localStorage
+    localStorage.setItem('profileExpanded', isExpanded);
     
     if (isExpanded) {
       expanded.style.height = `${expanded.scrollHeight}px`;
@@ -157,7 +217,7 @@ function displayProjects(year = 'all', type = 'all', page = 1) {
   container.innerHTML = '';
   
   // Update container class to limit max columns to 3 on all screen sizes
-  container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6';
+  container.className = 'grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-5 lg:gap-6';
   
   let filteredProjects = [...projects];
 
@@ -222,7 +282,7 @@ function getTypeIcon(type) {
   return icons[type] || '';
 }
 
-// Update the project card creation to use getTypeBadges
+// Update the project card creation for better responsiveness
 function createProjectCard(project) {
   const card = document.createElement('div');
   const observer = new IntersectionObserver((entries) => {
@@ -237,6 +297,9 @@ function createProjectCard(project) {
         setTimeout(() => {
           card.style.opacity = '1';
           card.style.transform = 'translateY(0) scale(1)';
+          
+          // Add interaction effects right after cards become visible
+          addCardInteractionEffects(card);
         }, 100);
         
         observer.unobserve(entry.target);
@@ -247,7 +310,8 @@ function createProjectCard(project) {
     rootMargin: '0px 0px 50px 0px'
   });
   
-  card.className = 'group bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col h-[360px] border border-gray-100/50 dark:border-gray-700/50 hover:border-blue-200/50 dark:hover:border-blue-700/50 hover:-translate-y-1';
+  // Ensure proper structure for hover effects
+  card.className = 'group bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col border border-gray-100/50 dark:border-gray-700/50 hover:border-blue-200/50 dark:hover:border-blue-700/50 hover:-translate-y-1';
   card.style.transition = 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease, transform 0.5s ease';
   observer.observe(card);
   return card;
@@ -256,8 +320,9 @@ function createProjectCard(project) {
 function generateCardContent(card, project) {
   const imagePath = `src/img/background_project/${project.year}/${project.image}`;
   
+  // Responsive content structure with adaptive padding and sizing
   card.innerHTML = `
-    <div class="relative h-40 overflow-hidden group-hover:h-44 transition-all duration-500">
+    <div class="relative h-36 sm:h-40 overflow-hidden group-hover:h-40 sm:group-hover:h-44 transition-all duration-500">
       <img src="${imagePath}" 
            alt="${project.title}" 
            loading="lazy"
@@ -267,47 +332,49 @@ function generateCardContent(card, project) {
       >
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/80 dark:from-black/30 dark:via-black/50 dark:to-black/80 group-hover:opacity-80 transition-all duration-300"></div>
       
-      <!-- Type badges - Always visible with transition effect -->
-      <div class="absolute top-3 left-3 flex gap-2 flex-wrap transition-all duration-300 transform group-hover:translate-y-0">
+      <!-- Type badges with improved responsive layout -->
+      <div class="absolute top-2 sm:top-3 left-2 sm:left-3 flex gap-1 sm:gap-2 flex-wrap transition-all duration-300">
         ${getTypeBadges(project.type)}
       </div>
       
-      <!-- Year badge - Fixed at bottom left -->
-      <div class="absolute bottom-3 left-3">
-        <span class="px-3 py-1 bg-blue-600/90 dark:bg-blue-500/90 text-white rounded-full text-xs font-medium backdrop-blur-sm shadow-md transform group-hover:scale-105 transition-transform duration-300 border border-blue-500/30 dark:border-blue-400/30">
+      <!-- Year badge - Responsive positioning -->
+      <div class="absolute bottom-2 sm:bottom-3 left-2 sm:left-3">
+        <span class="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-600/90 dark:bg-blue-500/90 text-white rounded-full text-xs font-medium backdrop-blur-sm shadow-md transform group-hover:scale-105 transition-transform duration-300 border border-blue-500/30 dark:border-blue-400/30">
           ${project.year}
         </span>
       </div>
     </div>
-    <div class="p-5 flex flex-col flex-grow bg-gradient-to-br from-white/0 via-white/70 to-blue-50/50 dark:from-transparent dark:via-transparent dark:to-blue-900/20 relative">
+    <div class="p-3 sm:p-4 md:p-5 flex flex-col flex-grow bg-gradient-to-br from-white/0 via-white/70 to-blue-50/50 dark:from-transparent dark:via-transparent dark:to-blue-900/20 relative">
       <!-- Enhanced background element - improved for light mode -->
       <div class="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.15),transparent_70%)]"></div>
       
       <!-- Card shine effect overlay - enhanced for light mode -->
       <div class="card-shine absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700"></div>
       
-      <h2 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative z-10">${project.title}</h2>
-      <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow relative z-10">${project.desc}</p>
+      <h2 class="text-base sm:text-lg font-bold text-gray-800 dark:text-white mb-1 sm:mb-2 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative z-10">${project.title}</h2>
+      <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3 mb-3 sm:mb-4 flex-grow relative z-10">${project.desc}</p>
       
       <!-- Enhanced card divider - improved for light mode -->
-      <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-4 opacity-70"></div>
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-3 sm:mb-4 opacity-70"></div>
       
       <div class="flex gap-2 mt-auto relative z-10">
         ${project.github ? `
           <a href="${project.github}" target="_blank" rel="noopener" 
-             class="project-btn project-github-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl border border-gray-700/50 dark:border-gray-600/50 overflow-hidden group/btn">
-            <span class="flex items-center justify-center gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
+             class="project-btn project-github-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md hover:shadow-xl border border-gray-700/50 dark:border-gray-600/50 overflow-hidden group/btn">
+            <span class="flex items-center justify-center gap-1 sm:gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
               <i class="fab fa-github transition-all duration-300 group-hover/btn:scale-110"></i>
-              <span class="transition-all duration-300 group-hover/btn:font-semibold">Source Code</span>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold hidden xs:inline-block">Source Code</span>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold xs:hidden">Code</span>
             </span>
           </a>
         ` : ''}
         ${project.url ? `
           <a href="${project.url}" target="_blank" rel="noopener" 
-             class="project-btn project-demo-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl border border-blue-500/50 dark:border-blue-500/30 overflow-hidden group/btn">
-            <span class="flex items-center justify-center gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
+             class="project-btn project-demo-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md hover:shadow-xl border border-blue-500/50 dark:border-blue-500/30 overflow-hidden group/btn">
+            <span class="flex items-center justify-center gap-1 sm:gap-2 transition-all duration-300 group-hover/btn:translate-y-0">
               <i class="fas fa-external-link-alt transition-all duration-300 group-hover/btn:scale-110"></i>
-              <span class="transition-all duration-300 group-hover/btn:font-semibold">Live Demo</span>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold hidden xs:inline-block">Live Demo</span>
+              <span class="transition-all duration-300 group-hover/btn:font-semibold xs:hidden">Demo</span>
             </span>
           </a>
         ` : project.github ? '' : '<div class="flex-1"></div>'}
@@ -317,60 +384,6 @@ function generateCardContent(card, project) {
   
   // Add enhanced interaction effects
   addCardInteractionEffects(card);
-}
-
-// New function to add more sophisticated card interaction effects
-function addCardInteractionEffects(card) {
-  // Prevent duplicate event handlers by adding a data attribute
-  if (card.dataset.enhanced === 'true') {
-    return;
-  }
-  
-  // Button hover effects
-  const projectBtns = card.querySelectorAll('.project-btn');
-  projectBtns.forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-      const icon = btn.querySelector('i');
-      const text = btn.querySelector('span span');
-      if (icon && text) {
-        icon.style.transform = 'scale(1.2)';
-        text.style.fontWeight = '600';
-      }
-    });
-    
-    btn.addEventListener('mouseleave', () => {
-      const icon = btn.querySelector('i');
-      const text = btn.querySelector('span span');
-      if (icon && text) {
-        icon.style.transform = '';
-        text.style.fontWeight = '';
-      }
-    });
-  });
-  
-  // Card shine effect on mouse move - enhanced for light mode
-  card.addEventListener('mousemove', handleCardShineEffect);
-  
-  // Mark card as enhanced
-  card.dataset.enhanced = 'true';
-}
-
-// Separate the card shine effect into its own function
-function handleCardShineEffect(e) {
-  const card = this;
-  const shine = card.querySelector('.card-shine');
-  if (shine) {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    if (isDarkMode) {
-      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%)`;
-    } else {
-      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59,130,246,0.15) 0%, rgba(255,255,255,0) 50%)`;
-    }
-  }
 }
 
 // Separate buttons HTML generation for cleaner code
@@ -520,7 +533,7 @@ window.addEventListener('load', () => {
   // Update initial container class to match displayProjects
   const container = document.getElementById('projectContainer');
   if (container) {
-    container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6';
+    container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8';
   }
 
   // Fix the bouncing animation for the "j" in Projects heading
@@ -723,7 +736,60 @@ window.addEventListener('load', () => {
   
   // Setup a mutation observer to detect dynamically added cards
   setupCardObserver();
+
+  // Set up intersection observer for profile section
+  setupProfileObserver();
+  
+  // Set up observers for profile section
+  setupProfileObserver();
+  setupProfileMutationObserver();
+
+  // Adjust page layout for better spacing
+  adjustLayoutSpacing();
+
+  // Initialize responsive layout controls
+  setupResponsiveControls();
+  
+  // Initialize all card interactivity
+  setTimeout(() => {
+    enhanceExistingCards();
+    addHoverPolyfill();
+  }, 200);
 });
+
+// New function to adjust page layout for better spacing
+function adjustLayoutSpacing() {
+  // Get the viewport width
+  const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  
+  // Adjust container width based on viewport
+  const container = document.querySelector('.container');
+  if (container) {
+    if (viewportWidth >= 1536) {
+      // Extra large screens
+      container.style.maxWidth = '1280px';
+    } else if (viewportWidth >= 1280) {
+      // Large screens
+      container.style.maxWidth = '80%';
+    } else if (viewportWidth >= 1024) {
+      // Medium-large screens (laptops)
+      container.style.maxWidth = '90%';
+    }
+  }
+  
+  // Apply additional spacing to cards on larger screens
+  if (viewportWidth >= 1024) {
+    const projectCards = document.querySelectorAll('.group');
+    projectCards.forEach(card => {
+      card.style.margin = '0 auto';
+    });
+  }
+}
+
+// Listen for window resize to adjust spacing
+window.addEventListener('resize', debounce(() => {
+  adjustLayoutSpacing();
+}, 250));
 
 // New function to enhance existing cards - improved with error handling
 function enhanceExistingCards() {
@@ -735,47 +801,8 @@ function enhanceExistingCards() {
         return;
       }
       
-      // Add shine element to cards if needed
-      const contentDiv = card.querySelector('div:nth-child(2)');
-      if (contentDiv && !contentDiv.querySelector('.card-shine')) {
-        const shine = document.createElement('div');
-        shine.className = 'card-shine absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700';
-        contentDiv.prepend(shine);
-      }
-      
-      // Add mousemove event to card - only if not already enhanced
-      if (!card.dataset.enhanced) {
-        card.addEventListener('mousemove', handleCardShineEffect);
-      }
-      
-      // Fix button interactions
-      const buttons = card.querySelectorAll('.project-btn');
-      buttons.forEach(btn => {
-        if (!btn.dataset.enhanced) {
-          btn.dataset.enhanced = 'true';
-          
-          btn.addEventListener('mouseenter', () => {
-            const icon = btn.querySelector('i');
-            const text = btn.querySelector('span span');
-            if (icon && text) {
-              icon.style.transform = 'scale(1.2)';
-              text.style.fontWeight = '600';
-            }
-          });
-          
-          btn.addEventListener('mouseleave', () => {
-            const icon = btn.querySelector('i');
-            const text = btn.querySelector('span span');
-            if (icon && text) {
-              icon.style.transform = '';
-              text.style.fontWeight = '';
-            }
-          });
-        }
-      });
-      
-      // Mark card as enhanced
-      card.dataset.enhanced = 'true';
+      // Add interaction effects to all cards
+      addCardInteractionEffects(card);
     });
   } catch (error) {
     console.log('Error enhancing cards:', error);
@@ -858,4 +885,246 @@ function fixDropdowns() {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     setTimeout(fixDropdowns, 100);
   });
+}
+
+// Add new function to observe if profile is visible
+function setupProfileObserver() {
+  // Check if profile section exists
+  const profileSection = document.querySelector('.container > div:first-child');
+  if (!profileSection) return;
+  
+  // Create IntersectionObserver to monitor profile section visibility
+  const profileObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      // When profile section comes into view
+      if (entry.isIntersecting) {
+        // Check if profile data needs to be restored
+        checkAndRestoreProfileData();
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -20% 0px'
+  });
+  
+  // Start observing profile section
+  profileObserver.observe(profileSection);
+  
+  // Also attach scroll event to ensure profile data is always available
+  window.addEventListener('scroll', debounce(() => {
+    checkAndRestoreProfileData();
+  }, 100));
+}
+
+// Function to check if profile data is missing and restore it
+function checkAndRestoreProfileData() {
+  const profileName = document.getElementById('profileName');
+  const profileImage = document.getElementById('profileImage');
+  
+  // Check if profile data is missing
+  if (!profileName.textContent || !profileImage.src.includes(profile.image)) {
+    console.log('Profile data missing, restoring...');
+    displayProfile(); // Re-display profile data
+  }
+  
+  // Also check if expanded content is correct
+  const expanded = document.getElementById('profileExpanded');
+  const isExpanded = localStorage.getItem('profileExpanded') === 'true';
+  
+  if (isExpanded && expanded.style.height === '0px') {
+    expanded.style.height = `${expanded.scrollHeight}px`;
+    document.getElementById('toggleIcon').style.transform = 'rotate(180deg)';
+    document.getElementById('toggleText').textContent = 'See Less';
+  }
+}
+
+// Helper function to watch for DOM changes that might affect profile
+function setupProfileMutationObserver() {
+  // Only proceed if MutationObserver is supported
+  if (!window.MutationObserver) return;
+  
+  const profileSection = document.querySelector('.container > div:first-child');
+  if (!profileSection) return;
+  
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+      if (mutation.type === 'childList' || mutation.type === 'attributes') {
+        // Check if profile data is intact
+        checkAndRestoreProfileData();
+      }
+    });
+  });
+  
+  observer.observe(profileSection, { 
+    childList: true,
+    subtree: true,
+    attributes: true
+  });
+}
+
+// New function to manage responsive behavior
+function setupResponsiveControls() {
+  // Add special xs breakpoint for better mobile support
+  if (window.innerWidth <= 480) {
+    document.documentElement.classList.add('xs');
+  } else {
+    document.documentElement.classList.remove('xs');
+  }
+  
+  // Listen for resize events to update xs class
+  window.addEventListener('resize', debounce(() => {
+    if (window.innerWidth <= 480) {
+      document.documentElement.classList.add('xs');
+    } else {
+      document.documentElement.classList.remove('xs');
+    }
+    
+    // Adjust button text for small screens
+    adjustButtonsForScreenSize();
+    
+    // Update layout spacing
+    adjustLayoutSpacing();
+  }, 250));
+  
+  // Initial button text adjustment
+  adjustButtonsForScreenSize();
+}
+
+// Helper function to adjust button text based on screen size
+function adjustButtonsForScreenSize() {
+  const isSmall = window.innerWidth <= 480;
+  
+  document.querySelectorAll('.project-github-btn span:last-child').forEach(span => {
+    span.textContent = isSmall ? 'Code' : 'Source Code';
+  });
+  
+  document.querySelectorAll('.project-demo-btn span:last-child').forEach(span => {
+    span.textContent = isSmall ? 'Demo' : 'Live Demo';
+  });
+}
+
+// New function to add more sophisticated card interaction effects
+function addCardInteractionEffects(card) {
+  // Prevent duplicate event handlers by adding a data attribute
+  if (card.dataset.enhanced === 'true') {
+    return;
+  }
+  
+  // Button hover effects
+  const projectBtns = card.querySelectorAll('.project-btn');
+  projectBtns.forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+      const icon = btn.querySelector('i');
+      const text = btn.querySelector('span span');
+      if (icon) {
+        icon.style.transform = 'scale(1.2)';
+      }
+      if (text) {
+        text.style.fontWeight = '600';
+      }
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+      const icon = btn.querySelector('i');
+      const text = btn.querySelector('span span');
+      if (icon) {
+        icon.style.transform = '';
+      }
+      if (text) {
+        text.style.fontWeight = '';
+      }
+    });
+  });
+  
+  // Make sure the card shine effect is properly initialized
+  initCardShineEffect(card);
+  
+  // Mark card as enhanced
+  card.dataset.enhanced = 'true';
+}
+
+// Separate function to initialize card shine effect
+function initCardShineEffect(card) {
+  // Make sure the card has a shine element
+  const contentDiv = card.querySelector('div:nth-child(2)');
+  if (contentDiv && !contentDiv.querySelector('.card-shine')) {
+    const shine = document.createElement('div');
+    shine.className = 'card-shine absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700';
+    contentDiv.prepend(shine);
+  }
+  
+  // Add the mousemove event listener to handle the shine effect
+  card.addEventListener('mousemove', handleCardShineEffect);
+  
+  // Add mouseleave to reset shine
+  card.addEventListener('mouseleave', resetCardShine);
+}
+
+// Separate the card shine effect into its own function
+function handleCardShineEffect(e) {
+  try {
+    const card = this;
+    const shine = card.querySelector('.card-shine');
+    if (shine) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      shine.style.opacity = "1";
+      if (isDarkMode) {
+        shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%)`;
+      } else {
+        shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59,130,246,0.15) 0%, rgba(255,255,255,0) 50%)`;
+      }
+    }
+  } catch (error) {
+    console.log('Error in card shine effect:', error);
+  }
+}
+
+// Add function to reset card shine on mouse leave
+function resetCardShine() {
+  try {
+    const card = this;
+    const shine = card.querySelector('.card-shine');
+    if (shine) {
+      shine.style.opacity = "0";
+    }
+  } catch (error) {
+    console.log('Error resetting card shine:', error);
+  }
+}
+
+// Add hover polyfill for touch devices
+function addHoverPolyfill() {
+  // Check if it's a touch device
+  const isTouchDevice = 'ontouchstart' in window || 
+                       navigator.maxTouchPoints > 0 || 
+                       navigator.msMaxTouchPoints > 0;
+  
+  if (isTouchDevice) {
+    const cards = document.querySelectorAll('.group');
+    cards.forEach(card => {
+      // Add touch event to simulate hover on touch devices
+      card.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        if (this.classList.contains('hover')) {
+          this.classList.remove('hover');
+        } else {
+          const hoverElements = document.querySelectorAll('.hover');
+          hoverElements.forEach(el => el.classList.remove('hover'));
+          this.classList.add('hover');
+        }
+      }, {passive: false});
+    });
+    
+    // Remove hover class when touching elsewhere
+    document.addEventListener('touchstart', function(e) {
+      if (!e.target.closest('.group')) {
+        const hoverElements = document.querySelectorAll('.hover');
+        hoverElements.forEach(el => el.classList.remove('hover'));
+      }
+    });
+  }
 }
