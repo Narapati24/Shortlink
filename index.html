@@ -39,8 +39,8 @@
         );
         background-size: 800px 100px;
         animation: shimmer 1.5s infinite linear;
+        min-height: 360px;
       }
-
       .dark .shimmer {
         background: linear-gradient(
           to right,
@@ -167,6 +167,19 @@
           padding-bottom: 0.625rem;
         }
       }
+
+      /* Fix project card sizes */
+      #projectContainer > div {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Remove animation that changes height */
+      .group-hover\:h-40,
+      .sm\:group-hover\:h-44 {
+        transition: none !important;
+      }
     </style>
 
     <!-- Defer non-critical CSS -->
@@ -186,6 +199,17 @@
     <!-- Preload key assets -->
     <link rel="preload" href="src/js/array.js" as="script" />
     <link rel="preload" href="src/js/main.js" as="script" />
+
+    <!-- jQuery first, then our scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Load data first -->
+    <script src="src/js/array.js"></script>
+    <script src="src/js/data-check.js"></script>
 
     <!-- Load particles.js only if needed -->
     <script>
@@ -472,13 +496,7 @@
       });
     </script>
 
-    <!-- Load scripts with priority -->
-    <script src="src/js/array.js" defer></script>
-    <script src="src/js/main.js" defer></script>
-    <script src="src/js/particles-config.js" defer></script>
-    <script src="src/js/tracking.js" defer></script>
-
-    <!-- Add footer with additional SEO content -->
+    <!-- Add footer with SEO content -->
     <footer
       class="mt-20 pb-6 text-center"
       style="animation: fadeIn 0.8s ease-out 0.7s forwards; opacity: 0"
@@ -495,5 +513,11 @@
         </p>
       </div>
     </footer>
+
+    <!-- Load scripts with proper order -->
+    <script src="src/js/main.js" defer></script>
+    <script src="src/js/card-fix.js" defer></script>
+    <script src="src/js/particles-config.js" defer></script>
+    <script src="src/js/tracking.js" defer></script>
   </body>
 </html>
