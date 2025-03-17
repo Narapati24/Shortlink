@@ -117,6 +117,10 @@ const projects = [
   },
 ];
 
+// Note: Projects are stored in chronological order but will be 
+// displayed with newest years first and newest additions within
+// each year appearing first in the UI.
+
 // Generate years dynamically from projects
 const projectYears = [...new Set(projects.map(project => project.year))].sort((a, b) => b - a);
 
@@ -124,3 +128,9 @@ const projectYears = [...new Set(projects.map(project => project.year))].sort((a
 const projectTypes = [...new Set(projects.flatMap(project => 
   Array.isArray(project.type) ? project.type : [project.type]
 ))].sort();
+
+// Make sure years are properly formatted as strings or numbers consistently
+projects.forEach(project => {
+  // Ensure year is stored as a number for proper sorting
+  project.year = project.year.toString();
+});
