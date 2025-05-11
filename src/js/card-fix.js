@@ -32,6 +32,66 @@
             if (card.classList.contains('shimmer')) return;
             card.style.height = maxHeight + 'px';
           });
+          
+          // Add accessibility checks for buttons
+          setTimeout(() => {
+            // Find all buttons without accessible names within project cards
+            const buttonsWithoutNames = document.querySelectorAll('#projectContainer button:not([aria-label]):not(:has(span:not(.sr-only)))');
+            buttonsWithoutNames.forEach(button => {
+              // Add appropriate labels based on content
+              if (button.querySelector('.fa-github')) {
+                button.setAttribute('aria-label', 'View source code on GitHub');
+              } else if (button.querySelector('.fa-external-link-alt')) {
+                button.setAttribute('aria-label', 'View live demo');
+              } else if (!button.textContent.trim()) {
+                button.setAttribute('aria-label', 'Project action');
+              }
+            });
+            
+            // Check all links that act as buttons or don't have text content
+            const cardLinks = document.querySelectorAll('#projectContainer a, #socialLinks a');
+            cardLinks.forEach(link => {
+              // Check if link has no accessible name
+              if (!link.hasAttribute('aria-label') && !link.textContent.trim()) {
+                if (link.querySelector('.fa-github')) {
+                  link.setAttribute('aria-label', 'View source code on GitHub');
+                } else if (link.querySelector('.fa-external-link-alt')) {
+                  link.setAttribute('aria-label', 'View live demo');
+                } else if (link.querySelector('.fa-linkedin, .fa-linkedin-in')) {
+                  link.setAttribute('aria-label', 'LinkedIn Profile');
+                } else if (link.querySelector('.fa-twitter')) {
+                  link.setAttribute('aria-label', 'Twitter Profile');
+                } else if (link.querySelector('.fa-facebook')) {
+                  link.setAttribute('aria-label', 'Facebook Page');
+                } else if (link.querySelector('.fa-instagram')) {
+                  link.setAttribute('aria-label', 'Instagram Profile');
+                } else {
+                  // Extract icon class to determine what it might be
+                  const iconEl = link.querySelector('i.fab, i.fas, i.far');
+                  if (iconEl) {
+                    const classList = Array.from(iconEl.classList);
+                    const iconClass = classList.find(cls => cls.startsWith('fa-'));
+                    if (iconClass) {
+                      const iconName = iconClass.replace('fa-', '');
+                      link.setAttribute('aria-label', `${iconName.charAt(0).toUpperCase() + iconName.slice(1)} link`);
+                    } else {
+                      link.setAttribute('aria-label', 'Social media link');
+                    }
+                  } else {
+                    link.setAttribute('aria-label', 'Project link');
+                  }
+                }
+                
+                // Add screen reader text
+                const srSpan = document.createElement('span');
+                srSpan.className = 'sr-only';
+                srSpan.textContent = link.getAttribute('aria-label');
+                link.appendChild(srSpan);
+              }
+            });
+            
+            console.log('Applied accessibility improvements to card links and buttons');
+          }, 100);
         }
         
         console.log('Card heights normalized to', maxHeight, 'px');

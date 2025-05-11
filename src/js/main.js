@@ -25,6 +25,10 @@ const ThemeManager = {
       const isDark = $('html').toggleClass('dark').hasClass('dark');
       localStorage.theme = isDark ? 'dark' : 'light';
       this.updateIcons(isDark);
+      
+      // Update accessibility attributes
+      $('#theme-toggle').attr('aria-pressed', isDark);
+      $('#theme-toggle .mode-label').text(isDark ? 'light' : 'dark');
     });
     
     // Listen for system preference changes
@@ -42,6 +46,10 @@ const ThemeManager = {
     // Apply theme and update UI
     $('html').toggleClass('dark', isDark);
     this.updateIcons(isDark);
+    
+    // Update accessibility attributes
+    $('#theme-toggle').attr('aria-pressed', isDark);
+    $('#theme-toggle .mode-label').text(isDark ? 'light' : 'dark');
   },
   
   updateIcons(isDark) {
@@ -113,15 +121,29 @@ const ProfileManager = {
     socialContainer.empty();
     
     const icons = { github: 'github', linkedin: 'linkedin-in' };
+    const socialNames = { 
+      github: 'GitHub Profile', 
+      linkedin: 'LinkedIn Profile',
+      twitter: 'Twitter Profile',
+      facebook: 'Facebook Page',
+      instagram: 'Instagram Profile',
+      youtube: 'YouTube Channel',
+      twitch: 'Twitch Channel',
+      discord: 'Discord Server',
+      reddit: 'Reddit Profile',
+      medium: 'Medium Blog'
+    };
     
     $.each(profile.social, (platform, url) => {
       $('<a>')
         .attr({
           href: url,
-          target: "_blank"
+          target: "_blank",
+          rel: "noopener",
+          'aria-label': socialNames[platform] || `${platform.charAt(0).toUpperCase() + platform.slice(1)} Profile`
         })
         .addClass("text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 text-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1")
-        .html(`<i class="fab fa-${icons[platform] || platform}"></i>`)
+        .html(`<i class="fab fa-${icons[platform] || platform}" aria-hidden="true"></i><span class="sr-only">${socialNames[platform] || `${platform.charAt(0).toUpperCase() + platform.slice(1)} Profile`}</span>`)
         .appendTo(socialContainer);
     });
   },
@@ -183,6 +205,7 @@ const ProfileManager = {
     expanded.css('height', isExpanded ? expanded.prop('scrollHeight') + 'px' : '0');
     toggleIcon.css('transform', isExpanded ? 'rotate(180deg)' : '');
     toggleText.text(isExpanded ? 'See Less' : 'See More');
+    toggle.attr('aria-expanded', isExpanded);
     
     // Re-enable transitions after initial state is set
     requestAnimationFrame(() => {
@@ -196,6 +219,7 @@ const ProfileManager = {
       toggleIcon.css('transform', willExpand ? 'rotate(180deg)' : '');
       toggleText.text(willExpand ? 'See Less' : 'See More');
       localStorage.setItem('profileExpanded', willExpand);
+      toggle.attr('aria-expanded', willExpand);
     });
   }
 };
@@ -272,6 +296,11 @@ const ProjectManager = {
       // Clear existing options except "All Years"
       yearSelect.find('option:not([value="all"])').remove();
       
+      // Ensure the select has proper accessibility attributes
+      if (!yearSelect.attr('aria-label')) {
+        yearSelect.attr('aria-label', 'Filter projects by year');
+      }
+      
       // Add year options
       if (window.projectYears && window.projectYears.length) {
         $.each(window.projectYears, (_, year) => {
@@ -300,6 +329,11 @@ const ProjectManager = {
     if (typeSelect.length) {
       // Clear existing options except "All Types"
       typeSelect.find('option:not([value="all"])').remove();
+      
+      // Ensure the select has proper accessibility attributes
+      if (!typeSelect.attr('aria-label')) {
+        typeSelect.attr('aria-label', 'Filter projects by type');
+      }
       
       // Add type options
       if (window.projectTypes && window.projectTypes.length) {
@@ -468,13 +502,13 @@ const ProjectManager = {
     };
     
     const typeIcons = {
-      web: '<i class="fas fa-globe fa-xs mr-1"></i>',
-      mobile: '<i class="fas fa-mobile-alt fa-xs mr-1"></i>',
-      terminal: '<i class="fas fa-terminal fa-xs mr-1"></i>'
+      web: '<i class="fas fa-globe fa-xs mr-1" aria-hidden="true"></i>',
+      mobile: '<i class="fas fa-mobile-alt fa-xs mr-1" aria-hidden="true"></i>',
+      terminal: '<i class="fas fa-terminal fa-xs mr-1" aria-hidden="true"></i>'
     };
     
     return types.map(type => `
-      <span class="px-2 py-1 ${typeStyles[type] || ''} rounded-full text-xs font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1">
+      <span class="px-2 py-1 ${typeStyles[type] || ''} rounded-full text-xs font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1" role="note">
         ${typeIcons[type] || ''}
         ${type.charAt(0).toUpperCase() + type.slice(1)}
       </span>
@@ -488,9 +522,10 @@ const ProjectManager = {
     if (project.github) {
       buttons += `
         <a href="${project.github}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-gray-700/50 dark:border-gray-600/50 overflow-hidden">
+           class="project-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-gray-700/50 dark:border-gray-600/50 overflow-hidden"
+           aria-label="View source code on GitHub">
           <span class="flex items-center justify-center gap-1 sm:gap-2">
-            <i class="fab fa-github"></i>
+            <i class="fab fa-github" aria-hidden="true"></i>
             <span class="hidden xs:inline-block">Source Code</span>
             <span class="xs:hidden">Code</span>
           </span>
@@ -502,9 +537,10 @@ const ProjectManager = {
     if (project.url) {
       buttons += `
         <a href="${project.url}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-blue-500/50 dark:border-blue-500/30 overflow-hidden">
+           class="project-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-blue-500/50 dark:border-blue-500/30 overflow-hidden"
+           aria-label="Visit live demo">
           <span class="flex items-center justify-center gap-1 sm:gap-2">
-            <i class="fas fa-external-link-alt"></i>
+            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
             <span class="hidden xs:inline-block">Live Demo</span>
             <span class="xs:hidden">Demo</span>
           </span>
@@ -531,6 +567,7 @@ const ProjectManager = {
       $('<button>')
         .addClass('px-4 py-2 rounded-xl bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300')
         .html('<i class="fas fa-chevron-left"></i>')
+        .attr('aria-label', 'Previous page')
         .on('click', () => this.displayProjects(year, type, currentPage - 1))
         .appendTo(container);
     }
@@ -543,6 +580,7 @@ const ProjectManager = {
       $('<button>')
         .addClass('px-4 py-2 rounded-xl bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300')
         .html('<i class="fas fa-chevron-right"></i>')
+        .attr('aria-label', 'Next page')
         .on('click', () => this.displayProjects(year, type, currentPage + 1))
         .appendTo(container);
     }
@@ -596,7 +634,9 @@ const ProjectManager = {
     
     const btn = $('<button>')
       .addClass(btnClass)
-      .text(pageNum);
+      .text(pageNum)
+      .attr('aria-label', `Page ${pageNum}`)
+      .attr('aria-current', isActive ? 'page' : null);
     
     if (!isActive) {
       btn.on('click', () => this.displayProjects(year, type, pageNum));
