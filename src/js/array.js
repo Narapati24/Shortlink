@@ -105,14 +105,14 @@ const projects = [
     github: "https://github.com/GlucoScan-Bangkit/GlucoScan-App",
     desc: "Merupakan Sebuah Project untuk memenuhi tugas capstone project pada bangkit academy",
     year: "2024",
-    image: "glucoscan.png",
+    image: "glucoscan.jpg",
     type: "mobile"
   },
   {
     title: "Realact",
     desc: "Merupakan Sebuah Project untuk mengelola tour Agent",
     year: "2024",
-    image: "realAct.png",
+    image: "realAct.jpg",
     type: "web"
   },
 ];
