@@ -1,0 +1,80 @@
+<!-- Profile Section -->
+<div
+  class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/50 dark:border-gray-700/50 hover:border-blue-200/30 dark:hover:border-blue-700/30 mx-auto"
+  style="animation: fadeIn 0.8s ease-out forwards"
+>
+  <!-- Basic Profile Info -->
+  <div
+    class="flex flex-col md:flex-row items-center gap-3 sm:gap-4 p-4 sm:p-6 relative"
+  >
+    <div
+      class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/30 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-2xl opacity-50 pointer-events-none"
+    ></div>
+    <div
+      class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-lg sm:rounded-xl overflow-hidden shadow-xl ring-2 ring-blue-200 dark:ring-blue-900/50 hover:ring-blue-300 dark:hover:ring-blue-700/70 transition-all duration-300 transform group-hover:scale-105 z-10"
+    >
+      <img id="profileImage" alt="Profile" class="w-full h-full object-cover" />
+    </div>
+    <div class="flex-1 text-center md:text-left">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h1
+            id="profileName"
+            class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
+          ></h1>
+          <p
+            id="profileRole"
+            class="text-lg text-gray-600 dark:text-gray-300"
+          ></p>
+        </div>
+        <div id="socialLinks" class="flex gap-6">
+          <!-- Social links will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expandable Content -->
+  <div
+    id="profileExpanded"
+    class="mt-0 overflow-hidden transition-all duration-500 h-0 px-6"
+  >
+    <hr class="border-gray-200 dark:border-gray-700/70 mb-6" />
+    <div class="grid md:grid-cols-2 gap-6 relative">
+      <div
+        class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent to-blue-50/30 dark:from-transparent dark:to-blue-900/20 rounded-2xl opacity-50 pointer-events-none"
+      ></div>
+      <!-- About Me -->
+      <div class="z-10">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+          About Me
+        </h2>
+        <p id="profileDesc" class="text-gray-600 dark:text-gray-300"></p>
+      </div>
+      <!-- Skills -->
+      <div class="z-10">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+          Skills
+        </h2>
+        <div id="skillsList" class="flex flex-wrap gap-2">
+          <!-- Skills will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle Button -->
+  <button
+    id="profileToggle"
+    class="w-full mt-1 sm:mt-2 px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-gray-50/90 to-blue-50/90 dark:from-gray-800/90 dark:to-blue-900/30 rounded-b-xl sm:rounded-b-2xl text-gray-700 dark:text-gray-300 hover:from-blue-50/80 hover:to-indigo-50/80 dark:hover:from-blue-900/30 dark:hover:to-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm border-t border-gray-100/70 dark:border-gray-700/50"
+    aria-expanded="false"
+    aria-controls="profileExpanded"
+  >
+    <span id="toggleText">See More</span>
+    <i
+      id="toggleIcon"
+      class="fas fa-chevron-down transition-transform duration-300"
+      aria-hidden="true"
+    ></i>
+  </button>
+</div>
