@@ -508,7 +508,7 @@ const ProjectManager = {
     };
     
     return types.map(type => `
-      <span class="px-2 py-1 ${typeStyles[type] || ''} rounded-full text-xs font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1" role="note">
+      <span class="px-2 py-1 ${typeStyles[type] || ''} rounded-full text-sm font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1" role="note">
         ${typeIcons[type] || ''}
         ${type.charAt(0).toUpperCase() + type.slice(1)}
       </span>
@@ -522,7 +522,7 @@ const ProjectManager = {
     if (project.github) {
       buttons += `
         <a href="${project.github}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-gray-700/50 dark:border-gray-600/50 overflow-hidden"
+           class="project-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-gray-700/50 dark:border-gray-600/50 overflow-hidden"
            aria-label="View source code on GitHub">
           <span class="flex items-center justify-center gap-1 sm:gap-2">
             <i class="fab fa-github" aria-hidden="true"></i>
@@ -537,7 +537,7 @@ const ProjectManager = {
     if (project.url) {
       buttons += `
         <a href="${project.url}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-blue-500/50 dark:border-blue-500/30 overflow-hidden"
+           class="project-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-blue-500/50 dark:border-blue-500/30 overflow-hidden"
            aria-label="Visit live demo">
           <span class="flex items-center justify-center gap-1 sm:gap-2">
             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
