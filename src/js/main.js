@@ -316,11 +316,13 @@ const ProjectManager = {
           yearSelect.append($('<option>').val(year).text(year));
         });
       }
-      
-      // Add event listener
+        // Add event listener
       yearSelect.on('change', () => {
         this.currentPage = 1;
         this.displayProjects(yearSelect.val(), $('#typeFilter').val(), 1);
+        
+        // Clear pagination cache when filter changes
+        this.projectCache = {};
       });
     }
     
@@ -351,10 +353,13 @@ const ProjectManager = {
         });
       }
       
-      // Add event listener
+    // Add event listener
       typeSelect.on('change', () => {
         this.currentPage = 1;
         this.displayProjects($('#yearFilter').val(), typeSelect.val(), 1);
+        
+        // Clear pagination cache when filter changes
+        this.projectCache = {};
       });
     }
   },
@@ -406,8 +411,7 @@ const ProjectManager = {
     this.projectCache[cacheKey] = filtered;
     return filtered;
   },
-  
-  displayProjects(year = 'all', type = 'all', page = 1) {
+    displayProjects(year = 'all', type = 'all', page = 1) {
     const container = $('#projectContainer');
     if (!container.length) {
       console.error("Project container not found");
@@ -416,6 +420,9 @@ const ProjectManager = {
     
     // Clear container
     container.empty();
+    
+    // Remove existing pagination
+    $('#paginationContainer').remove();
     
     // Get filtered projects
     const filteredProjects = this.getFilteredProjects(year, type);
@@ -552,8 +559,7 @@ const ProjectManager = {
     
     return buttons;
   },
-  
-  renderPagination(totalPages, currentPage, year, type) {
+    renderPagination(totalPages, currentPage, year, type) {
     // Remove existing pagination
     $('#paginationContainer').remove();
     
@@ -584,6 +590,10 @@ const ProjectManager = {
         .on('click', () => this.displayProjects(year, type, currentPage + 1))
         .appendTo(container);
     }
+    
+    // Store current filter values for pagination use
+    container.data('year', year);
+    container.data('type', type);
     
     // Add to DOM
     $('#projectContainer').after(container);
@@ -626,8 +636,7 @@ const ProjectManager = {
       }
     }
   },
-  
-  appendPageButton(container, pageNum, isActive, year, type) {
+    appendPageButton(container, pageNum, isActive, year, type) {
     const btnClass = isActive
       ? 'w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white shadow-lg scale-110 border border-blue-500/50 dark:border-blue-400/50'
       : 'w-10 h-10 rounded-xl flex items-center justify-center bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300';
@@ -636,7 +645,9 @@ const ProjectManager = {
       .addClass(btnClass)
       .text(pageNum)
       .attr('aria-label', `Page ${pageNum}`)
-      .attr('aria-current', isActive ? 'page' : null);
+      .attr('aria-current', isActive ? 'page' : null)
+      .data('year', year)  // Store filter data in the button
+      .data('type', type); // for easier access when clicked
     
     if (!isActive) {
       btn.on('click', () => this.displayProjects(year, type, pageNum));

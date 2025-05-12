@@ -7,7 +7,23 @@
       name="description"
       content="Explore the portfolio of Narapati Keysa Anandi, a skilled Web and Mobile Developer."
     />
-    <link rel="Icon" type="image/png" href="src/img/logo/RainyDeepLogo.png" />
+    <!-- Simple favicon configuration (temporary) -->
+    <link rel="icon" type="image/png" href="src/img/logo/RainyDeepLogo.png" />
+    <link rel="shortcut icon" href="src/img/logo/RainyDeepLogo.png" />
+    <link rel="apple-touch-icon" href="src/img/logo/RainyDeepLogo.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <!-- Full favicon configuration (uncomment when files are available) -->
+    <!-- 
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#603cba">
+    <meta name="theme-color" content="#ffffff">
+    -->
 
     <!-- Critical CSS inline -->
     <style>
@@ -210,7 +226,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Load data first -->
+    <!-- Load data first - proper order is important -->
     <script src="src/js/array.js"></script>
     <script src="src/js/data-check.js"></script>
 
@@ -351,7 +367,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M20.354 15.354A9 9 9 9 0 018.646 3.646 9.003 9.003 9.003 0 0012 21a9.003 9.003 9.003 0 008.354-5.646z"
+            d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z"
           />
         </svg>
         <span class="sr-only"
@@ -549,12 +565,12 @@
         </div>
       </div>
     </footer>
-
     <!-- Load scripts with proper order -->
     <script src="src/js/main.js" defer></script>
     <script src="src/js/card-fix.js" defer></script>
     <script src="src/js/particles-config.js" defer></script>
     <script src="src/js/accessibility-check.js" defer></script>
     <script src="src/js/tracking.js" defer></script>
+    <script src="src/js/debug.js" defer></script>
   </body>
 </html>

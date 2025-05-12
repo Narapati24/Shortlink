@@ -1,4 +1,5 @@
-const profile = {
+// Define data in the global (window) scope
+window.profile = {
   name: "Narapati Keysa Anandi",
   role: "Mobile Developer & Web Developer",
   image: "profile.JPG",
@@ -16,7 +17,7 @@ const profile = {
   }
 };
 
-const projects = [
+window.projects = [
   {
     title: "Portofolio",
     url: "https://porto.narapatis.my.id",
@@ -122,15 +123,23 @@ const projects = [
 // each year appearing first in the UI.
 
 // Generate years dynamically from projects
-const projectYears = [...new Set(projects.map(project => project.year))].sort((a, b) => b - a);
+window.projectYears = [...new Set(window.projects.map(project => project.year))].sort((a, b) => b - a);
 
 // Update projectTypes to handle arrays of types
-const projectTypes = [...new Set(projects.flatMap(project => 
+window.projectTypes = [...new Set(window.projects.flatMap(project => 
   Array.isArray(project.type) ? project.type : [project.type]
 ))].sort();
 
 // Make sure years are properly formatted as strings or numbers consistently
-projects.forEach(project => {
+window.projects.forEach(project => {
   // Ensure year is stored as a number for proper sorting
   project.year = project.year.toString();
+});
+
+// Log successful loading of data
+console.log('Array data loaded successfully:', {
+  profile: window.profile.name,
+  projects: window.projects.length,
+  years: window.projectYears.length,
+  types: window.projectTypes.length
 });
