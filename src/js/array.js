@@ -116,6 +116,28 @@ window.projects = [
     image: "realAct.jpg",
     type: "web"
   },
+  {
+    title: "SiKujang",
+    desc: "Merupakan Sebuah Project aplikasi mobile pemantau keuangan wirausaha",
+    year: "2025",
+    image: "siKujang.jpg",
+    type: "mobile"
+  },
+  {
+    title: "Birthday Reminder App",
+    url: "https://birthday.narapatis.my.id",
+    desc: "Merupakan Sebuah Project untuk mengingatkan tanggal ulang tahun teman-teman",
+    year: "2025",
+    image: "birthdayReminder.png",
+    type: "web"
+  },
+  {
+    title: "Todolist App with AI",
+    desc: "Merupakan Sebuah Project untuk mengelola daftar tugas dengan bantuan AI",
+    year: "2025",
+    image: "todolistAI.jpg",
+    type: "mobile"
+  },
 ];
 
 // Note: Projects are stored in chronological order but will be 
