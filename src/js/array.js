@@ -125,7 +125,7 @@ window.projects = [
   },
   {
     title: "Birthday Reminder App",
-    url: "birthday.narapatis.my.id",
+    url: "https://birthday.narapatis.my.id",
     desc: "Merupakan Sebuah Project untuk mengingatkan tanggal ulang tahun teman-teman",
     year: "2025",
     image: "birthdayReminder.png",
