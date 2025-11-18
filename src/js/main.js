@@ -377,22 +377,22 @@ const ProjectManager = {
       });
     }
     
-    // Sort by year first (newest first), then by reverse order in the original array
-    // This means the last project in the array (most recently added) will appear first
+    // Sort by year first (newest first), then by array order
+    // This means the first project in the array will appear first
     filtered.sort((a, b) => {
       // First compare years (newest first)
       const yearDiff = parseInt(b.year) - parseInt(a.year);
       
       if (yearDiff === 0) {
-        // If projects have the same year, reverse the order from the array
+        // If projects have the same year, maintain the order from the array
         // Find the original indices of the projects
         const indexA = projects.findIndex(p => 
           p.title === a.title && p.year === a.year && p.image === a.image);
         const indexB = projects.findIndex(p => 
           p.title === b.title && p.year === b.year && p.image === b.image);
         
-        // Return in reverse order (higher index = newer = should come first)
-        return indexB - indexA;
+        // Return in array order (lower index = should come first)
+        return indexA - indexB;
       }
       
       return yearDiff;
