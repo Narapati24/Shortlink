@@ -10,65 +10,6 @@ const debounce = (fn, ms) => {
 };
 
 /**
- * Theme handling with jQuery
- */
-const ThemeManager = {
-  init() {
-    // Check if element exists before operating on it
-    if (!$('#theme-toggle').length) return;
-    
-    // Set theme based on stored preference or system preference
-    this.applyTheme();
-    
-    // Set up listener with jQuery
-    $('#theme-toggle').on('click', () => {
-      const isDark = $('html').toggleClass('dark').hasClass('dark');
-      localStorage.theme = isDark ? 'dark' : 'light';
-      this.updateIcons(isDark);
-      
-      // Update accessibility attributes
-      $('#theme-toggle').attr('aria-pressed', isDark);
-      $('#theme-toggle .mode-label').text(isDark ? 'light' : 'dark');
-    });
-    
-    // Listen for system preference changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!localStorage.theme) this.applyTheme();
-    });
-  },
-  
-  applyTheme() {
-    // Check system preference only when needed
-    const prefersDark = !localStorage.theme && 
-                        window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = localStorage.theme === 'dark' || prefersDark;
-    
-    // Apply theme and update UI
-    $('html').toggleClass('dark', isDark);
-    this.updateIcons(isDark);
-    
-    // Update accessibility attributes
-    $('#theme-toggle').attr('aria-pressed', isDark);
-    $('#theme-toggle .mode-label').text(isDark ? 'light' : 'dark');
-  },
-  
-  updateIcons(isDark) {
-    // Use jQuery selectors
-    const sunIcon = $('#theme-toggle svg:first-child');
-    const moonIcon = $('#theme-toggle svg:last-child');
-    
-    if (!sunIcon.length || !moonIcon.length) return;
-    
-    // Manage classes
-    sunIcon.toggleClass('opacity-0 scale-0', !isDark);
-    sunIcon.toggleClass('opacity-100 scale-100', isDark);
-    
-    moonIcon.toggleClass('opacity-0 scale-0', isDark);
-    moonIcon.toggleClass('opacity-100 scale-100', !isDark);
-  }
-};
-
-/**
  * Profile Manager using jQuery
  */
 const ProfileManager = {
@@ -98,14 +39,64 @@ const ProfileManager = {
   
   renderProfile() {
     // Set basic profile info with jQuery
-    $('#profileImage').attr('src', `src/img/profile/${profile.image}`);
-    $('#profileName').text(profile.name);
-    $('#profileRole').text(profile.role);
-    $('#profileDesc').text(profile.description);
+    $('#profileName').text(profile.name || 'Loading...');
+    $('#profileRole').text(profile.role || 'Loading...');
+    $('#profileDesc').text(profile.description || '');
     
-    // Render social links and skills
-    this.renderSocial();
-    this.renderSkills();
+    // Set profile image - using jQuery
+    const imgPath = profile.image ? `src/img/profile/${profile.image}` : 'src/img/profile/default.jpg';
+    $('#profileImage').attr('src', imgPath);
+    
+    // Render social links with midnight blue theme
+    const socialContainer = $('#socialLinks');
+    socialContainer.empty();
+    
+    if (profile.social) {
+      if (profile.social.github) {
+        $('<a>')
+          .attr({
+            href: profile.social.github,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            'aria-label': 'GitHub Profile'
+          })
+          .addClass('w-12 h-12 rounded-lg bg-midnight-800/50 hover:bg-midnight-700/50 flex items-center justify-center transition-all duration-300 border border-midnight-700/50 hover:border-midnight-600 hover:scale-110 shadow-lg')
+          .html('<i class="fab fa-github text-xl text-white" aria-hidden="true"></i>')
+          .appendTo(socialContainer);
+      }
+      
+      if (profile.social.linkedin) {
+        $('<a>')
+          .attr({
+            href: profile.social.linkedin,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            'aria-label': 'LinkedIn Profile'
+          })
+          .addClass('w-12 h-12 rounded-lg bg-midnight-800/50 hover:bg-midnight-700/50 flex items-center justify-center transition-all duration-300 border border-midnight-700/50 hover:border-midnight-600 hover:scale-110 shadow-lg')
+          .html('<i class="fab fa-linkedin text-xl text-white" aria-hidden="true"></i>')
+          .appendTo(socialContainer);
+      }
+    }
+    
+    // Render skills with midnight blue theme
+    const skillsContainer = $('#skillsList');
+    skillsContainer.empty();
+    
+    if (profile.skills && profile.skills.length > 0) {
+      $.each(profile.skills, (_, skill) => {
+        const levelColors = {
+          'Advanced': 'bg-midnight-500/90 border-midnight-400/50',
+          'Intermediate': 'bg-midnight-600/90 border-midnight-500/50',
+          'Beginner': 'bg-midnight-700/90 border-midnight-600/50'
+        };
+        
+        $('<span>')
+          .addClass(`px-3 py-1.5 ${levelColors[skill.level] || 'bg-midnight-600/90 border-midnight-500/50'} text-white rounded-lg text-sm font-medium backdrop-blur-sm shadow-lg border`)
+          .text(skill.name)
+          .appendTo(skillsContainer);
+      });
+    }
     
     // Mark profile as loaded
     $('body').attr('data-profile-loaded', 'true');
@@ -142,7 +133,7 @@ const ProfileManager = {
           rel: "noopener",
           'aria-label': socialNames[platform] || `${platform.charAt(0).toUpperCase() + platform.slice(1)} Profile`
         })
-        .addClass("text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 text-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1")
+        .addClass("text-midnight-300 hover:text-midnight-100 text-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1")
         .html(`<i class="fab fa-${icons[platform] || platform}" aria-hidden="true"></i><span class="sr-only">${socialNames[platform] || `${platform.charAt(0).toUpperCase() + platform.slice(1)} Profile`}</span>`)
         .appendTo(socialContainer);
     });
@@ -158,11 +149,11 @@ const ProfileManager = {
     
     // Pre-define color maps for better performance
     const colors = {
-      frontend: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/70',
-      backend: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/70',
-      mobile: 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/70',
-      design: 'bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800/70',
-      tools: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/70'
+      frontend: 'bg-midnight-600/90 text-white border-midnight-500/50',
+      backend: 'bg-midnight-600/90 text-white border-midnight-500/50',
+      mobile: 'bg-midnight-600/90 text-white border-midnight-500/50',
+      design: 'bg-midnight-600/90 text-white border-midnight-500/50',
+      tools: 'bg-midnight-600/90 text-white border-midnight-500/50'
     };
     
     const icons = {
@@ -178,7 +169,7 @@ const ProfileManager = {
     // Add skills to container
     $.each(profile.skills, (_, skill) => {
       $('<span>')
-        .addClass(`px-3 py-1 ${colors[skill.category] || 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'} rounded-full text-sm border border-opacity-40 hover:scale-105 transition-all duration-300 cursor-default flex items-center gap-1 shadow-sm`)
+        .addClass(`px-3 py-1 ${colors[skill.category] || 'bg-midnight-600/90 text-white border-midnight-500/50'} rounded-full text-sm border border-opacity-40 hover:scale-105 transition-all duration-300 cursor-default flex items-center gap-1 shadow-sm`)
         .html(`
           ${icons[skill.category] || ''}
           ${skill.name}
@@ -305,7 +296,7 @@ const ProjectManager = {
       if (window.projectYears && window.projectYears.length) {
         $.each(window.projectYears, (_, year) => {
           yearSelect.append(
-            $('<option>').val(year).text(year)
+            $('<option>').val(year).text(year).addClass('bg-midnight-900 text-white')
           );
         });
         console.log("Added year options:", window.projectYears.length);
@@ -313,7 +304,7 @@ const ProjectManager = {
         console.warn("No year data available for filters");
         // Add some default years as fallback
         ['2024', '2023', '2022'].forEach(year => {
-          yearSelect.append($('<option>').val(year).text(year));
+          yearSelect.append($('<option>').val(year).text(year).addClass('bg-midnight-900 text-white'));
         });
       }
         // Add event listener
@@ -341,7 +332,7 @@ const ProjectManager = {
       if (window.projectTypes && window.projectTypes.length) {
         $.each(window.projectTypes, (_, type) => {
           typeSelect.append(
-            $('<option>').val(type).text(type.charAt(0).toUpperCase() + type.slice(1))
+            $('<option>').val(type).text(type.charAt(0).toUpperCase() + type.slice(1)).addClass('bg-midnight-900 text-white')
           );
         });
         console.log("Added type options:", window.projectTypes.length);
@@ -349,7 +340,7 @@ const ProjectManager = {
         console.warn("No type data available for filters");
         // Add some default types as fallback
         ['web', 'mobile', 'terminal'].forEach(type => {
-          typeSelect.append($('<option>').val(type).text(type.charAt(0).toUpperCase() + type.slice(1)));
+          typeSelect.append($('<option>').val(type).text(type.charAt(0).toUpperCase() + type.slice(1)).addClass('bg-midnight-900 text-white'));
         });
       }
       
@@ -438,7 +429,7 @@ const ProjectManager = {
     if (projectsToShow.length === 0) {
       $('<div>')
         .addClass('col-span-1 xs:col-span-2 lg:col-span-3 text-center py-4')
-        .html('<p class="text-gray-500 dark:text-gray-400">No projects found matching your criteria.</p>')
+        .html('<p class="text-midnight-400">No projects found matching your criteria.</p>')
         .appendTo(container);
     } else {
       // Add projects to container
@@ -460,39 +451,37 @@ const ProjectManager = {
   },
   
   createProjectCard(project) {
-    // Use jQuery to create project card with fixed height structure
+    // Use jQuery to create project card with midnight blue theme
     return $('<div>')
-      .addClass('group bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col border border-gray-100/50 dark:border-gray-700/50 hover:border-blue-200/50 dark:hover:border-blue-700/50 hover:-translate-y-1')
+      .addClass('group bg-gradient-to-br from-midnight-900/40 to-midnight-800/40 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col border border-midnight-700/50 hover:border-midnight-600/70 hover:-translate-y-2')
       .html(`
-        <div class="image-container relative overflow-hidden">
+        <div class="image-container relative overflow-hidden h-48">
           <img 
             ${this.observer ? 'data-src' : 'src'}="src/img/background_project/${project.year}/${project.image}" 
             alt="${project.title}" 
             loading="lazy"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             onerror="this.onerror=null; this.src='src/img/placeholder.jpg';">
-          <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/80 dark:from-black/30 dark:via-black/50 dark:to-black/80"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-midnight-950/20 via-midnight-900/40 to-midnight-950/90"></div>
           
-          <div class="absolute top-2 sm:top-3 left-2 sm:left-3 flex gap-1 sm:gap-2 flex-wrap">
+          <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
             ${this.renderTypeBadges(project.type)}
           </div>
           
-          <div class="absolute bottom-2 sm:bottom-3 left-2 sm:left-3">
-            <span class="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-600/90 dark:bg-blue-500/90 text-white rounded-full text-xs font-medium backdrop-blur-sm shadow-md border border-blue-500/30 dark:border-blue-400/30">
-              ${project.year}
+          <div class="absolute bottom-3 left-3">
+            <span class="px-3 py-1 bg-midnight-600/90 text-white rounded-lg text-sm font-semibold backdrop-blur-sm shadow-lg border border-midnight-500/50">
+              <i class="far fa-calendar-alt mr-1.5"></i>${project.year}
             </span>
           </div>
         </div>
         
-        <div class="card-content p-3 sm:p-4 md:p-5 flex flex-col flex-grow bg-gradient-to-br from-white/0 via-white/70 to-blue-50/50 dark:from-transparent dark:via-transparent dark:to-blue-900/20 relative">
-          <div class="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.15),transparent_70%)]"></div>
+        <div class="card-content p-5 flex flex-col flex-grow">
+          <h2 class="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-midnight-300 transition-colors duration-300">${project.title}</h2>
+          <p class="text-sm text-midnight-300 leading-relaxed line-clamp-3 mb-4 flex-grow">${project.desc}</p>
           
-          <h2 class="text-base sm:text-lg font-bold text-gray-800 dark:text-white mb-1 sm:mb-2 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative z-10">${project.title}</h2>
-          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3 mb-3 sm:mb-4 flex-grow relative z-10">${project.desc}</p>
+          <div class="h-px w-full bg-gradient-to-r from-transparent via-midnight-600 to-transparent mb-4"></div>
           
-          <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-3 sm:mb-4 opacity-70"></div>
-          
-          <div class="flex gap-2 mt-auto relative z-10">
+          <div class="flex gap-2 mt-auto">
             ${this.renderProjectButtons(project)}
           </div>
         </div>
@@ -503,19 +492,19 @@ const ProjectManager = {
     const types = Array.isArray(projectTypes) ? projectTypes : [projectTypes];
     
     const typeStyles = {
-      web: 'bg-emerald-600/90 dark:bg-emerald-500/90 text-white border-emerald-500/50 dark:border-emerald-400/30',
-      mobile: 'bg-violet-600/90 dark:bg-violet-500/90 text-white border-violet-500/50 dark:border-violet-400/30',
-      terminal: 'bg-amber-600/90 dark:bg-amber-500/90 text-white border-amber-500/50 dark:border-amber-400/30'
+      web: 'bg-emerald-500/90 text-white border-emerald-400/50',
+      mobile: 'bg-violet-500/90 text-white border-violet-400/50',
+      terminal: 'bg-amber-500/90 text-white border-amber-400/50'
     };
     
     const typeIcons = {
-      web: '<i class="fas fa-globe fa-xs mr-1" aria-hidden="true"></i>',
-      mobile: '<i class="fas fa-mobile-alt fa-xs mr-1" aria-hidden="true"></i>',
-      terminal: '<i class="fas fa-terminal fa-xs mr-1" aria-hidden="true"></i>'
+      web: '<i class="fas fa-globe fa-xs mr-1.5" aria-hidden="true"></i>',
+      mobile: '<i class="fas fa-mobile-alt fa-xs mr-1.5" aria-hidden="true"></i>',
+      terminal: '<i class="fas fa-terminal fa-xs mr-1.5" aria-hidden="true"></i>'
     };
     
     return types.map(type => `
-      <span class="px-2 py-1 ${typeStyles[type] || ''} rounded-full text-sm font-medium backdrop-blur-sm shadow-md border transform transition-transform duration-300 flex items-center gap-1" role="note">
+      <span class="px-2.5 py-1 ${typeStyles[type] || ''} rounded-lg text-xs font-semibold backdrop-blur-sm shadow-lg border flex items-center gap-1" role="note">
         ${typeIcons[type] || ''}
         ${type.charAt(0).toUpperCase() + type.slice(1)}
       </span>
@@ -529,13 +518,10 @@ const ProjectManager = {
     if (project.github) {
       buttons += `
         <a href="${project.github}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gray-800 dark:bg-gray-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-gray-700/50 dark:border-gray-600/50 overflow-hidden"
+           class="project-btn flex-1 bg-midnight-700/70 hover:bg-midnight-600/70 text-white px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 shadow-lg border border-midnight-600/50 transition-all duration-300 hover:scale-105"
            aria-label="View source code on GitHub">
-          <span class="flex items-center justify-center gap-1 sm:gap-2">
-            <i class="fab fa-github" aria-hidden="true"></i>
-            <span class="hidden xs:inline-block">Source Code</span>
-            <span class="xs:hidden">Code</span>
-          </span>
+          <i class="fab fa-github text-lg" aria-hidden="true"></i>
+          <span>GitHub</span>
         </a>
       `;
     }
@@ -544,17 +530,21 @@ const ProjectManager = {
     if (project.url) {
       buttons += `
         <a href="${project.url}" target="_blank" rel="noopener" 
-           class="project-btn flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 text-white px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 shadow-md border border-blue-500/50 dark:border-blue-500/30 overflow-hidden"
+           class="project-btn flex-1 bg-gradient-to-r from-midnight-500 to-midnight-600 hover:from-midnight-600 hover:to-midnight-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 shadow-lg border border-midnight-400/50 transition-all duration-300 hover:scale-105"
            aria-label="Visit live demo">
-          <span class="flex items-center justify-center gap-1 sm:gap-2">
-            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-            <span class="hidden xs:inline-block">Live Demo</span>
-            <span class="xs:hidden">Demo</span>
-          </span>
+          <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+          <span>Demo</span>
         </a>
       `;
-    } else if (!project.github) {
-      buttons += '<div class="flex-1"></div>';
+    }
+    
+    // If no buttons, show a placeholder
+    if (!project.github && !project.url) {
+      buttons = `
+        <div class="flex-1 px-4 py-2.5 rounded-lg text-sm text-midnight-400 text-center border border-midnight-700/30 bg-midnight-900/20">
+          <i class="fas fa-lock mr-2"></i>Private Project
+        </div>
+      `;
     }
     
     return buttons;
@@ -571,7 +561,7 @@ const ProjectManager = {
     // Previous button
     if (currentPage > 1) {
       $('<button>')
-        .addClass('px-4 py-2 rounded-xl bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300')
+        .addClass('px-4 py-2 rounded-lg bg-midnight-800/50 hover:bg-midnight-700/50 text-white hover:scale-105 shadow-lg border border-midnight-700/50 hover:border-midnight-600 backdrop-blur-sm transition-all duration-300')
         .html('<i class="fas fa-chevron-left"></i>')
         .attr('aria-label', 'Previous page')
         .on('click', () => this.displayProjects(year, type, currentPage - 1))
@@ -584,7 +574,7 @@ const ProjectManager = {
     // Next button
     if (currentPage < totalPages) {
       $('<button>')
-        .addClass('px-4 py-2 rounded-xl bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300')
+        .addClass('px-4 py-2 rounded-lg bg-midnight-800/50 hover:bg-midnight-700/50 text-white hover:scale-105 shadow-lg border border-midnight-700/50 hover:border-midnight-600 backdrop-blur-sm transition-all duration-300')
         .html('<i class="fas fa-chevron-right"></i>')
         .attr('aria-label', 'Next page')
         .on('click', () => this.displayProjects(year, type, currentPage + 1))
@@ -638,8 +628,8 @@ const ProjectManager = {
   },
     appendPageButton(container, pageNum, isActive, year, type) {
     const btnClass = isActive
-      ? 'w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 text-white shadow-lg scale-110 border border-blue-500/50 dark:border-blue-400/50'
-      : 'w-10 h-10 rounded-xl flex items-center justify-center bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 shadow-md border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-300';
+      ? 'w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-midnight-500 to-midnight-600 text-white shadow-lg scale-110 border border-midnight-400/50'
+      : 'w-10 h-10 rounded-xl flex items-center justify-center bg-midnight-800/50 text-midnight-200 hover:bg-midnight-700/50 hover:scale-105 shadow-md border border-midnight-700/50 backdrop-blur-sm transition-all duration-300';
     
     const btn = $('<button>')
       .addClass(btnClass)
@@ -707,9 +697,6 @@ function initApp() {
     console.log("Checking if data from array.js is available:");
     console.log("- Profile data:", typeof profile !== 'undefined');
     console.log("- Projects data:", typeof projects !== 'undefined');
-    
-    ThemeManager.init();
-    console.log("Theme initialized");
     
     ProfileManager.init();
     console.log("Profile initialized");
