@@ -46,7 +46,7 @@
   });
   
   function fixAccessibility() {
-    console.log('Running accessibility check...');
+    // Running accessibility check
     
     // Fix links that don't have discernible names
     const links = document.querySelectorAll('a:not([aria-hidden="true"])');
@@ -82,7 +82,7 @@
     });
     
     if (fixedCount > 0) {
-      console.log(`Fixed ${fixedCount} links without accessible names`);
+      // Fixed links without accessible names
     }
   }
   

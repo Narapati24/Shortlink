@@ -14,7 +14,6 @@ const debounce = (fn, ms) => {
  */
 const ProfileManager = {
   init() {
-    console.log("Checking profile data...");
     // Check if profile data exists in the global scope
     if (typeof profile === 'undefined' || !profile) {
       console.error("Profile data is missing. Make sure array.js is loaded.");
@@ -28,8 +27,6 @@ const ProfileManager = {
         social: {}
       };
       console.warn("Using placeholder profile data");
-    } else {
-      console.log("Profile data loaded successfully:", profile.name);
     }
     
     // Load and render profile data
@@ -225,7 +222,6 @@ const ProjectManager = {
   projectCache: {},
   
   init() {
-    console.log("Checking projects data...");
     // Check if projects data exists in the global scope
     if (typeof projects === 'undefined' || !projects) {
       console.error("Projects data is missing. Make sure array.js is loaded.");
@@ -234,8 +230,6 @@ const ProjectManager = {
       window.projectYears = [];
       window.projectTypes = [];
       console.warn("Using empty projects array");
-    } else {
-      console.log("Projects data loaded successfully:", projects.length, "projects found");
     }
 
     if (!$('#projectContainer').length) {
@@ -277,10 +271,6 @@ const ProjectManager = {
   },
   
   setupFilters() {
-    console.log("Setting up filters with available data:");
-    console.log("- Year data:", window.projectYears);
-    console.log("- Type data:", window.projectTypes);
-    
     // Setup year filter
     const yearSelect = $('#yearFilter');
     if (yearSelect.length) {
@@ -299,7 +289,6 @@ const ProjectManager = {
             $('<option>').val(year).text(year).addClass('bg-midnight-900 text-white')
           );
         });
-        console.log("Added year options:", window.projectYears.length);
       } else {
         console.warn("No year data available for filters");
         // Add some default years as fallback
@@ -335,7 +324,6 @@ const ProjectManager = {
             $('<option>').val(type).text(type.charAt(0).toUpperCase() + type.slice(1)).addClass('bg-midnight-900 text-white')
           );
         });
-        console.log("Added type options:", window.projectTypes.length);
       } else {
         console.warn("No type data available for filters");
         // Add some default types as fallback
@@ -417,7 +405,6 @@ const ProjectManager = {
     
     // Get filtered projects
     const filteredProjects = this.getFilteredProjects(year, type);
-    console.log(`Filtered projects (${year}, ${type}):`, filteredProjects.length);
     
     // Calculate pagination
     const totalPages = Math.ceil(filteredProjects.length / this.ITEMS_PER_PAGE);
@@ -672,7 +659,6 @@ const ProjectManager = {
  */
 const ExperienceManager = {
   init() {
-    console.log("Checking experience data...");
     // Check if experience data exists in the global scope
     if (typeof experiences === 'undefined' || !experiences) {
       console.error("Experience data is missing. Make sure array.js is loaded.");
@@ -680,8 +666,6 @@ const ExperienceManager = {
       window.experienceCategories = [];
       window.experienceTags = [];
       console.warn("Using empty experiences array");
-    } else {
-      console.log("Experience data loaded successfully:", experiences.length, "experiences found");
     }
 
     if (!$('#experienceContainer').length) {
@@ -756,8 +740,6 @@ const ExperienceManager = {
   },
   
   setupFilters() {
-    console.log("Setting up experience filters");
-    
     // Setup category filter buttons
     const categoryContainer = $('#experienceCategoryFilter');
     if (categoryContainer.length && window.experienceCategories) {
@@ -830,7 +812,6 @@ const ExperienceManager = {
     
     // Get filtered experiences
     const filteredExperiences = this.getFilteredExperiences(category, tags);
-    console.log(`Filtered experiences (${category}, tags: ${tags.join(', ')}):`, filteredExperiences.length);
     
     // Show message if no results
     if (filteredExperiences.length === 0) {
@@ -935,7 +916,6 @@ const LayoutManager = {
  * Initialize app with proper data checks
  */
 function initApp() {
-  console.log("App initializing...");
   
   try {
     // Verify data is loaded
@@ -954,22 +934,14 @@ function initApp() {
     }
     
     // Verify array.js data
-    console.log("Checking if data from array.js is available:");
-    console.log("- Profile data:", typeof profile !== 'undefined');
-    console.log("- Projects data:", typeof projects !== 'undefined');
-    console.log("- Experience data:", typeof experiences !== 'undefined');
     
     ProfileManager.init();
-    console.log("Profile initialized");
     
     ProjectManager.init();
-    console.log("Projects initialized");
     
     ExperienceManager.init();
-    console.log("Experience initialized");
     
     LayoutManager.init();
-    console.log("Layout manager initialized");
   } catch (error) {
     console.error("Error initializing app:", error);
   }

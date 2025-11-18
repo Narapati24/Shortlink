@@ -21,13 +21,13 @@ function discord_message(username, message) {
   })
   .then(response => {
     if (response.ok) {
-      console.log("Visitor tracked successfully");
+      // Visitor tracked successfully
     } else {
-      console.log("Tracking failed with status:", response.status);
+      // Tracking failed
     }
   })
   .catch(error => {
-    console.log("Tracking error:", error);
+    // Tracking error
   });
 }
 
@@ -39,7 +39,7 @@ window.addEventListener("load", (event) => {
                       window.location.protocol === 'file:';
   
   if (isLocalhost) {
-    console.log("Visitor tracking skipped in local development environment");
+    // Visitor tracking skipped in local development
     return;
   }
   
@@ -52,7 +52,7 @@ window.addEventListener("load", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log("Visitor IP:", data.ip);
+      // Visitor IP logged
       discord_message(
         KetUsernameBot,
         "LINK :\n" +
@@ -67,5 +67,5 @@ window.addEventListener("load", (event) => {
           navigator.userAgent
       );
     })
-    .catch(error => console.log("Tracking error:", error));
+    .catch(error => {});
 });

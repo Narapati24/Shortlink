@@ -72,7 +72,7 @@
         const lcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
-          console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+          // LCP: lastEntry.renderTime || lastEntry.loadTime
         });
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
       } catch (e) {
@@ -83,7 +83,7 @@
       try {
         const fidObserver = new PerformanceObserver((list) => {
           list.getEntries().forEach((entry) => {
-            console.log('FID:', entry.processingStart - entry.startTime);
+            // FID: entry.processingStart - entry.startTime
           });
         });
         fidObserver.observe({ entryTypes: ['first-input'] });
@@ -97,7 +97,7 @@
       setTimeout(() => {
         const perfData = window.performance.timing;
         const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log('Page Load Time:', pageLoadTime + 'ms');
+        // Page Load Time: pageLoadTime + 'ms'
       }, 0);
     });
   }

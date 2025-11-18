@@ -90,11 +90,11 @@
               }
             });
             
-            console.log('Applied accessibility improvements to card links and buttons');
+            // Applied accessibility improvements
           }, 100);
         }
         
-        console.log('Card heights normalized to', maxHeight, 'px');
+        // Card heights normalized
       }, 100);
     };
     
@@ -126,7 +126,7 @@
       // Fix when filter changes
       $('#yearFilter, #typeFilter').on('change', function() {
         setTimeout(function() {
-          console.log('Filter changed, normalizing card heights');
+          // Filter changed, normalizing card heights
           const event = new Event('card-fix');
           document.dispatchEvent(event);
         }, 200);

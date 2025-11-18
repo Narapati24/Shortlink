@@ -1,15 +1,20 @@
 // Define data in the global (window) scope
 window.profile = {
   name: "Narapati Keysa Anandi",
-  role: "Mobile Developer & Web Developer",
+  role: "Full-Stack Developer | Mobile App Specialist",
   image: "profile.JPG",
-  description: "Seorang mahasiswa yang berfokus pada pengembangan website dan mobile apps. Memiliki pengalaman dalam pembuatan aplikasi web responsif dan aplikasi Android native.",
+  description: "Passionate developer specializing in creating innovative mobile and web solutions. As a Bangkit Academy 2024 graduate with Google certification path, I combine technical expertise in Flutter, Kotlin, and Laravel with a strong foundation in AI integration. Experienced in delivering 15+ successful projects ranging from AI-powered mobile apps to enterprise web systems. Committed to writing clean, maintainable code and building user-centric applications that solve real-world problems.",
   skills: [
+    { name: "Flutter Development", category: "mobile", level: "Advanced" },
     { name: "Web Development", category: "frontend", level: "Advanced" },
-    { name: "Android Development", category: "mobile", level: "Intermediate" },
-    { name: "Flutter", category: "mobile", level: "Intermediate" },
-    { name: "Laravel", category: "backend", level: "Intermediate" },
-    { name: "Git", category: "tools", level: "Advanced" }
+    { name: "Android (Kotlin)", category: "mobile", level: "Advanced" },
+    { name: "Laravel & PHP", category: "backend", level: "Advanced" },
+    { name: "React & JavaScript", category: "frontend", level: "Intermediate" },
+    { name: "Firebase & Cloud", category: "backend", level: "Advanced" },
+    { name: "AI/ML Integration", category: "tools", level: "Intermediate" },
+    { name: "Git & GitHub", category: "tools", level: "Advanced" },
+    { name: "MySQL & MongoDB", category: "backend", level: "Advanced" },
+    { name: "UI/UX Design", category: "design", level: "Intermediate" }
   ],
   social: {
     github: "https://github.com/Narapati24",
@@ -258,12 +263,4 @@ window.projects.forEach(project => {
   project.year = project.year.toString();
 });
 
-// Log successful loading of data
-console.log('Array data loaded successfully:', {
-  profile: window.profile.name,
-  projects: window.projects.length,
-  experiences: window.experiences.length,
-  years: window.projectYears.length,
-  types: window.projectTypes.length,
-  experienceTags: window.experienceTags.length
-});
+// Data loaded successfully
