@@ -460,8 +460,11 @@ const ProjectManager = {
             ${this.observer ? 'data-src' : 'src'}="src/img/background_project/${project.year}/${project.image}" 
             alt="${project.title}" 
             loading="lazy"
+            decoding="async"
+            width="400"
+            height="192"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            onerror="this.onerror=null; this.src='src/img/placeholder.jpg';">
+            onerror="this.onerror=null; this.src='src/img/placeholder.jpg'; this.removeAttribute('srcset');">
           <div class="absolute inset-0 bg-gradient-to-b from-midnight-950/20 via-midnight-900/40 to-midnight-950/90"></div>
           
           <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
@@ -477,7 +480,17 @@ const ProjectManager = {
         
         <div class="card-content p-5 flex flex-col flex-grow">
           <h2 class="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-midnight-300 transition-colors duration-300">${project.title}</h2>
-          <p class="text-sm text-midnight-300 leading-relaxed line-clamp-3 mb-4 flex-grow">${project.desc}</p>
+          <p class="text-sm text-midnight-300 leading-relaxed line-clamp-3 mb-4">${project.desc}</p>
+          
+          ${project.stack && project.stack.length > 0 ? `
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              ${project.stack.map(tech => `
+                <span class="px-2 py-0.5 bg-midnight-700/60 text-midnight-200 rounded text-xs font-medium border border-midnight-600/40">
+                  ${tech}
+                </span>
+              `).join('')}
+            </div>
+          ` : ''}
           
           <div class="h-px w-full bg-gradient-to-r from-transparent via-midnight-600 to-transparent mb-4"></div>
           
@@ -655,6 +668,253 @@ const ProjectManager = {
 };
 
 /**
+ * Experience Manager using jQuery
+ */
+const ExperienceManager = {
+  init() {
+    console.log("Checking experience data...");
+    // Check if experience data exists in the global scope
+    if (typeof experiences === 'undefined' || !experiences) {
+      console.error("Experience data is missing. Make sure array.js is loaded.");
+      window.experiences = [];
+      window.experienceCategories = [];
+      window.experienceTags = [];
+      console.warn("Using empty experiences array");
+    } else {
+      console.log("Experience data loaded successfully:", experiences.length, "experiences found");
+    }
+
+    if (!$('#experienceContainer').length) {
+      console.error("Experience container element not found");
+      return;
+    }
+    
+    // Setup filters
+    this.setupFilters();
+    
+    // Setup modal functionality
+    this.setupModal();
+    
+    // Initial display
+    this.displayExperiences('all', []);
+  },
+  
+  setupModal() {
+    const modal = $('#experienceModal');
+    const openBtn = $('#experienceToggle');
+    const closeBtn = $('#closeExperienceModal');
+    
+    if (!modal.length || !openBtn.length) return;
+    
+    // Open modal
+    openBtn.on('click', () => {
+      modal.removeClass('hidden').addClass('flex');
+      $('body').css('overflow', 'hidden'); // Prevent background scrolling
+      
+      // Reset filters to default
+      this.resetFilters();
+    });
+    
+    // Close modal on button click
+    closeBtn.on('click', () => {
+      modal.removeClass('flex').addClass('hidden');
+      $('body').css('overflow', ''); // Restore scrolling
+    });
+    
+    // Close modal on backdrop click
+    modal.on('click', (e) => {
+      if (e.target.id === 'experienceModal') {
+        modal.removeClass('flex').addClass('hidden');
+        $('body').css('overflow', '');
+      }
+    });
+    
+    // Close modal on Escape key
+    $(document).on('keydown', (e) => {
+      if (e.key === 'Escape' && modal.hasClass('flex')) {
+        modal.removeClass('flex').addClass('hidden');
+        $('body').css('overflow', '');
+      }
+    });
+  },
+  
+  resetFilters() {
+    // Reset category filter
+    const categoryContainer = $('#experienceCategoryFilter');
+    categoryContainer.find('button').removeClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg')
+      .addClass('bg-midnight-800/50 text-midnight-300 border-midnight-700/50');
+    categoryContainer.find('button[data-category="all"]')
+      .removeClass('bg-midnight-800/50 text-midnight-300 border-midnight-700/50')
+      .addClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg');
+    
+    // Reset tag filter
+    $('#experienceTagFilter button').removeClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg')
+      .addClass('bg-midnight-800/50 text-midnight-300 border-midnight-700/50');
+    
+    // Display all experiences
+    this.displayExperiences('all', []);
+  },
+  
+  setupFilters() {
+    console.log("Setting up experience filters");
+    
+    // Setup category filter buttons
+    const categoryContainer = $('#experienceCategoryFilter');
+    if (categoryContainer.length && window.experienceCategories) {
+      categoryContainer.empty();
+      
+      $.each(window.experienceCategories, (_, category) => {
+        const btn = $('<button>')
+          .attr('data-category', category)
+          .addClass('px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 border')
+          .addClass(category === 'all' 
+            ? 'bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg' 
+            : 'bg-midnight-800/50 text-midnight-300 border-midnight-700/50 hover:bg-midnight-700/50 hover:border-midnight-600')
+          .text(category.charAt(0).toUpperCase() + category.slice(1))
+          .on('click', function() {
+            // Update button styles
+            categoryContainer.find('button').removeClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg')
+              .addClass('bg-midnight-800/50 text-midnight-300 border-midnight-700/50');
+            $(this).removeClass('bg-midnight-800/50 text-midnight-300 border-midnight-700/50')
+              .addClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg');
+            
+            // Get selected tags
+            const selectedTags = $('#experienceTagFilter button.bg-gradient-to-r').map(function() {
+              return $(this).data('tag');
+            }).get();
+            
+            ExperienceManager.displayExperiences(category, selectedTags);
+          });
+        
+        categoryContainer.append(btn);
+      });
+    }
+    
+    // Setup tag filter buttons
+    const tagContainer = $('#experienceTagFilter');
+    if (tagContainer.length && window.experienceTags) {
+      tagContainer.empty();
+      
+      $.each(window.experienceTags, (_, tag) => {
+        const btn = $('<button>')
+          .attr('data-tag', tag)
+          .addClass('px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 border bg-midnight-800/50 text-midnight-300 border-midnight-700/50 hover:bg-midnight-700/50 hover:border-midnight-600')
+          .text(tag)
+          .on('click', function() {
+            // Toggle tag selection
+            $(this).toggleClass('bg-gradient-to-r from-midnight-500 to-midnight-600 text-white border-midnight-400/50 shadow-lg bg-midnight-800/50 text-midnight-300 border-midnight-700/50');
+            
+            // Get selected category and tags
+            const category = $('#experienceCategoryFilter button.bg-gradient-to-r').data('category') || 'all';
+            const selectedTags = $('#experienceTagFilter button.bg-gradient-to-r').map(function() {
+              return $(this).data('tag');
+            }).get();
+            
+            ExperienceManager.displayExperiences(category, selectedTags);
+          });
+        
+        tagContainer.append(btn);
+      });
+    }
+  },
+  
+  displayExperiences(category = 'all', tags = []) {
+    const container = $('#experienceContainer');
+    if (!container.length) {
+      console.error("Experience container not found");
+      return;
+    }
+    
+    // Clear container
+    container.empty();
+    
+    // Get filtered experiences
+    const filteredExperiences = this.getFilteredExperiences(category, tags);
+    console.log(`Filtered experiences (${category}, tags: ${tags.join(', ')}):`, filteredExperiences.length);
+    
+    // Show message if no results
+    if (filteredExperiences.length === 0) {
+      $('<div>')
+        .addClass('text-center py-8')
+        .html('<p class="text-midnight-400">No experience found matching your criteria.</p>')
+        .appendTo(container);
+    } else {
+      // Add experiences to container
+      $.each(filteredExperiences, (_, experience) => {
+        const card = this.createExperienceCard(experience);
+        container.append(card);
+      });
+    }
+  },
+  
+  getFilteredExperiences(category, tags) {
+    let filtered = [...experiences];
+    
+    // Filter by category
+    if (category !== 'all') {
+      filtered = filtered.filter(exp => exp.category === category);
+    }
+    
+    // Filter by tags
+    if (tags.length > 0) {
+      filtered = filtered.filter(exp => 
+        tags.some(tag => exp.tags && exp.tags.includes(tag))
+      );
+    }
+    
+    return filtered;
+  },
+  
+  createExperienceCard(experience) {
+    return $('<div>')
+      .addClass('bg-gradient-to-br from-midnight-900/40 to-midnight-800/40 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-midnight-700/50 hover:border-midnight-600/70 transition-all duration-300 hover:-translate-y-1')
+      .html(`
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+          <div class="flex-grow">
+            <h3 class="text-xl font-bold text-white mb-1">${experience.title}</h3>
+            <p class="text-midnight-300 font-semibold mb-1">${experience.role}</p>
+            <p class="text-midnight-400 text-sm">
+              <i class="fas fa-building mr-2"></i>${experience.company}
+              ${experience.location ? ` • <i class="fas fa-map-marker-alt mr-1"></i>${experience.location}` : ''}
+            </p>
+          </div>
+          <div class="flex-shrink-0">
+            <span class="px-3 py-1.5 bg-midnight-700/60 text-midnight-200 rounded-lg text-sm font-medium border border-midnight-600/40 whitespace-nowrap">
+              <i class="far fa-calendar-alt mr-1.5"></i>${experience.period}
+            </span>
+          </div>
+        </div>
+        
+        <p class="text-midnight-300 text-sm leading-relaxed mb-4">${experience.description}</p>
+        
+        ${experience.achievements && experience.achievements.length > 0 ? `
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-midnight-200 mb-2">Key Achievements:</h4>
+            <ul class="space-y-1.5">
+              ${experience.achievements.map(achievement => `
+                <li class="text-midnight-300 text-sm flex items-start gap-2">
+                  <i class="fas fa-check-circle text-midnight-500 mt-0.5 flex-shrink-0"></i>
+                  <span>${achievement}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+        
+        ${experience.tags && experience.tags.length > 0 ? `
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-midnight-700/50">
+            ${experience.tags.map(tag => `
+              <span class="px-2 py-0.5 bg-midnight-700/40 text-midnight-300 rounded text-xs font-medium border border-midnight-600/30">
+                ${tag}
+              </span>
+            `).join('')}
+          </div>
+        ` : ''}
+      `);
+  }
+};
+
+/**
  * Responsive layout handling
  */
 const LayoutManager = {
@@ -697,12 +957,16 @@ function initApp() {
     console.log("Checking if data from array.js is available:");
     console.log("- Profile data:", typeof profile !== 'undefined');
     console.log("- Projects data:", typeof projects !== 'undefined');
+    console.log("- Experience data:", typeof experiences !== 'undefined');
     
     ProfileManager.init();
     console.log("Profile initialized");
     
     ProjectManager.init();
     console.log("Projects initialized");
+    
+    ExperienceManager.init();
+    console.log("Experience initialized");
     
     LayoutManager.init();
     console.log("Layout manager initialized");
