@@ -84,12 +84,7 @@
         window.projectTypes = ['web', 'mobile', 'terminal'];
       }
     }    
-    console.log('Data check complete: ', {
-      profile: !!window.profile,
-      projects: window.projects ? window.projects.length : 0,
-      years: window.projectYears ? window.projectYears.length : 0,
-      types: window.projectTypes ? window.projectTypes.length : 0
-    });
+    // Data check complete
   };
 
   // First attempt immediately in case array.js has already been loaded

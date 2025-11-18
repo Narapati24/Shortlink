@@ -52,7 +52,7 @@
       return src || 'inline script';
     }).filter(src => src !== 'inline script');
     
-    console.log('Script loading order:', scripts);
+    // Script loading order checked
     
     // Provide suggestions
     if (!results.profile.exists || !results.projects.exists) {

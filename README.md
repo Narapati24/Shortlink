@@ -7,16 +7,54 @@ A modern, responsive portfolio website showcasing the web and mobile development
 ## 🚀 Features
 
 - **Responsive Design**: Optimized for all device sizes from mobile to desktop
-- **Dark Mode**: Toggle between light and dark themes
+- **Midnight Blue Theme**: Modern, professional dark theme
 - **Project Filtering**: Filter projects by year and type
 - **Performance Optimized**:
+  - Service Worker for offline support and caching
   - Critical CSS inlined
   - Deferred loading of non-critical resources
-  - Image optimization
-  - Lazy loading
+  - Image optimization with lazy loading
+  - Preconnect to external domains
+  - Resource hints (dns-prefetch, prefetch)
+  - Async script loading
+  - Web Vitals monitoring (LCP, FID)
+  - Device-specific optimizations
+  - GZIP compression (.htaccess)
+  - Browser caching headers
 - **Animated UI Elements**: Smooth transitions and animations for better user experience
 - **Accessibility Features**: ARIA labels, semantic HTML, and keyboard navigation
 - **SEO Optimized**: Meta tags, JSON-LD structured data, and sitemap
+
+## ⚡ Performance Features
+
+### Service Worker
+- Caches static assets for faster subsequent loads
+- Offline support for core functionality
+- Smart cache invalidation
+
+### Image Optimization
+- Lazy loading with IntersectionObserver
+- Async image decoding
+- Proper width/height attributes to prevent layout shift
+- Automatic image optimization via GitHub Actions
+
+### Resource Loading
+- Preconnect to external domains (jQuery, CDN)
+- DNS prefetch for API endpoints
+- Critical CSS inlined in HTML
+- Non-critical CSS loaded asynchronously
+- Scripts loaded with defer/async attributes
+
+### Performance Monitoring
+- Tracks Largest Contentful Paint (LCP)
+- Tracks First Input Delay (FID)
+- Page load time logging
+- Console performance metrics
+
+### Device Optimization
+- Reduces animations on low-end devices
+- Mobile-specific optimizations
+- Responsive font sizing
 
 ## 🛠️ Technologies Used
 

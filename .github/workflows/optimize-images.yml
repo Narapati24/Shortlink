@@ -1,0 +1,23 @@
+name: Optimize Images
+
+on:
+  push:
+    branches: [ main, newModel ]
+    paths:
+      - 'src/img/**'
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Optimize images
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+          jpegQuality: 80
+          pngQuality: 80
+          webpQuality: 80
+          ignorePaths: 'node_modules/**,dist/**'
