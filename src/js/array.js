@@ -1,20 +1,19 @@
-// Define data in the global (window) scope
-window.profile = {
+export const profile = {
   name: "Narapati Keysa Anandi",
   role: "Full-Stack Developer | Mobile App Specialist",
   image: "profile.JPG",
   description: "Passionate developer specializing in creating innovative mobile and web solutions. As a Bangkit Academy 2024 graduate with Google certification path, I combine technical expertise in Flutter, Kotlin, and Laravel with a strong foundation in AI integration. Experienced in delivering 15+ successful projects ranging from AI-powered mobile apps to enterprise web systems. Committed to writing clean, maintainable code and building user-centric applications that solve real-world problems.",
   skills: [
-    { name: "Flutter Development", category: "mobile", level: "Advanced" },
-    { name: "Web Development", category: "frontend", level: "Advanced" },
-    { name: "Android (Kotlin)", category: "mobile", level: "Advanced" },
-    { name: "Laravel & PHP", category: "backend", level: "Advanced" },
-    { name: "React & JavaScript", category: "frontend", level: "Intermediate" },
-    { name: "Firebase & Cloud", category: "backend", level: "Advanced" },
-    { name: "AI/ML Integration", category: "tools", level: "Intermediate" },
-    { name: "Git & GitHub", category: "tools", level: "Advanced" },
-    { name: "MySQL & MongoDB", category: "backend", level: "Advanced" },
-    { name: "UI/UX Design", category: "design", level: "Intermediate" }
+    { name: "Flutter", category: "mobile", level: "Advanced" },
+    { name: "Web Dev", category: "frontend", level: "Advanced" },
+    { name: "Kotlin", category: "mobile", level: "Advanced" },
+    { name: "Laravel", category: "backend", level: "Advanced" },
+    { name: "React", category: "frontend", level: "Intermediate" },
+    { name: "Firebase", category: "backend", level: "Advanced" },
+    { name: "AI/ML", category: "tools", level: "Intermediate" },
+    { name: "Git", category: "tools", level: "Advanced" },
+    { name: "SQL/NoSQL", category: "backend", level: "Advanced" },
+    { name: "UI/UX", category: "design", level: "Intermediate" }
   ],
   social: {
     github: "https://github.com/Narapati24",
@@ -22,7 +21,7 @@ window.profile = {
   }
 };
 
-window.projects = [
+export const projects = [
   {
     title: "Todolist App with AI",
     desc: "Smart task management application with AI-powered suggestions and productivity insights",
@@ -160,107 +159,4 @@ window.projects = [
   },
 ];
 
-// Note: Projects are stored in chronological order but will be 
-// displayed with newest years first and newest additions within
-// each year appearing first in the UI.
 
-// Experience data
-window.experiences = [
-  {
-    title: "Bangkit Academy 2024",
-    role: "Mobile Development Cohort",
-    company: "Google, GoTo, Traveloka",
-    period: "Feb 2024 - Jul 2024",
-    location: "Remote",
-    description: "Intensive 6-month program focusing on Android development with Kotlin, machine learning integration, and soft skills",
-    achievements: [
-      "Completed 300+ hours of structured learning",
-      "Built Glucoscan AI app as capstone project",
-      "Earned Google Associate Android Developer certification path"
-    ],
-    tags: ["Mobile Development", "Kotlin", "Machine Learning", "Cloud Computing"],
-    category: "education"
-  },
-  {
-    title: "Freelance Web Developer",
-    role: "Full Stack Developer",
-    company: "Self-Employed",
-    period: "2023 - Present",
-    location: "Remote",
-    description: "Building custom websites and web applications for clients, focusing on responsive design and modern frameworks",
-    achievements: [
-      "Delivered 10+ client projects successfully",
-      "Specialized in Laravel and React development",
-      "Maintained 100% client satisfaction rate"
-    ],
-    tags: ["Web Development", "Laravel", "React", "Freelance"],
-    category: "work"
-  },
-  {
-    title: "Wifiku Internet Provider",
-    role: "Web Developer",
-    company: "Wifiku",
-    period: "2023",
-    location: "Indonesia",
-    description: "Developed and maintained company profile website with service catalog and customer portal",
-    achievements: [
-      "Built responsive company website from scratch",
-      "Improved online presence and customer engagement",
-      "Implemented SEO best practices"
-    ],
-    tags: ["Web Development", "HTML/CSS", "JavaScript"],
-    category: "work"
-  },
-  {
-    title: "Web Programming Course",
-    role: "Student",
-    company: "University",
-    period: "2022 - 2023",
-    location: "Campus",
-    description: "Comprehensive web development curriculum covering HTML, CSS, JavaScript, PHP, and MySQL",
-    achievements: [
-      "Built multiple projects including Pnews portal",
-      "Learned full-stack development fundamentals",
-      "Achieved excellent grades in all web courses"
-    ],
-    tags: ["Web Development", "PHP", "MySQL", "Education"],
-    category: "education"
-  },
-  {
-    title: "Mobile App Development Learning",
-    role: "Self-Taught Developer",
-    company: "Independent Study",
-    period: "2024 - Present",
-    location: "Self-Paced",
-    description: "Continuous learning in Flutter and Android development through online courses and personal projects",
-    achievements: [
-      "Mastered Flutter framework fundamentals",
-      "Built 5+ mobile applications",
-      "Integrated Firebase and various APIs"
-    ],
-    tags: ["Mobile Development", "Flutter", "Android", "Self-Learning"],
-    category: "education"
-  }
-];
-
-// Experience categories
-window.experienceCategories = ["all", "work", "education"];
-
-// Experience tags for filtering
-window.experienceTags = [...new Set(window.experiences.flatMap(exp => exp.tags))].sort();
-
-// Generate years dynamically from projects
-window.projectYears = [...new Set(window.projects.map(project => project.year))].sort((a, b) => b - a);
-
-// Update projectTypes to handle arrays of types
-window.projectTypes = [...new Set(window.projects.flatMap(project => 
-  Array.isArray(project.type) ? project.type : [project.type]
-))].sort();
-
-// Make sure years are properly formatted as strings or numbers consistently
-window.projects.forEach(project => {
-  // Ensure year is stored as a number for proper sorting
-  project.year = project.year.toString();
-});
-
-// Data loaded successfully

@@ -1,165 +1,102 @@
-# Narapati Shortcut - Portfolio Website
+# Narapati Keysa - Portfolio Website
 
-A modern, responsive portfolio website showcasing the web and mobile development projects of Narapati Keysa Anandi.
+A modern, high-performance portfolio website built with **Vite** and **Tailwind CSS**. This project showcases my profile, skills, and collection of projects with advanced filtering and pagination features.
 
-![Portfolio Preview](src/img/profile/profile.JPG)
+![Portfolio Preview](public/img/logo/RainyDeepLogo.png)
 
 ## 🚀 Features
 
-- **Responsive Design**: Optimized for all device sizes from mobile to desktop
-- **Midnight Blue Theme**: Modern, professional dark theme
-- **Project Filtering**: Filter projects by year and type
-- **Performance Optimized**:
-  - Service Worker for offline support and caching
-  - Critical CSS inlined
-  - Deferred loading of non-critical resources
-  - Image optimization with lazy loading
-  - Preconnect to external domains
-  - Resource hints (dns-prefetch, prefetch)
-  - Async script loading
-  - Web Vitals monitoring (LCP, FID)
-  - Device-specific optimizations
-  - GZIP compression (.htaccess)
-  - Browser caching headers
-- **Animated UI Elements**: Smooth transitions and animations for better user experience
-- **Accessibility Features**: ARIA labels, semantic HTML, and keyboard navigation
-- **SEO Optimized**: Meta tags, JSON-LD structured data, and sitemap
+- **Dynamic Content**: All data (profile, projects, experiences) is managed in a structured JSON-like format (`src/js/array.js`), making it easy to update.
+- **Advanced Filtering**: Filter projects by **Type** (Mobile, Web, etc.) and **Year**.
+- **Pagination**: Client-side pagination for the project grid to ensure optimal performance and UX.
+- **Responsive Design**: Fully responsive layout using Tailwind CSS with a custom "Midnight Blue" theme.
+- **Modern UI**: Glassmorphism effects, smooth transitions, and interactive elements.
+- **Automated Deployment**: Configured with GitHub Actions for automatic deployment to GitHub Pages.
+- **SEO Friendly**: Includes sitemap, robots.txt, and meta tags.
 
-## ⚡ Performance Features
+## 🛠️ Tech Stack
 
-### Service Worker
-- Caches static assets for faster subsequent loads
-- Offline support for core functionality
-- Smart cache invalidation
+- **Build Tool**: [Vite](https://vitejs.dev/) - For lightning-fast development and optimized builds.
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework.
+- **Language**: Modern JavaScript (ES Modules).
+- **Deployment**: GitHub Pages (via GitHub Actions).
 
-### Image Optimization
-- Lazy loading with IntersectionObserver
-- Async image decoding
-- Proper width/height attributes to prevent layout shift
-- Automatic image optimization via GitHub Actions
-
-### Resource Loading
-- Preconnect to external domains (jQuery, CDN)
-- DNS prefetch for API endpoints
-- Critical CSS inlined in HTML
-- Non-critical CSS loaded asynchronously
-- Scripts loaded with defer/async attributes
-
-### Performance Monitoring
-- Tracks Largest Contentful Paint (LCP)
-- Tracks First Input Delay (FID)
-- Page load time logging
-- Console performance metrics
-
-### Device Optimization
-- Reduces animations on low-end devices
-- Mobile-specific optimizations
-- Responsive font sizing
-
-## 🛠️ Technologies Used
-
-- HTML5
-- CSS3 (with TailwindCSS)
-- JavaScript (with jQuery)
-- Particles.js (for background effects)
-- PostCSS
-- Vite (bundler)
-
-## 📁 Project Structure
-
-```
-├── index.html              # Main HTML file
-├── src/
-│   ├── css/                # Stylesheet files
-│   │   ├── font-size-fix.css
-│   │   ├── input.css
-│   │   └── style.css
-│   ├── img/                # Image resources
-│   │   ├── background_project/
-│   │   │   ├── 2022/
-│   │   │   ├── 2023/
-│   │   │   └── 2024/
-│   │   ├── logo/
-│   │   └── profile/
-│   └── js/                 # JavaScript files
-│       ├── accessibility-check.js
-│       ├── array.js        # Project data
-│       ├── card-fix.js
-│       ├── data-check.js
-│       ├── main.js         # Main application logic
-│       ├── particles-config.js
-│       └── tracking.js
-├── CNAME                   # Custom domain configuration
-├── robots.txt              # Robots exclusion standard
-├── sitemap.xml             # XML sitemap for search engines
-├── package.json            # Dependencies and scripts
-├── postcss.config.js       # PostCSS configuration
-├── tailwind.config.js      # Tailwind CSS configuration
-└── vite.config.js          # Vite bundler configuration
-```
-
-## 🚩 Getting Started
+## 📦 Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or later recommended)
-- npm or yarn
+- Node.js (v18 or higher recommended)
+- npm (Node Package Manager)
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Narapati24/Shortlink.git
-   cd Shortlink
-   ```
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Narapati24/Shortlink.git
+    cd Shortlink
+    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+### Development
 
-## 🔧 Development
+Start the local development server:
 
-### Building for production
+```bash
+npm run dev
+```
+
+The site will be available at `http://localhost:5173`.
+
+### Production Build
+
+Build the project for production (generates `dist` folder):
 
 ```bash
 npm run build
 ```
 
-### Customizing the content
+Preview the production build locally:
 
-Edit the `src/js/array.js` file to update project information and personal details.
+```bash
+npm run preview
+```
 
-## 📱 Performance Optimizations
+## 🚀 Deployment
 
-- Critical CSS is inlined in the `<head>` for faster initial rendering
-- Non-critical CSS is loaded asynchronously with `media="print"` and `onload`
-- Particles.js is only loaded on devices that can handle it efficiently
-- Image preloading for important assets
-- Custom loading animations and shimmer effects
+This project is configured to deploy automatically to **GitHub Pages** using GitHub Actions.
 
-## 🌐 Deployment
+1.  Push your changes to the `newModel` (or `main`) branch.
+2.  The workflow defined in `.github/workflows/deploy.yml` will trigger.
+3.  It builds the project and deploys the `dist` folder to the `gh-pages` environment.
 
-This site is deployed using GitHub Pages. The live version can be accessed at:
+**Note**: Ensure your GitHub Repository Settings > Pages is set to deploy from **GitHub Actions**.
 
-[https://narapati24.github.io/Shortlink/](https://narapati24.github.io/Shortlink/)
+## 📂 Project Structure
 
-## 📝 License
-
-[MIT License](LICENSE)
+```
+├── .github/            # GitHub Actions workflows
+├── public/             # Static assets (images, favicon, robots.txt)
+├── src/
+│   ├── css/            # Tailwind directives and custom CSS
+│   ├── js/
+│   │   ├── array.js    # Data source (Profile & Projects)
+│   │   └── main.js     # Application logic (Rendering, Filtering)
+├── index.html          # Entry point
+├── tailwind.config.js  # Tailwind configuration
+└── vite.config.js      # Vite configuration
+```
 
 ## 👤 Author
 
 **Narapati Keysa Anandi**
 
+- Website: [kodingin.id](https://kodingin.id)
 - GitHub: [@Narapati24](https://github.com/Narapati24)
 - LinkedIn: [Narapati Keysa](https://www.linkedin.com/in/narapati-keysa/)
 
 ---
-
-© 2025 Narapati Keysa Anandi. All rights reserved.
+&copy; 2025 Kodingin.id. All Rights Reserved.
