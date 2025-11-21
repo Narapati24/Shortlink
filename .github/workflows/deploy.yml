@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "newModel" ] # Ganti dengan nama branch utamamu jika berbeda (misal: main atau master)
+    branches: [ "main" ] # Only deploy from main branch
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
