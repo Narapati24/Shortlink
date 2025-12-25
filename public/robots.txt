@@ -8,4 +8,4 @@ Allow: /*.css$
 Allow: /*.js$
 
 # Sitemap
-Sitemap: https://narapati24.github.io/Shortlink/sitemap.xml
+Sitemap: https://narapatis.my.id/sitemap.xml
