@@ -109,6 +109,10 @@ function renderProfile() {
   const profileContainer = document.getElementById('profile-section');
   if (!profileContainer) return;
 
+  // Clear skeleton if present (simple innerHTML replacement is fine as long as we had the skeleton initially)
+  // For smoother transition, we could fade out skeleton, but replacement is standard for CSR after load.
+
+
   const skillsHtml = profile.skills.map(skill => `
     <span class="px-3 py-1 text-xs font-medium text-white/90 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-default">
       ${skill.name}

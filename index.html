@@ -117,6 +117,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/css/style.css" />
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="image" href="/img/profile/profile.JPG" />
   </head>
   <body
     class="bg-midnight-950 text-midnight-50 min-h-screen font-sans selection:bg-midnight-500 selection:text-white"
@@ -219,12 +221,31 @@
       class="container mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-20 space-y-20 mt-16"
     >
       <!-- Profile Section -->
-      <section id="profile-section" class="animate-fade-in">
-        <!-- Content injected by JS -->
-        <div class="flex justify-center">
+      <section
+        id="profile-section"
+        class="animate-fade-in min-h-[60vh] flex items-center justify-center"
+      >
+        <!-- Skeleton Loading State -->
+        <div
+          class="flex flex-col items-center text-center space-y-8 w-full max-w-4xl animate-pulse"
+        >
           <div
-            class="animate-pulse w-32 h-32 bg-midnight-800 rounded-full"
+            class="w-32 h-32 md:w-48 md:h-48 bg-midnight-800 rounded-full"
           ></div>
+          <div class="space-y-4 w-full flex flex-col items-center">
+            <div
+              class="h-10 md:h-14 bg-midnight-800 rounded-lg w-3/4 max-w-lg"
+            ></div>
+            <div
+              class="h-6 md:h-8 bg-midnight-800 rounded-lg w-1/2 max-w-md"
+            ></div>
+          </div>
+          <div class="h-20 bg-midnight-800 rounded-lg w-full max-w-2xl"></div>
+          <div class="flex gap-2">
+            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
+            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
+            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
+          </div>
         </div>
       </section>
 
@@ -281,7 +302,25 @@
           id="projects-grid"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          <!-- Content injected by JS -->
+          <!-- Skeleton Loading State (Initial Views) -->
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
+          <div
+            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
+          ></div>
         </div>
 
         <!-- Pagination -->
