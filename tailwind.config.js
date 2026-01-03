@@ -8,22 +8,31 @@ export default {
     extend: {
       colors: {
         midnight: {
-          50: '#f0f4ff',
-          100: '#e0e9ff',
-          200: '#c7d7fe',
-          300: '#a5bbfc',
-          400: '#8199f8',
-          500: '#6376f1',
-          600: '#4a56e5',
-          700: '#3c47ca',
-          800: '#323da3',
-          900: '#2d3681',
-          950: '#0f172a', // Primary midnight blue
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
         },
+        accent: {
+          400: '#22d3ee', // Cyan
+          500: '#06b6d4',
+          600: '#0891b2',
+        }
+      },
+      fontFamily: {
+        sans: ['"Outfit"', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'midnight-gradient': 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+        'accent-gradient': 'linear-gradient(135deg, #22d3ee 0%, #6376f1 100%)',
       },
     },
   },

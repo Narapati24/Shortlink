@@ -8,7 +8,6 @@ export const profile = {
     { name: "Web Dev", category: "frontend", level: "Advanced" },
     { name: "Kotlin", category: "mobile", level: "Advanced" },
     { name: "Laravel", category: "backend", level: "Advanced" },
-    { name: "React", category: "frontend", level: "Intermediate" },
     { name: "Firebase", category: "backend", level: "Advanced" },
     { name: "AI/ML", category: "tools", level: "Intermediate" },
     { name: "Git", category: "tools", level: "Advanced" },
@@ -17,7 +16,10 @@ export const profile = {
   ],
   social: {
     github: "https://github.com/Narapati24",
-    linkedin: "https://www.linkedin.com/in/narapati-keysa/"
+    linkedin: "https://www.linkedin.com/in/narapati-keysa/",
+    email: "narapatikeysa00@gmail.com",
+    whatsapp: "6285603595072",
+    company: "https://kodingin.id"
   }
 };
 
@@ -46,6 +48,22 @@ export const projects = [
     image: "siKujang.jpg",
     type: "mobile",
     stack: ["Flutter", "Firebase", "Chart.js"]
+  },
+  {
+    title: "Cosmic Blaster",
+    desc: "Space shooter game with custom animations and logic challenges.",
+    year: "2025",
+    image: "cosmic_blaster.png",
+    type: ["mobile", "game"],
+    stack: ["Unity", "C#"]
+  },
+  {
+    title: "Dunia Hewan",
+    desc: "Interactive educational game teaching measurement concepts through engaging storytelling and puzzles. Features custom animations and logic challenges.",
+    year: "2025",
+    image: "dunia_hewan.jpg",
+    type: ["mobile", "game"],
+    stack: ["Unity", "C#"]
   },
   {
     title: "Glucoscan",
@@ -83,13 +101,21 @@ export const projects = [
     stack: ["Kotlin", "Retrofit", "Glide"]
   },
   {
+    title: "Pahlawan Pengukur",
+    desc: "Educational mobile game designed to teach measurement concepts through interactive storytelling. Built with Adobe Animate and ActionScript 3.0, offering engaging puzzles and custom animations to enhance learning.",
+    year: "2024",
+    image: "pahlawan_pengukur.png",
+    type: ["mobile", "game"],
+    stack: ["Adobe Animate", "Actionscript 3.0", "Flash"]
+  },
+  {
     title: "Graph Akademic",
     github: "https://github.com/Narapati24/2_Tubes_PP1",
     desc: "Academic performance visualization tool with interactive charts and analytics",
     year: "2024",
     image: "grafAkademik.jpg",
-    type: ["web", "terminal"],
-    stack: ["Python", "Matplotlib", "Pandas"]
+    type: "web",
+    stack: ["java", "react", "tailwind"]
   },
   {
     title: "Automated Teller Machine (ATM)",
@@ -97,11 +123,12 @@ export const projects = [
     desc: "Console-based ATM simulation with banking operations and security features",
     year: "2023",
     image: "atm.png",
-    type: "terminal",
-    stack: ["C++", "OOP"]
+    type: "software",
+    stack: ["java", "OOP"]
   },
   {
     title: "Pptq Ponpes AM",
+    url: "https://pptqam.ponpes.id",
     desc: "Student registration management system for Islamic boarding school with admin dashboard",
     year: "2023",
     image: "pptqPonpes.jpg",
