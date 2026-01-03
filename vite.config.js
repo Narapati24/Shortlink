@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  base: './', // Ensure relative paths for GitHub Pages
   server: {
     open: true,
     watch: {
@@ -11,6 +12,8 @@ export default defineConfig({
     devSourcemap: true
   },
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    emptyOutDir: true,
+    assetsDir: 'assets',
   }
 })

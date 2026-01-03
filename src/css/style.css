@@ -7,6 +7,47 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
   .glass-card {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
+    @apply bg-midnight-900/50 backdrop-blur-md border border-midnight-800 shadow-xl;
   }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-midnight-950;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-midnight-800 rounded-full border-2 border-midnight-950;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-midnight-700;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Hide Scrollbar for Horizontal Scroll */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-500 { animation-delay: 500ms; }
