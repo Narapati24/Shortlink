@@ -34,6 +34,14 @@ export const projects = [
     company: "Kodingin"
   },
   {
+    title: "Stylo",
+    desc: "E-commerce platform for fashion enthusiasts to buy trendy clothing and accessories",
+    year: "2025",
+    image: "stylo.png",
+    type: "web",
+    stack: ["Laravel", "MySQL", "Tailwind CSS"]
+  },
+  {
     title: "Todolist App with AI",
     desc: "Smart task management application with AI-powered suggestions and productivity insights",
     year: "2025",
