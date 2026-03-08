@@ -223,6 +223,16 @@ function renderProjects() {
             ${project.title}
           </h3>
           
+          ${project.company ? `
+            <!-- Company -->
+            <div class="mb-3 flex items-center gap-2 text-xs text-midnight-400">
+               <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+               </svg>
+               <span>Built for <span class="text-accent-300 font-medium">${project.company}</span></span>
+            </div>
+          ` : ''}
+          
           <!-- Description -->
           <p class="text-midnight-400 text-sm mb-6 line-clamp-2 leading-relaxed flex-grow font-normal">
             ${project.desc}
