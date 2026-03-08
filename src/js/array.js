@@ -25,6 +25,14 @@ export const profile = {
 
 export const projects = [
   {
+    title: "Bungo Bersih Sampah",
+    desc: "Community-driven waste management app connecting residents with local waste collection services for a cleaner environment",
+    year: "2026",
+    image: "bungo_bersih_sampah.png",
+    type: "mobile",
+    stack: ["Flutter", "Firebase"]
+  },
+  {
     title: "Todolist App with AI",
     desc: "Smart task management application with AI-powered suggestions and productivity insights",
     year: "2025",
@@ -34,7 +42,6 @@ export const projects = [
   },
   {
     title: "Birthday Reminder App",
-    url: "https://birthday.narapatis.my.id",
     desc: "Never miss a birthday! Web app with notifications and personalized reminders for friends and family",
     year: "2025",
     image: "birthdayReminder.png",
