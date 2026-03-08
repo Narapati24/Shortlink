@@ -25,6 +25,15 @@ export const profile = {
 
 export const projects = [
   {
+    title: "Bungo Bersih Sampah",
+    desc: "Community-driven waste management app connecting residents with local waste collection services for a cleaner environment",
+    year: "2026",
+    image: "bungo_bersih_sampah.png",
+    type: "mobile",
+    stack: ["Flutter", "Firebase"],
+    company: "Kodingin"
+  },
+  {
     title: "Todolist App with AI",
     desc: "Smart task management application with AI-powered suggestions and productivity insights",
     year: "2025",
@@ -33,8 +42,7 @@ export const projects = [
     stack: ["Flutter", "Firebase", "AI/ML"]
   },
   {
-    title: "Birthday Reminder App",
-    url: "https://birthday.narapatis.my.id",
+    title: "Birthday Reminder Web",
     desc: "Never miss a birthday! Web app with notifications and personalized reminders for friends and family",
     year: "2025",
     image: "birthdayReminder.png",
@@ -72,7 +80,8 @@ export const projects = [
     year: "2024",
     image: "glucoscan.jpg",
     type: "mobile",
-    stack: ["Kotlin", "TensorFlow", "Cloud Vision"]
+    stack: ["Kotlin", "TensorFlow", "Cloud Vision"],
+    company: "Bangkit Academy"
   },
   {
     title: "Realact",
@@ -80,7 +89,8 @@ export const projects = [
     year: "2024",
     image: "realAct.jpg",
     type: "web",
-    stack: ["Laravel", "MySQL", "Bootstrap"]
+    stack: ["Laravel", "MySQL", "Bootstrap"],
+    company: "PT Nuansa Persada Madani"
   },
   {
     title: "Dicoding Event App",
@@ -89,7 +99,8 @@ export const projects = [
     year: "2024",
     image: "dicodingEvent.jpg",
     type: "mobile",
-    stack: ["Kotlin", "Retrofit", "Room DB"]
+    stack: ["Kotlin", "Retrofit", "Room DB"],
+    company: "Bangkit Academy"
   },
   {
     title: "League of Legend Champion",
@@ -98,7 +109,8 @@ export const projects = [
     year: "2024",
     image: "leagueOfLegendChampion.jpg",
     type: "mobile",
-    stack: ["Kotlin", "Retrofit", "Glide"]
+    stack: ["Kotlin", "Retrofit", "Glide"],
+    company: "Bangkit Academy"
   },
   {
     title: "Pahlawan Pengukur",
@@ -133,7 +145,8 @@ export const projects = [
     year: "2023",
     image: "pptqPonpes.jpg",
     type: "web",
-    stack: ["PHP", "MySQL", "Bootstrap"]
+    stack: ["PHP", "MySQL", "Bootstrap"],
+    company: "Pptq Ponpes AM"
   },
   {
     title: "Company Profile Wifiku",
@@ -142,7 +155,8 @@ export const projects = [
     year: "2023",
     image: "wifiku.png",
     type: "web",
-    stack: ["HTML", "CSS", "JavaScript"]
+    stack: ["HTML", "CSS", "JavaScript"],
+    company: "Wifiku"
   },
   {
     title: "Game Balap Karung",
