@@ -34,7 +34,18 @@ export const projects = [
     company: "Kodingin"
   },
   {
+    title: "Spotify",
+    github: "https://github.com/Narapati24/Spotify_App",
+    desc: "Music streaming app",
+    year: "2025",
+    image: "spotify.png",
+    type: "mobile",
+    stack: ["Flutter", "Firebase"]
+  },
+  {
     title: "Stylo",
+    url: "https://stylo.narapatis.my.id",
+    github: "https://github.com/Narapati24/Stylo",
     desc: "E-commerce platform for fashion enthusiasts to buy trendy clothing and accessories",
     year: "2025",
     image: "stylo.png",
