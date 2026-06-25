@@ -25,6 +25,33 @@ export const profile = {
 
 export const projects = [
   {
+    title: "Simtest Web",
+    desc: "Comprehensive university entrance exam simulation platform featuring realistic test environments and performance analytics",
+    year: "2026",
+    image: null,
+    type: "web",
+    stack: ["nextjs", "tailwind css"],
+    company: "Aluesa"
+  },
+  {
+    title: "Company Profile Simfan",
+    desc: "Professional corporate website for rural banks (BPR) showcasing financial services and institutional trust",
+    year: "2026",
+    image: null,
+    type: "web",
+    stack: ["nextjs", "tailwind css"],
+    company: "Aluesa"
+  },
+  {
+    title: "Mobile Simfan",
+    desc: "Secure mobile banking application designed for rural banks (BPR) to seamlessly manage term deposits and financial portfolios",
+    year: "2026",
+    image: null,
+    type: "mobile",
+    stack: ["Flutter"],
+    company: "Aluesa"
+  },
+  {
     title: "Bungo Bersih Sampah",
     desc: "Community-driven waste management app connecting residents with local waste collection services for a cleaner environment",
     year: "2026",
@@ -36,7 +63,7 @@ export const projects = [
   {
     title: "Spotify",
     github: "https://github.com/Narapati24/Spotify_App",
-    desc: "Music streaming app",
+    desc: "Feature-rich music streaming application delivering personalized audio experiences and extensive song libraries",
     year: "2025",
     image: "spotify.png",
     type: "mobile",
@@ -46,7 +73,7 @@ export const projects = [
     title: "Stylo",
     url: "https://stylo.narapatis.my.id",
     github: "https://github.com/Narapati24/Stylo",
-    desc: "E-commerce platform for fashion enthusiasts to buy trendy clothing and accessories",
+    desc: "Modern e-commerce platform tailored for fashion enthusiasts, offering a seamless shopping experience for trendy apparel and accessories",
     year: "2025",
     image: "stylo.png",
     type: "web",
