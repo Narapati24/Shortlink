@@ -25,33 +25,6 @@ export const profile = {
 
 export const projects = [
   {
-    title: "Simtest Web",
-    desc: "Comprehensive university entrance exam simulation platform featuring realistic test environments and performance analytics",
-    year: "2026",
-    image: null,
-    type: "web",
-    stack: ["nextjs", "tailwind css"],
-    company: "Aluesa"
-  },
-  {
-    title: "Company Profile Simfan",
-    desc: "Professional corporate website for rural banks (BPR) showcasing financial services and institutional trust",
-    year: "2026",
-    image: null,
-    type: "web",
-    stack: ["nextjs", "tailwind css"],
-    company: "Aluesa"
-  },
-  {
-    title: "Mobile Simfan",
-    desc: "Secure mobile banking application designed for rural banks (BPR) to seamlessly manage term deposits and financial portfolios",
-    year: "2026",
-    image: null,
-    type: "mobile",
-    stack: ["Flutter"],
-    company: "Aluesa"
-  },
-  {
     title: "Bungo Bersih Sampah",
     desc: "Community-driven waste management app connecting residents with local waste collection services for a cleaner environment",
     year: "2026",
