@@ -428,13 +428,63 @@ function openProjectModal(index) {
     ?.addEventListener("click", () => modal.close());
 }
 
+const MONTHS = {
+  january: 0,
+  february: 1,
+  march: 2,
+  april: 3,
+  may: 4,
+  june: 5,
+  july: 6,
+  august: 7,
+  september: 8,
+  october: 9,
+  november: 10,
+  december: 11,
+};
+
+function parseMonthYear(str) {
+  const parts = str.trim().toLowerCase().split(/\s+/);
+  if (parts.length !== 2) return null;
+  const month = MONTHS[parts[0]];
+  const year = Number(parts[1]);
+  if (month === undefined || Number.isNaN(year)) return null;
+  return { year, month };
+}
+
+function calculateDuration(period = "") {
+  const [startRaw, endRaw] = period.split("-").map((s) => s.trim());
+  if (!startRaw || !endRaw) return "";
+
+  const start = parseMonthYear(startRaw);
+  const now = new Date();
+  const end =
+    endRaw.toLowerCase() === "present"
+      ? { year: now.getFullYear(), month: now.getMonth() }
+      : parseMonthYear(endRaw);
+
+  if (!start || !end) return "";
+
+  const totalMonths =
+    (end.year - start.year) * 12 + (end.month - start.month) + 1;
+  if (totalMonths <= 0) return "";
+
+  const yrs = Math.floor(totalMonths / 12);
+  const mos = totalMonths % 12;
+  const parts = [];
+  if (yrs > 0) parts.push(`${yrs} ${yrs === 1 ? "yr" : "yrs"}`);
+  if (mos > 0) parts.push(`${mos} ${mos === 1 ? "mo" : "mos"}`);
+  return parts.join(" ");
+}
+
 function renderExperiences() {
   const listEl = document.getElementById("experience-list");
   if (!listEl) return;
 
   listEl.innerHTML = experiences
-    .map(
-      (exp) => `
+    .map((exp) => {
+      const duration = calculateDuration(exp.period) || exp.duration;
+      return `
       <article class="rounded-2xl border border-slate-800 bg-[#131C31] p-4 sm:p-5 space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5">
           <div>
@@ -448,11 +498,8 @@ function renderExperiences() {
           <div class="text-xs font-mono text-slate-400 sm:text-right shrink-0">
             <p>${escapeHtml(exp.period)}</p>
             ${
-              exp.duration || exp.location
-                ? `<p class="text-slate-500 mt-0.5">${[
-                    exp.duration,
-                    exp.location,
-                  ]
+              duration || exp.location
+                ? `<p class="text-slate-500 mt-0.5">${[duration, exp.location]
                     .filter(Boolean)
                     .map(escapeHtml)
                     .join(" · ")}</p>`
@@ -470,8 +517,8 @@ function renderExperiences() {
             : ""
         }
       </article>
-    `
-    )
+    `;
+    })
     .join("");
 }
 
