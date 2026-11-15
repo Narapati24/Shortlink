@@ -38,8 +38,16 @@ const SOCIAL_META = {
   },
 };
 
+const EXP_CATEGORIES = [
+  { id: "all", label: "All" },
+  { id: "work", label: "Work" },
+  { id: "community", label: "Community" },
+  { id: "academic", label: "Academic" },
+];
+
 let activeCategory = "all";
 let activeYear = "all";
+let activeExpCategory = "all";
 let searchQuery = "";
 let currentPage = 1;
 
@@ -477,11 +485,45 @@ function calculateDuration(period = "") {
   return parts.join(" ");
 }
 
+function renderExpFilterTabs() {
+  const tabsEl = document.getElementById("exp-filter-tabs");
+  if (!tabsEl) return;
+
+  tabsEl.innerHTML = EXP_CATEGORIES.map((cat) => {
+    const count =
+      cat.id === "all"
+        ? experiences.length
+        : experiences.filter((e) => e.category === cat.id).length;
+    const isActive = activeExpCategory === cat.id;
+    return `
+      <button
+        type="button"
+        role="tab"
+        aria-selected="${isActive}"
+        data-exp-category="${cat.id}"
+        class="shrink-0 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-colors border ${
+          isActive
+            ? "bg-violet-600 text-white border-violet-500"
+            : "bg-[#131C31] text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white"
+        }"
+      >
+        ${cat.label}
+        <span class="ml-1 opacity-70 font-mono text-[11px]">${count}</span>
+      </button>
+    `;
+  }).join("");
+}
+
 function renderExperiences() {
   const listEl = document.getElementById("experience-list");
   if (!listEl) return;
 
-  listEl.innerHTML = experiences
+  const filtered =
+    activeExpCategory === "all"
+      ? experiences
+      : experiences.filter((e) => e.category === activeExpCategory);
+
+  listEl.innerHTML = filtered
     .map((exp) => {
       const duration = calculateDuration(exp.period) || exp.duration;
       return `
@@ -553,6 +595,15 @@ function initEvents() {
   document.querySelectorAll("[data-main-tab]").forEach((btn) => {
     btn.addEventListener("click", () => switchMainTab(btn.dataset.mainTab));
   });
+  // Experience category filter delegation
+  document.getElementById("exp-filter-tabs")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-exp-category]");
+    if (!btn) return;
+    activeExpCategory = btn.dataset.expCategory;
+    renderExpFilterTabs();
+    renderExperiences();
+  });
+
   // Category filter delegation
   document.getElementById("filter-tabs")?.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-category]");
@@ -610,6 +661,7 @@ function init() {
   renderYearFilter();
   renderFilterTabs();
   renderProjects();
+  renderExpFilterTabs();
   renderExperiences();
   initEvents();
 }

@@ -225,16 +225,16 @@ export const experiences = [
   {
     company: "Aluesa Global Digitek",
     role: "Junior Software Engineer Trainee",
+    category: "work",
     period: "April 2026 - Present",
-    duration: "8 months",
     location: "",
     highlights: []
   },
   {
     company: "Kodingin.id",
     role: "Mobile Developer",
+    category: "work",
     period: "December 2025 - Present",
-    duration: "1 year",
     location: "",
     highlights: [
       "Developed and maintained cross-platform mobile applications using Flutter, ensuring responsive UI and smooth user experience across Android platforms.",
@@ -246,8 +246,8 @@ export const experiences = [
   {
     company: "Kodingin.id",
     role: "System Analyst",
+    category: "work",
     period: "March 2025 - February 2026",
-    duration: "1 year",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Translated client business needs into detailed technical specifications for the development team, reducing potential post-launch revisions by 20%.",
@@ -258,8 +258,8 @@ export const experiences = [
   {
     company: "GDGoC Universitas Pasundan",
     role: "Lead",
+    category: "community",
     period: "October 2025 - August 2026",
-    duration: "11 months",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Led and managed a core team of 15+ members to execute the tech community's yearly roadmap and activities.",
@@ -270,8 +270,8 @@ export const experiences = [
   {
     company: "GDGoC Universitas Pasundan",
     role: "Head Curriculum Developer",
+    category: "community",
     period: "October 2024 - October 2025",
-    duration: "1 year 1 month",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Designed a comprehensive, year-long technical curriculum for members.",
@@ -281,16 +281,16 @@ export const experiences = [
   {
     company: "Universitas Pasundan",
     role: "Laboratory Teaching Assistant",
+    category: "academic",
     period: "January 2025 - June 2026",
-    duration: "1 year 6 months",
     location: "Bandung, West Java, Indonesia",
     highlights: []
   },
   {
     company: "Universitas Pasundan",
     role: "Assistant Lecturer Internet Web Programing",
+    category: "academic",
     period: "October 2024 - January 2025",
-    duration: "4 months",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Supported the lead lecturer in a class of 40+ students, leading weekly practical lab sessions on HTML, CSS, JavaScript.",
@@ -300,8 +300,8 @@ export const experiences = [
   {
     company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
     role: "Mobile Development Cohort",
+    category: "academic",
     period: "September 2024 - January 2025",
-    duration: "5 months",
     location: "",
     highlights: [
       "Completed an intensive 900+ hour independent study program focused on mobile app development with Kotlin.",
@@ -312,8 +312,8 @@ export const experiences = [
   {
     company: "Google Developer Student Club Universitas Pasundan",
     role: "Curriculum Developer",
+    category: "community",
     period: "October 2023 - October 2024",
-    duration: "1 year 1 month",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Developed 5+ interactive learning modules on the fundamentals of Flutter and Dart.",
@@ -323,16 +323,16 @@ export const experiences = [
   {
     company: "Team GIB",
     role: "Full Stack Developer",
+    category: "work",
     period: "September 2023 - September 2024",
-    duration: "1 year 1 month",
     location: "",
     highlights: []
   },
   {
     company: "Universitas Pasundan",
     role: "Mentor Pemrograman Web",
+    category: "academic",
     period: "April 2024 - June 2024",
-    duration: "3 months",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Personally mentored 20+ students through their final web development projects, providing guidance from concept to deployment.",
@@ -342,16 +342,16 @@ export const experiences = [
   {
     company: "QLesson",
     role: "External Public Relations",
+    category: "work",
     period: "October 2023 - April 2024",
-    duration: "7 months",
     location: "Bandung, West Java, Indonesia",
     highlights: []
   },
   {
     company: "GDSC",
     role: "HackFest 2024 Competition with Team \"HisteriaCode\"",
+    category: "community",
     period: "December 2023 - January 2024",
-    duration: "2 months",
     location: "",
     highlights: [
       "Participated in HackFest 2024 as a \"Hacker\" within Team HisteriaCode, coding innovative applications and crafting technological solutions."
@@ -360,8 +360,8 @@ export const experiences = [
   {
     company: "Universitas Pasundan",
     role: "Assistant Lecturer (Internet Technology Web)",
+    category: "academic",
     period: "September 2023 - January 2024",
-    duration: "5 months",
     location: "Bandung, West Java, Indonesia",
     highlights: [
       "Assisted students in Internet Technology Web (ITW) courses, guiding them through module assignments and troubleshooting."
@@ -370,8 +370,8 @@ export const experiences = [
   {
     company: "AIESEC in Bandung",
     role: "JOIN AIESEC",
+    category: "community",
     period: "September 2023 - October 2023",
-    duration: "2 months",
     location: "Bandung, West Java, Indonesia",
     highlights: ["Delegate of JOIN AIESEC."]
   }
