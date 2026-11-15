@@ -60,295 +60,275 @@
       content="https://narapatis.my.id/img/profile/profile.JPG"
     />
 
+    <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Narapati Keysa Anandi",
-        "url": "https://narapatis.my.id",
+        "url": "https://narapatis.my.id/",
         "image": "https://narapatis.my.id/img/profile/profile.JPG",
-        "jobTitle": "Full-Stack Developer",
-        "description": "Full-Stack Web & Mobile Developer graduating from Bangkit Academy, experienced in building scalable applications with Flutter, Kotlin, and Laravel.",
-        "alumniOf": {
-          "@type": "Organization",
-          "name": "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka"
-        },
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Kodingin.id",
-          "url": "https://kodingin.id"
-        },
+        "jobTitle": "Full-Stack Developer | Mobile App Specialist",
+        "email": "mailto:narapatikeysa00@gmail.com",
         "sameAs": [
           "https://github.com/Narapati24",
           "https://www.linkedin.com/in/narapati-keysa/",
           "https://kodingin.id"
-        ],
-        "knowsAbout": [
-          "Web Development",
-          "Mobile App Development",
-          "Flutter",
-          "Kotlin",
-          "React",
-          "Laravel",
-          "AI Integration",
-          "Software Engineering"
         ]
       }
     </script>
-
-    <script
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="24b387fa-95ab-4ca4-b4f6-9e9529125176"
-    ></script>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/img/logo/RainyDeepLogo.png" />
-    <link rel="apple-touch-icon" href="/img/logo/RainyDeepLogo.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
-
-    <!-- Styles -->
-    <!-- Styles -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/src/css/style.css" />
-    <!-- Preload Critical Assets -->
-    <link rel="preload" as="image" href="/img/profile/profile.JPG" />
   </head>
   <body
-    class="bg-midnight-950 text-midnight-50 min-h-screen font-sans selection:bg-midnight-500 selection:text-white"
+    class="bg-[#0B1120] text-slate-100 selection:bg-violet-500 selection:text-white min-h-screen"
   >
-    <!-- Background Effects -->
-    <!-- Background Effects -->
-    <div
-      class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none select-none"
-    >
-      <!-- Primary Accent Blob -->
+    <!-- Top Bar (Always Top) -->
+    <header class="sticky top-0 z-30 bg-[#0B1120] border-b border-slate-800/80">
       <div
-        class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-[100px] animate-pulse"
-      ></div>
-
-      <!-- Secondary Slate Blob -->
-      <div
-        class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px] animate-pulse delay-1000"
-      ></div>
-
-      <!-- Grid Pattern -->
-      <div
-        class="absolute inset-0 bg-[url('/img/grid.svg')] opacity-[0.03]"
-      ></div>
-    </div>
-
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav
-      class="fixed top-0 left-0 right-0 z-50 flex justify-center md:pt-6 pointer-events-none transition-all duration-300"
-    >
-      <div
-        class="pointer-events-auto w-full md:w-auto bg-midnight-950/80 backdrop-blur-2xl border-b md:border border-white/5 md:rounded-full px-6 py-4 md:py-3 md:px-8 shadow-2xl shadow-black/20 flex items-center justify-between md:gap-12"
+        class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-14 flex items-center justify-between gap-4"
       >
-        <!-- Logo -->
-        <a href="#" class="relative group">
+        <a
+          href="#"
+          class="font-semibold tracking-tight text-sm sm:text-base flex items-center gap-2 text-slate-100 shrink-0"
+        >
           <span
-            class="text-2xl font-bold bg-clip-text text-transparent bg-accent-gradient tracking-tight group-hover:opacity-80 transition-opacity"
-            >NK.</span
-          >
+            class="w-2 h-2 rounded-full bg-violet-400"
+            aria-hidden="true"
+          ></span>
+          <span>narapatis.my.id</span>
         </a>
 
-        <!-- Desktop Links -->
-        <div
-          class="hidden md:flex items-center gap-1 bg-white/5 rounded-full p-1 border border-white/5"
+        <nav
+          class="flex items-center gap-1.5"
+          role="tablist"
+          aria-label="Portfolio sections"
         >
-          <a
-            href="#profile-section"
-            class="px-5 py-1.5 rounded-full text-sm font-medium text-midnight-200 hover:text-white hover:bg-white/10 transition-all duration-300"
-          >
-            Profile
-          </a>
-          <a
-            href="#projects-section"
-            class="px-5 py-1.5 rounded-full text-sm font-medium text-midnight-200 hover:text-white hover:bg-white/10 transition-all duration-300"
+          <button
+            id="tab-projects"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-main-tab="projects"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors bg-violet-600 text-white"
           >
             Projects
-          </a>
-        </div>
-
-        <!-- Right Side -->
-        <div class="flex items-center gap-4">
-          <!-- Mobile Links -->
-          <div class="flex md:hidden gap-4">
-            <a
-              href="#profile-section"
-              class="text-sm font-medium text-midnight-200"
-              >Profile</a
-            >
-            <a
-              href="#projects-section"
-              class="text-sm font-medium text-midnight-200"
-              >Projects</a
-            >
-          </div>
-
-          <a
-            href="#contact-section"
-            class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-600/10 text-accent-400 text-sm font-medium border border-accent-500/20 hover:bg-accent-600 hover:text-white transition-all duration-300 group"
+          </button>
+          <button
+            id="tab-experience"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-main-tab="experience"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors text-slate-400 hover:text-white hover:bg-[#131C31]"
           >
-            <span>Let's Talk</span>
-            <svg
-              class="w-3 h-3 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
-          </a>
-        </div>
+            Experience
+          </button>
+        </nav>
       </div>
-    </nav>
+    </header>
 
     <main
-      class="container mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-20 space-y-20 mt-16"
+      class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:grid lg:grid-cols-12 lg:gap-10 space-y-12 lg:space-y-0"
     >
-      <!-- Profile Section -->
-      <section
-        id="profile-section"
-        class="animate-fade-in min-h-[60vh] flex items-center justify-center"
+      <!-- Profile / Hero Section -->
+      <aside
+        aria-label="Profile"
+        class="space-y-6 lg:col-span-3 lg:sticky lg:top-20 lg:self-start"
       >
-        <!-- Skeleton Loading State -->
-        <div
-          class="flex flex-col items-center text-center space-y-8 w-full max-w-4xl animate-pulse"
-        >
-          <div
-            class="w-32 h-32 md:w-48 md:h-48 bg-midnight-800 rounded-full"
-          ></div>
-          <div class="space-y-4 w-full flex flex-col items-center">
-            <div
-              class="h-10 md:h-14 bg-midnight-800 rounded-lg w-3/4 max-w-lg"
-            ></div>
-            <div
-              class="h-6 md:h-8 bg-midnight-800 rounded-lg w-1/2 max-w-md"
-            ></div>
-          </div>
-          <div class="h-20 bg-midnight-800 rounded-lg w-full max-w-2xl"></div>
-          <div class="flex gap-2">
-            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
-            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
-            <div class="h-8 w-20 bg-midnight-800 rounded-full"></div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+          <img
+            id="profile-image"
+            src="/img/profile/profile.JPG"
+            alt="Narapati Keysa Anandi"
+            width="88"
+            height="88"
+            class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover border border-violet-500/30 shrink-0 bg-slate-800"
+          />
+          <div class="space-y-1.5">
+            <h1
+              id="profile-name"
+              class="text-2xl sm:text-3xl font-bold tracking-tight text-white"
+            >
+              Narapati Keysa Anandi
+            </h1>
+            <p
+              id="profile-role"
+              class="text-sm sm:text-base font-medium text-violet-300"
+            >
+              Full-Stack Developer | Mobile App Specialist
+            </p>
           </div>
         </div>
-      </section>
 
-      <!-- Projects Section -->
-      <section id="projects-section" class="space-y-8">
-        <div
-          class="flex items-center justify-between border-b border-midnight-800 pb-4"
-        >
-          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-            <svg
-              class="w-6 h-6 text-midnight-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-              ></path>
-            </svg>
-            Featured Projects
-          </h2>
-          <button
-            onclick="window.resetFilters()"
-            class="text-sm px-3 py-1 rounded-full bg-midnight-800 text-midnight-300 hover:bg-midnight-700 hover:text-white transition-all"
+        <p
+          id="profile-desc"
+          class="text-sm sm:text-base leading-relaxed text-slate-300 max-w-2xl"
+        ></p>
+
+        <!-- Social & Quick Links -->
+        <div id="social-links" class="flex flex-wrap gap-2"></div>
+
+        <!-- Core Skills -->
+        <div class="pt-2">
+          <h2
+            class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3"
           >
-            Reset Filters
+            Core Stack
+          </h2>
+          <div id="skills-list" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </aside>
+
+      <hr class="border-slate-800/80 lg:hidden" />
+
+      <!-- Main Content (Projects & Experience) -->
+      <div class="lg:col-span-9 space-y-6">
+        <!-- Projects Section -->
+        <section
+          id="projects"
+          aria-label="Projects"
+          class="space-y-5"
+        >
+          <div
+            class="sticky top-14 z-20 bg-[#0B1120] pt-2 pb-3 border-b border-slate-800/60 lg:static lg:pt-0 lg:pb-0 lg:border-b-0 space-y-4"
+          >
+          <div
+            class="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+          >
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Projects
+              </h2>
+              <p class="text-sm text-slate-400 mt-0.5">
+                Mobile apps, web platforms, and interactive builds.
+              </p>
+            </div>
+
+          <!-- Search & Year Filter -->
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="relative flex-1 sm:w-56">
+              <svg
+                class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                id="project-search"
+                type="search"
+                placeholder="Search projects..."
+                class="w-full pl-9 pr-3 py-2 text-sm bg-[#131C31] text-slate-100 placeholder:text-slate-500 border border-slate-800 rounded-xl focus:outline-none focus:border-violet-500 transition-colors"
+              />
+            </div>
+
+            <select
+              id="year-filter"
+              aria-label="Filter projects by year"
+              class="px-3 py-2 text-sm bg-[#131C31] text-slate-200 border border-slate-800 rounded-xl focus:outline-none focus:border-violet-500 transition-colors"
+            ></select>
+          </div>
+        </div>
+
+          <!-- Category Filter Tabs -->
+          <div
+            id="filter-tabs"
+            class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar"
+            role="tablist"
+            aria-label="Filter projects by category"
+          ></div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div
+          id="projects-grid"
+          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+        ></div>
+
+        <!-- Empty State -->
+        <div
+          id="empty-state"
+          class="hidden py-12 text-center border border-dashed border-slate-800 rounded-2xl bg-[#131C31]/40"
+        >
+          <p class="text-sm text-slate-400">
+            No projects match your filter.
+          </p>
+          <button
+            id="reset-filters"
+            type="button"
+            class="mt-3 text-xs font-medium underline underline-offset-4 text-violet-300 hover:text-violet-200"
+          >
+            Reset filters
           </button>
         </div>
 
-        <!-- Filters -->
-        <!-- Modern Filters -->
-        <div class="space-y-4 mb-8">
-          <!-- Type Filter -->
-          <div
-            class="flex overflow-x-auto pb-2 gap-2 scrollbar-hide"
-            id="type-filter-container"
-          >
-            <!-- Injected by JS -->
-          </div>
-
-          <!-- Year Filter -->
-          <div
-            class="flex overflow-x-auto pb-2 gap-2 scrollbar-hide"
-            id="year-filter-container"
-          >
-            <!-- Injected by JS -->
-          </div>
-        </div>
-
-        <div
-          id="projects-grid"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <!-- Skeleton Loading State (Initial Views) -->
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-          <div
-            class="aspect-[16/10] bg-midnight-900/40 rounded-2xl animate-pulse border border-white/5"
-          ></div>
-        </div>
-
-        <!-- Pagination -->
-        <div
-          id="pagination-controls"
-          class="flex justify-center items-center gap-2 mt-8"
-        >
-          <!-- Content injected by JS -->
-        </div>
+        <!-- Pagination (Sticky bottom on mobile) -->
+        <nav
+          id="pagination"
+          aria-label="Projects pagination"
+          class="sticky bottom-0 z-20 bg-[#0B1120] border-t border-slate-800/80 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:static lg:border-t-0 lg:bg-transparent lg:pt-2 flex items-center justify-between"
+        ></nav>
       </section>
-      <!-- Contact Section -->
-      <section id="contact-section" class="scroll-mt-24">
-        <!-- Content injected by JS -->
-      </section>
+
+        <!-- Experience Section (Hidden by default) -->
+        <section
+          id="experience-panel"
+          aria-label="Experience"
+          class="hidden space-y-6"
+        >
+          <div
+            class="sticky top-14 z-20 bg-[#0B1120] pt-2 pb-3 border-b border-slate-800/60 lg:static lg:pt-0 lg:pb-0 lg:border-b-0 space-y-4"
+          >
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Experience
+              </h2>
+              <p class="text-sm text-slate-400 mt-0.5">
+                Work history, community leadership, and academic roles.
+              </p>
+            </div>
+            <div
+              id="exp-filter-tabs"
+              class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar"
+              role="tablist"
+              aria-label="Filter experience by category"
+            ></div>
+          </div>
+          <div id="experience-list" class="space-y-4"></div>
+        </section>
+      </div>
     </main>
 
-    <footer
-      class="border-t border-midnight-900 bg-midnight-950/50 backdrop-blur-sm mt-auto"
-    >
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 mt-16 py-8">
       <div
-        id="footer-content"
-        class="container mx-auto px-6 md:px-12 lg:px-24 py-8"
+        class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400"
       >
-        <!-- Content injected by JS -->
+        <p>© <span id="footer-year"></span> Narapati Keysa Anandi.</p>
+        <a
+          href="#"
+          class="hover:text-violet-300 transition-colors"
+        >
+          Back to top ↑
+        </a>
       </div>
     </footer>
 
-    <!-- Scripts -->
     <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>
