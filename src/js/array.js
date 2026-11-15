@@ -220,3 +220,159 @@ export const projects = [
 ];
 
 
+
+export const experiences = [
+  {
+    company: "Aluesa Global Digitek",
+    role: "Junior Software Engineer Trainee",
+    period: "April 2026 - Present",
+    duration: "8 months",
+    location: "",
+    highlights: []
+  },
+  {
+    company: "Kodingin.id",
+    role: "Mobile Developer",
+    period: "December 2025 - Present",
+    duration: "1 year",
+    location: "",
+    highlights: [
+      "Developed and maintained cross-platform mobile applications using Flutter, ensuring responsive UI and smooth user experience across Android platforms.",
+      "Implemented application features, integrated APIs, and optimized app performance for stability and efficiency.",
+      "Collaborated with designers and backend developers to translate product requirements into functional mobile solutions.",
+      "Participated in debugging, testing, and improving application performance during development cycles."
+    ]
+  },
+  {
+    company: "Kodingin.id",
+    role: "System Analyst",
+    period: "March 2025 - February 2026",
+    duration: "1 year",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Translated client business needs into detailed technical specifications for the development team, reducing potential post-launch revisions by 20%.",
+      "Designed robust system architectures and application workflows using UML (Use Case, Activity, Sequence) and ERD diagrams, ensuring product scalability and efficiency.",
+      "Acted as the key communication bridge between technical and non-technical stakeholders, ensuring alignment on project goals and progress."
+    ]
+  },
+  {
+    company: "GDGoC Universitas Pasundan",
+    role: "Lead",
+    period: "October 2025 - August 2026",
+    duration: "11 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Led and managed a core team of 15+ members to execute the tech community's yearly roadmap and activities.",
+      "Increased active member engagement by 40% by initiating relevant, industry-focused workshops and sharing sessions.",
+      "Organized and executed over 10 technical events (seminars & workshops), reaching a total audience of 500+ students and aspiring developers."
+    ]
+  },
+  {
+    company: "GDGoC Universitas Pasundan",
+    role: "Head Curriculum Developer",
+    period: "October 2024 - October 2025",
+    duration: "1 year 1 month",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Designed a comprehensive, year-long technical curriculum for members.",
+      "Managed a team of 8 Curriculum Developers, providing direction and reviewing over 12 learning modules to ensure quality and clarity."
+    ]
+  },
+  {
+    company: "Universitas Pasundan",
+    role: "Laboratory Teaching Assistant",
+    period: "January 2025 - June 2026",
+    duration: "1 year 6 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: []
+  },
+  {
+    company: "Universitas Pasundan",
+    role: "Assistant Lecturer Internet Web Programing",
+    period: "October 2024 - January 2025",
+    duration: "4 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Supported the lead lecturer in a class of 40+ students, leading weekly practical lab sessions on HTML, CSS, JavaScript.",
+      "Assessed and provided constructive feedback on student assignments and projects, improving their code quality and conceptual understanding."
+    ]
+  },
+  {
+    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
+    role: "Mobile Development Cohort",
+    period: "September 2024 - January 2025",
+    duration: "5 months",
+    location: "",
+    highlights: [
+      "Completed an intensive 900+ hour independent study program focused on mobile app development with Kotlin.",
+      "Engineered a functional team capstone project: developed a mobile application from concept to prototype, implementing complex features using Kotlin, Firebase, and REST APIs.",
+      "Selected from thousands of applicants, demonstrating strong problem-solving abilities and a high aptitude for learning."
+    ]
+  },
+  {
+    company: "Google Developer Student Club Universitas Pasundan",
+    role: "Curriculum Developer",
+    period: "October 2023 - October 2024",
+    duration: "1 year 1 month",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Developed 5+ interactive learning modules on the fundamentals of Flutter and Dart.",
+      "Served as a facilitator in 3 hands-on workshops, guiding participants through real-time coding challenges and debugging."
+    ]
+  },
+  {
+    company: "Team GIB",
+    role: "Full Stack Developer",
+    period: "September 2023 - September 2024",
+    duration: "1 year 1 month",
+    location: "",
+    highlights: []
+  },
+  {
+    company: "Universitas Pasundan",
+    role: "Mentor Pemrograman Web",
+    period: "April 2024 - June 2024",
+    duration: "3 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Personally mentored 20+ students through their final web development projects, providing guidance from concept to deployment.",
+      "Conducted weekly code review sessions, resulting in cleaner, more efficient code and ensuring 100% on-time project completion for all mentees."
+    ]
+  },
+  {
+    company: "QLesson",
+    role: "External Public Relations",
+    period: "October 2023 - April 2024",
+    duration: "7 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: []
+  },
+  {
+    company: "GDSC",
+    role: "HackFest 2024 Competition with Team \"HisteriaCode\"",
+    period: "December 2023 - January 2024",
+    duration: "2 months",
+    location: "",
+    highlights: [
+      "Participated in HackFest 2024 as a \"Hacker\" within Team HisteriaCode, coding innovative applications and crafting technological solutions."
+    ]
+  },
+  {
+    company: "Universitas Pasundan",
+    role: "Assistant Lecturer (Internet Technology Web)",
+    period: "September 2023 - January 2024",
+    duration: "5 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: [
+      "Assisted students in Internet Technology Web (ITW) courses, guiding them through module assignments and troubleshooting."
+    ]
+  },
+  {
+    company: "AIESEC in Bandung",
+    role: "JOIN AIESEC",
+    period: "September 2023 - October 2023",
+    duration: "2 months",
+    location: "Bandung, West Java, Indonesia",
+    highlights: ["Delegate of JOIN AIESEC."]
+  }
+];

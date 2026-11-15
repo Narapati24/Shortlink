@@ -73,14 +73,14 @@
   <body
     class="bg-[#0B1120] text-slate-100 selection:bg-violet-500 selection:text-white min-h-screen"
   >
-    <!-- Top Bar -->
+    <!-- Top Bar (Always Top) -->
     <header class="sticky top-0 z-30 bg-[#0B1120] border-b border-slate-800/80">
       <div
-        class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-14 flex items-center justify-between"
+        class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-14 flex items-center justify-between gap-4"
       >
         <a
           href="#"
-          class="font-semibold tracking-tight text-sm sm:text-base flex items-center gap-2 text-slate-100"
+          class="font-semibold tracking-tight text-sm sm:text-base flex items-center gap-2 text-slate-100 shrink-0"
         >
           <span
             class="w-2 h-2 rounded-full bg-violet-400"
@@ -88,12 +88,33 @@
           ></span>
           <span>narapatis.my.id</span>
         </a>
-        <a
-          href="#projects"
-          class="text-xs sm:text-sm font-medium text-slate-300 hover:text-violet-300 px-3 py-1.5 rounded-lg transition-colors"
+
+        <nav
+          class="flex items-center gap-1.5"
+          role="tablist"
+          aria-label="Portfolio sections"
         >
-          Projects
-        </a>
+          <button
+            id="tab-projects"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-main-tab="projects"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors bg-violet-600 text-white"
+          >
+            Projects
+          </button>
+          <button
+            id="tab-experience"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-main-tab="experience"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors text-slate-400 hover:text-white hover:bg-[#131C31]"
+          >
+            Experience
+          </button>
+        </nav>
       </div>
     </header>
 
@@ -151,12 +172,14 @@
 
       <hr class="border-slate-800/80 lg:hidden" />
 
-      <!-- Projects Section -->
-      <section
-        id="projects"
-        aria-label="Projects"
-        class="space-y-5 lg:col-span-9"
-      >
+      <!-- Main Content (Projects & Experience) -->
+      <div class="lg:col-span-9 space-y-6">
+        <!-- Projects Section -->
+        <section
+          id="projects"
+          aria-label="Projects"
+          class="space-y-5"
+        >
         <div
           class="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
         >
@@ -232,13 +255,31 @@
           </button>
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination (Sticky bottom on mobile) -->
         <nav
           id="pagination"
           aria-label="Projects pagination"
-          class="flex items-center justify-between pt-2"
+          class="sticky bottom-0 z-20 bg-[#0B1120] border-t border-slate-800/80 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:static lg:border-t-0 lg:bg-transparent lg:pt-2 flex items-center justify-between"
         ></nav>
       </section>
+
+        <!-- Experience Section (Hidden by default) -->
+        <section
+          id="experience-panel"
+          aria-label="Experience"
+          class="hidden space-y-6"
+        >
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              Experience
+            </h2>
+            <p class="text-sm text-slate-400 mt-0.5">
+              Work history, community leadership, and academic roles.
+            </p>
+          </div>
+          <div id="experience-list" class="space-y-4"></div>
+        </section>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -255,14 +296,6 @@
         </a>
       </div>
     </footer>
-
-    <!-- Project Detail Modal -->
-    <dialog
-      id="project-modal"
-      class="w-[calc(100%-2rem)] max-w-xl rounded-2xl bg-[#131C31] text-slate-100 border border-slate-700/80 p-0 shadow-2xl backdrop:bg-black/75"
-    >
-      <div id="modal-content" class="p-5 sm:p-6 space-y-4"></div>
-    </dialog>
 
     <script type="module" src="/src/js/main.js"></script>
   </body>

@@ -1,4 +1,4 @@
-import { profile, projects } from "./array.js";
+import { profile, projects, experiences } from "./array.js";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -258,11 +258,7 @@ function renderProjects() {
         <article
           class="group flex flex-col rounded-2xl border border-slate-800 bg-[#131C31] overflow-hidden transition-transform duration-200 hover:-translate-y-0.5 hover:border-violet-500/40"
         >
-          <button
-            type="button"
-            data-project-index="${idx}"
-            class="text-left focus:outline-none flex-1 flex flex-col"
-          >
+          <div class="flex-1 flex flex-col">
             <div class="aspect-[16/10] w-full bg-slate-900 overflow-hidden border-b border-slate-800">
               <img
                 src="./img/background_project/${escapeHtml(p.year)}/${escapeHtml(p.image)}"
@@ -286,11 +282,11 @@ function renderProjects() {
                   }
                 </div>
 
-                <h3 class="text-base sm:text-lg font-semibold tracking-tight text-white group-hover:text-violet-300 transition-colors">
+                <h3 class="text-base sm:text-lg font-semibold tracking-tight text-white">
                   ${escapeHtml(p.title)}
                 </h3>
 
-                <p class="text-sm text-slate-400 line-clamp-2 leading-relaxed">
+                <p class="text-sm text-slate-400 leading-relaxed">
                   ${escapeHtml(p.desc)}
                 </p>
               </div>
@@ -312,7 +308,7 @@ function renderProjects() {
                 }
               </div>
             </div>
-          </button>
+          </div>
 
           ${
             p.url || p.github
@@ -432,7 +428,84 @@ function openProjectModal(index) {
     ?.addEventListener("click", () => modal.close());
 }
 
+function renderExperiences() {
+  const listEl = document.getElementById("experience-list");
+  if (!listEl) return;
+
+  listEl.innerHTML = experiences
+    .map(
+      (exp) => `
+      <article class="rounded-2xl border border-slate-800 bg-[#131C31] p-4 sm:p-5 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5">
+          <div>
+            <h3 class="text-base sm:text-lg font-semibold text-white tracking-tight">
+              ${escapeHtml(exp.role)}
+            </h3>
+            <p class="text-sm font-medium text-violet-300">
+              ${escapeHtml(exp.company)}
+            </p>
+          </div>
+          <div class="text-xs font-mono text-slate-400 sm:text-right shrink-0">
+            <p>${escapeHtml(exp.period)}</p>
+            ${
+              exp.duration || exp.location
+                ? `<p class="text-slate-500 mt-0.5">${[
+                    exp.duration,
+                    exp.location,
+                  ]
+                    .filter(Boolean)
+                    .map(escapeHtml)
+                    .join(" · ")}</p>`
+                : ""
+            }
+          </div>
+        </div>
+        ${
+          exp.highlights && exp.highlights.length > 0
+            ? `<ul class="space-y-1.5 text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                ${exp.highlights
+                  .map((item) => `<li>${escapeHtml(item)}</li>`)
+                  .join("")}
+              </ul>`
+            : ""
+        }
+      </article>
+    `
+    )
+    .join("");
+}
+
+function switchMainTab(tabName) {
+  const projectsSection = document.getElementById("projects");
+  const expSection = document.getElementById("experience-panel");
+  const tabProjects = document.getElementById("tab-projects");
+  const tabExp = document.getElementById("tab-experience");
+  if (!projectsSection || !expSection || !tabProjects || !tabExp) return;
+
+  const isProjects = tabName === "projects";
+  projectsSection.classList.toggle("hidden", !isProjects);
+  expSection.classList.toggle("hidden", isProjects);
+
+  tabProjects.setAttribute("aria-selected", String(isProjects));
+  tabExp.setAttribute("aria-selected", String(!isProjects));
+
+  tabProjects.className = `px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+    isProjects
+      ? "bg-violet-600 text-white"
+      : "text-slate-400 hover:text-white hover:bg-[#131C31]"
+  }`;
+  tabExp.className = `px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+    !isProjects
+      ? "bg-violet-600 text-white"
+      : "text-slate-400 hover:text-white hover:bg-[#131C31]"
+  }`;
+}
+
 function initEvents() {
+  // Primary Projects / Experience tab switcher
+  document.querySelectorAll("[data-main-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => switchMainTab(btn.dataset.mainTab));
+  });
   // Category filter delegation
   document.getElementById("filter-tabs")?.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-category]");
@@ -480,19 +553,6 @@ function initEvents() {
     renderProjects();
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   });
-
-  // Project card modal delegation
-  document.getElementById("projects-grid")?.addEventListener("click", (e) => {
-    const trigger = e.target.closest("[data-project-index]");
-    if (!trigger) return;
-    openProjectModal(Number(trigger.dataset.projectIndex));
-  });
-
-  // Close modal on backdrop click
-  const modal = document.getElementById("project-modal");
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) modal.close();
-  });
 }
 
 function init() {
@@ -503,6 +563,7 @@ function init() {
   renderYearFilter();
   renderFilterTabs();
   renderProjects();
+  renderExperiences();
   initEvents();
 }
 
